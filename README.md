@@ -8,20 +8,20 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 #**Ferramentas**
 
 
-dirsearch
-JSParser
-knockpy
-lazys3
-recon_profile
-sqlmap-dev
-Sublist3r
-teh_s3_bucketeers
-virtual-host-discovery
-wpscan
-webscreenshot
-Massdns
-Asnlookup
-Unfurl
-Waybackurls
-Httprobe
-Seclists collection
+- dirsearch
+- JSParser
+- knockpy
+- lazys3
+- recon_profile
+- sqlmap-dev
+- Sublist3r
+- teh_s3_bucketeers
+- virtual-host-discovery
+- wpscan
+- webscreenshot
+- Massdns
+- Asnlookup
+- Unfurl
+- Waybackurls
+- Httprobe
+- Seclists collection
