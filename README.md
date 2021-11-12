@@ -1,5 +1,5 @@
 ## **Feijoada**
-Ferramenta em script Bash para Bug Bount ou Pentest
+Ferramenta em script Bash Completa para Bug Bount ou Pentest !
 
 
 ## Ferramenta atualiza todo diretório kali-linux e todas dependencias nescessarias para trabalhar
@@ -11,7 +11,7 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 ## **Ferramentas**
 
 
-- dirsearch                    - crtndstry
+- dirsearch
 - JSParser
 - knockpy
 - lazys3
