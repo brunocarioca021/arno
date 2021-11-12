@@ -11,7 +11,7 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 ## **Ferramentas**
 
 
-- dirsearch
+- dirsearch                    - crtndstry
 - JSParser
 - knockpy
 - lazys3
