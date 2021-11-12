@@ -1,4 +1,4 @@
-## **cuscuz**
+## **Feijoada**
 Ferramenta em script Bash para Bug Bount ou Pentest
 
 
@@ -51,7 +51,7 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 
 
 ## **Instalar**
-- git clone https://github.com/pantherwhite/cauteloso-octo-succotash.git
-- cd cauteloso-octo-succotash
-- chmod +x succotash.sh
-- ./succotash.sh
+- git clone https://github.com/pantherwhite/Feijoada.git
+- cd Feijoada
+- chmod +x install.sh
+- ./install.sh
