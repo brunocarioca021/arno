@@ -1,7 +1,10 @@
 # **cauteloso-octo-succotash**
 Ferramenta em script Bash para Bug Bount ou Pentest
 
-Um script para instalar as ferramentas mais populares usadas ao procurar vulnerabilidades para um programa de recompensa de bug.
+## Ferramenta atualiza todo diretório kali-linux e todas dependencias nescessarias para trabalhar
+   - tor, argparse, requests, proxychains4, aptitude, synaptic, hashcatm docker.io etc...
+
+Um script para instalar as ferramentas mais populares usadas ao procurar vulnerabilidades para um programa de recompensa de bug. :shipit:
 
 
 
@@ -19,9 +22,29 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 - virtual-host-discovery
 - wpscan
 - webscreenshot
+- Parsero
 - Massdns
 - Asnlookup
 - Unfurl
 - Waybackurls
 - Httprobe
 - Seclists collection
+- wfuxx
+- Brave
+- Aquatone
+- Gau
+- Subfinder
+- Httpx
+- Gobuster
+- assetfinder
+- Veil-Evasion
+- takeover
+- wpscan
+- infoga
+- Gittools
+- anonsurf
+- asnlookup
+- ParamSpider
+- theHarvester
+- dvcs-ripper
+- crtndstry
