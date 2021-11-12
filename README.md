@@ -1,4 +1,4 @@
-## **cauteloso-octo-succotash**
+## **cuscuz**
 Ferramenta em script Bash para Bug Bount ou Pentest
 
 
