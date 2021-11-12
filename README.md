@@ -1,4 +1,4 @@
-# **cauteloso-octo-succotash**
+## **cauteloso-octo-succotash**
 Ferramenta em script Bash para Bug Bount ou Pentest
 
 ## Ferramenta atualiza todo diretório kali-linux e todas dependencias nescessarias para trabalhar
@@ -8,7 +8,7 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 
 
 
-#**Ferramentas**
+##**Ferramentas**
 
 
 - dirsearch
@@ -48,3 +48,10 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 - theHarvester
 - dvcs-ripper
 - crtndstry
+
+
+##**Instalar**
+git clone https://github.com/pantherwhite/cauteloso-octo-succotash.git
+cd cauteloso-octo-succotash
+chmod +x succotash.sh
+./succotash.sh
