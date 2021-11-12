@@ -1,11 +1,11 @@
 ## **cauteloso-octo-succotash**
 Ferramenta em script Bash para Bug Bount ou Pentest
 
+
 ## Ferramenta atualiza todo diretório kali-linux e todas dependencias nescessarias para trabalhar
    - tor, argparse, requests, proxychains4, aptitude, synaptic, hashcatm docker.io etc...
 
-:EMOJICODE: Um script para instalar as ferramentas mais populares usadas ao procurar vulnerabilidades para um programa de recompensa de bug. :shipit:
-
+Um script para instalar as ferramentas mais populares usadas ao procurar vulnerabilidades para um programa de recompensa de bug. :shipit:
 
 
 ## **Ferramentas**
