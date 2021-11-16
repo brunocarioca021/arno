@@ -1,9 +1,9 @@
 ## **Feijoada**
-Ferramenta em script Bash Completa para Bug bounty ou Pentest !
+Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar 90% do seu Tempo na hora de configurar sua máquina para trabalhar.
 
 
 ## Ferramenta atualiza todo diretório kali-linux e todas dependências necessárias para trabalhar
-   - tor, argparse, requests, proxychains4, aptitude, synaptic, hashcat, docker.io etc...
+   - tor, argparse, requests, proxychains4, aptitude, synaptic, hashcat, docker.io, exploitdb-papers, exploitdb-bin-sploits etc...
 
 Um script para instalar as ferramentas mais populares usadas ao procurar vulnerabilidades para um programa de recompensa de Bug bounty. :shipit:
 
