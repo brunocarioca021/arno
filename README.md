@@ -3,7 +3,7 @@ Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar 90% d
 
 
 ## Ferramenta atualiza todo diretório kali-linux e todas dependências necessárias para trabalhar
-   - tor, argparse, requests, proxychains4, aptitude, synaptic, hashcat, docker.io, exploitdb-papers, exploitdb-bin-sploits etc...
+   - tor, argparse, requests, proxychains4, aptitude, Seclists, synaptic, brave, hashcat, docker.io, exploitdb-papers, exploitdb-bin-sploits etc...
 
 Um script para instalar as ferramentas mais populares usadas ao procurar vulnerabilidades para um programa de recompensa de Bug bounty. :shipit:
 
@@ -21,16 +21,18 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 - teh_s3_bucketeers
 - virtual-host-discovery
 - wpscan
-- webscreenshot
 - Parsero
+- lazyrecon
+- SocialFish
+- shellphish
+- maskphish
+- phoneinfoga
 - Massdns
 - Asnlookup
 - Unfurl
 - Waybackurls
 - Httprobe
-- Seclists collection
-- wfuxx
-- Brave
+- wfuzz
 - Aquatone
 - Gau
 - Subfinder
@@ -39,11 +41,9 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 - assetfinder
 - Veil-Evasion
 - takeover
-- wpscan
 - infoga
 - Gittools
 - anonsurf
-- asnlookup
 - ParamSpider
 - theHarvester
 - dvcs-ripper
@@ -52,6 +52,6 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 
 ## **Instalar**
 - git clone https://github.com/pantherwhite/Feijoada.git
-- cd Feijoada
+- cd /feijoada
 - chmod +x install.sh
 - ./install.sh
