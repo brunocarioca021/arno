@@ -51,6 +51,7 @@ sudo apt-get install -y parsero
 sudo apt-get install -y apache2
 sudo apt-get install -y ssh
 sudo apt-get install -y tor
+sudo apt-get install -y privoxy
 sudo apt-get install -y wifite
 sudo apt-get install -y proxychains4
 sudo apt-get install -y hashcat
