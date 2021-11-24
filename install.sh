@@ -63,6 +63,7 @@ sudo apt -y install exploitdb
 sudo apt -y install exploitdb-papers
 sudo apt -y install exploitdb-bin-sploits
 sudo pip3 install argparse
+sudo pip install one-lin3r
 sudo pip3 install requests
 sudo pip3 install wfuzz
 sudo gem install typhoeus
