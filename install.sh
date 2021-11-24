@@ -58,6 +58,7 @@ sudo apt-get install -y hashcat
 sudo apt-get install -y aptitute
 sudo apt-get install -y synaptic
 sudo apt-get install -y dirsearch
+sudo apt install python3.9-venv
 sudo apt -y install exploitdb
 sudo apt -y install exploitdb-papers
 sudo apt -y install exploitdb-bin-sploits
@@ -81,8 +82,6 @@ cd recon_profile
 cat bash_profile >> ~/.bash_profile
 source ~/.bash_profile
 echo "done"
-
-
 
 #install go
 if [[ -z "$GOPATH" ]];then
