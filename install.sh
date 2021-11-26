@@ -62,6 +62,7 @@ sudo apt install python3.9-venv
 sudo apt -y install exploitdb
 sudo apt -y install exploitdb-papers
 sudo apt -y install exploitdb-bin-sploits
+sudo apt -y install reaver
 sudo pip3 install argparse
 sudo pip install one-lin3r
 sudo pip3 install requests
@@ -123,57 +124,46 @@ sudo apt-get install -y awscli
 echo "Não se esqueça de configurar as credenciais da AWS!"
 
 
-
 #criando uma pasta de ferramentas em ~/
 mkdir ~/feijoada
 cd ~/feijoada/
 
-#install aquatone (ferramenta para inspeção visual de sites em uma grande quantidade de hosts)
 echo "Installing Aquatone"
 go get github.com/michenriksen/aquatone
 echo "done"
 
-#install gau (busca URLs conhecidos no Open Threat Exchange da AlienVault , no Wayback Machine e no Common Crawl para qualquer domínio)
 echo "Installing Gau"
 GO111MODULE=on go get -u -v github.com/lc/gau
 echo "done"
 
-#install subfinder (ferramenta de descoberta de subdomínio que descobre subdomínios válidos)
 echo "Installing Subfinder"
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 echo "done"
 
-#install httpx (httpx é um rápido e multi-purpose HTTP kit de ferramentas permite executar vários probers)
 echo "Installing Httpx"
 go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 echo "done"
 
-#install gobuster (ferramenta usada para força bruta)
 echo "Installing Gobuster"
 go install github.com/OJ/gobuster/v3@latest
 echo "done"
 
-#install assetfinder (Encontre domínios e subdomínios potencialmente relacionados a um determinado domínio.)
 echo "Installing Assetfinder"
 go get -u github.com/tomnomnom/assetfinder
 echo "done"
 
-#install httprobe (Faça uma lista de domínios e verifique se há servidores http e https em funcionamento.)
 echo "installing httprobe"
 go get -u github.com/tomnomnom/httprobe 
 echo "done"
 
-#install unfurl (Retire pedaços de URLs fornecidos em stdin)
 echo "installing unfurl"
 go get -u github.com/tomnomnom/unfurl 
 echo "done"
 
-#install waybackurls (Aceite domínios delimitados por linha em stdin, busque URLs conhecidos da Wayback Machine)
 echo "installing waybackurls"
 go get github.com/tomnomnom/waybackurls
 echo "done"
 
-#analisar URLs relativos de arquivos JavaScript. descobrir facilmente solicitações AJAX
 echo "installing JSParser"
 git clone https://github.com/nahamsec/JSParser.git
 cd JSParser*
@@ -181,17 +171,10 @@ sudo python setup.py install
 cd ~/feijoada/
 echo "done"
 
-#Ferramenta para enumerar subdomínios de sites usando OSINT.
 echo "installing Sublist3r"
 git clone https://github.com/aboul3la/Sublist3r.git
 cd Sublist3r*
 pip install -r requirements.txt
-cd ~/feijoada/
-echo "done"
-
-#Veil-Evasion é uma ferramenta projetada para gerar cargas úteis metasploit que contornam as soluções antivírus comuns
-echo "installing Veil-Evasion"
-git clone https://github.com/Veil-Framework/Veil-Evasion.git
 cd ~/feijoada/
 echo "done"
 
@@ -200,13 +183,11 @@ git clone https://github.com/tomdev/teh_s3_bucketeers.git
 cd ~/feijoada/
 echo "done"
 
-#configure uma página no serviço que está sendo usado e aponte sua página para esse subdomínio
 echo "installing takeover"
 git clone https://github.com/m4ll0k/takeover.git
 cd ~/feijoada/
 echo "done"
 
-#WordPress Security Scanner
 echo "installing wpscan"
 git clone https://github.com/wpscanteam/wpscan.git
 cd wpscan*
@@ -215,38 +196,32 @@ cd ~/feijoada/wpscan/bin && sudo cp wpscan /usr/local/bin
 cd ~/feijoada/
 echo "done"
 
-#Scanner de caminho da web
 echo "installing dirsearch"
 git clone https://github.com/maurosoria/dirsearch.git
 pip3 install -r requirements.txt
 cd ~/feijoada/
 echo "done"
 
-#Um script Ruby para força bruta para baldes AWS s3 usando diferentes permutações.
 echo "installing lazys3"
 git clone https://github.com/nahamsec/lazys3.git
 cd ~/feijoada/
 echo "done"
 
-#Scanner HTTP básico que enumera hosts virtuais em um determinado endereço IP
 echo "installing virtual host discovery"
 git clone https://github.com/jobertabma/virtual-host-discovery.git
 cd ~/feijoada/
 echo "done"
 
-#Detecção e exploração de falhas de injeção SQL e controle de servidores de banco de dados
 echo "installing sqlmap"
 git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap-dev
 cd ~/feijoada/
 echo "done"
 
-#Ferramenta python3 projetada para enumerar rapidamente subdomínos
 echo "installing knock.py"
 git clone https://github.com/guelfoweb/knock.git
 cd ~/feijoada/
 echo "done"
 
-#Ferramenta python3 projetada para enumerar rapidamente subdomínos
 echo "installing Infoga"
 git clone https://github.com/m4ll0k/Infoga.git
 cd Infoga
@@ -257,19 +232,16 @@ python setup.py install
 cd ~/feijoada/
 echo "done"
 
-#Script em Bash que automatiza algumas tarefas de reconhecimento e coleta de informações
 echo "installing lazyrecon"
 git clone https://github.com/nahamsec/lazyrecon.git
 cd ~/feijoada/
 echo "done"
 
-#Repositório contém três pequenos scripts python / bash usados para a pesquisa Git.
 echo "installing GitTools"
 git clone https://github.com/internetwache/GitTools.git
 cd ~/feijoada/
 echo "done"
 
-#Resolvedor de stub de DNS simples de alto desempenho
 echo "installing massdns"
 git clone https://github.com/blechschmidt/massdns.git
 cd ~/feijoada/massdns
@@ -292,7 +264,6 @@ pip install -r requirements.txt
 cd ~/feijoada/
 echo "done"
 
-#Encontra parâmetros de arquivos da web do domínio inserido
 echo "installing ParamSpider"
 git clone https://github.com/devanshbatham/ParamSpider
 cd ~/feijoada/ParamSpider
@@ -300,7 +271,6 @@ pip3 install -r requirements.txt
 cd ~/feijoada/
 echo "done"
 
-#ferramenta reúne e-mails, nomes, subdomínios, IPs e URLs usando varias fontes de dados públicas
 echo "installing theHarvester"
 git clone https://github.com/laramies/theHarvester
 cd ~/feijoada/theHarvester/bin && sudo cp theHarvester /usr/local/bin
@@ -308,19 +278,11 @@ docker build -t theharvester .
 cd ~/feijoada/
 echo "done"
 
-#Ripar sistemas de controle de versão acessíveis pela web (Ele pode extrair repositórios mesmo quando a navegação no diretório está desligada.)
 echo "installing dvcs-ripper"
 git clone https://github.com/kost/dvcs-ripper.git
 cd ~/feijoada/
 echo "done"
 
-#inserir usuario e senha do git
-echo "installing shellphish"
-git clone https://github.com/thelinuxchoice/shellphish
-cd ~/feijoada/
-echo "done"
-
-#falta
 echo "installing SocialFish"
 git clone https://github.com/UndeadSec/SocialFish.git
 sudo apt-get install python3 python3-pip python3-dev -y
@@ -328,26 +290,11 @@ python3 -m pip install -r requirements.txt
 cd ~/feijoada/
 echo "done"
 
-#crtndtry usa várias fontes diferentes para criar uma lista de subdomínios raiz
 echo "installing crtndstry"
 git clone https://github.com/nahamsec/crtndstry.git
 cd ~/feijoada/
 echo "done"
 
-#
-echo "installing maskphish"
-git clone https://github.com/jaykali/maskphish
-cd ~/feijoada/
-echo "done"
-
-#crtndtry usa várias fontes diferentes para criar uma lista de subdomínios raiz
-echo "installing phoneinfoga"
-curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install | bash
-sudo mv ./phoneinfoga /usr/bin/phoneinfoga
-cd ~/feijoada/
-echo "done"
-
-#coleção de vários tipos de listas
 echo "downloading Seclists"
 cd ~/feijoada/
 git clone https://github.com/danielmiessler/SecLists.git
@@ -357,12 +304,136 @@ cat dns-Jhaddix.txt | head -n -14 > clean-jhaddix-dns.txt
 cd ~/feijoada/
 echo "done"
 
-
 cd ~/go/bin && sudo cp * /usr/local/bin/
 
 echo -e "\n\n\n\n\n\n\n\n\nDone! Todas as ferramentas estão configuradas em ~/feijoada"
 ls -Slha
 echo "\n\n\n\n\n\n\n\n\nUma última vez: não se esqueça de configurar as credenciais da AWS em ~/.aws/!"
+
+packages_list=(aircrack-ng aireplay-ng airmon-ng airodump-ng awk curl hostapd iwconfig lighttpd
+macchanger mdk3 unzip xterm openssl rfkill strings fuser)
+function pkgscheck_flux() {
+	for pkg in "${packages_list[@]}"
+	do
+		echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for $pkg\033[0m"
+		sleep 1
+		if ! hash $pkg 2>/dev/null; then
+			echo -e "\033[1m\033[31mNot Found\033[0m"
+			apt-get install $pkg -y
+		else
+			echo -e "\033[1m\033[32mFound\033[0m"
+		fi
+	done
+	echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for dhcpd\033[0m"
+	if ! hash dhcpd 2>/dev/null;then
+		echo -e "\033[1m\033[31mNot Found\033[0m"
+		echo -e "\033[1mInstalling \033[31mdhcpd\033[0m"
+		apt-get install isc-dhcp-server -y
+	else
+		echo -e "\033[1m\033[32mFound\033[0m"
+	fi
+}
+# Check for source in sources.list if not adds it to the sources.list
+username=$(whoami)
+if [ $username != "root" ];then
+	echo -e "\033[1m\033[31mPlease run this script as the user root try doing sudo bash install.sh"
+	exit
+fi
+echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for source in sources.list"
+source="deb http://ftp.debian.org/debian/ stretch main contrib non-free"
+path="/etc/apt/sources.list"
+found=0
+while read line; do
+	if [ "$line" == "$source" ];then
+		found=1;
+		echo -e "\033[1m\033[32mFound\033[0m"
+		break
+	fi
+done < $path
+
+if [ $found != 1 ];then
+	echo -e "\033[1m\033[31mNot Found \033[0m";echo "Adding $source to $path";echo $source >> $path;
+fi
+
+git="/usr/bin/git"
+python="/usr/bin/python"
+piperror="/usr/bin/python2: No module named pip"
+pip=$(python2 -m pip 2>&1)
+nmap="/usr/bin/nmap"
+phpcgi="/usr/bin/php-cgi"
+echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for git"
+sleep 5
+if [ -x $git ];then
+	echo -e "\033[1m\033[32mFound\033[0m"
+else
+	echo -e "\033[1m\033[31mNot Found\033[0m"
+	echo -e "\033[1mInstalling \033[31mgit\033[0m"
+	apt-get install git -y
+fi
+echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for python2"
+sleep 5
+if [ -f $python ];then
+	echo -e "\033[1m\033[32mFound\033[0m"
+else
+	echo -e "\033[1m\033[31mNot Found\033[0m"
+	echo -e "\033[1mInstalling \033[31mpython2\033[0m"
+	apt-get install python2 -y
+fi
+echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for python2-pip"
+sleep 5
+if [ "$pip" != "$piperror" ];then
+	echo -e "\033[1m\033[32mFound\033[0m"
+else
+	echo -e "\033[1m\033[31mNot Found\033[0m"
+	echo -e "\033[1mInstalling \033[31mpython2-pip\033[0m"
+	#curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
+	python2 incase/get-pip.py
+fi
+echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for nmap"
+sleep 5
+if [ -f $nmap ];then
+	echo -e "\033[1m\033[32mFound\033[0m"
+else
+	echo -e "\033[1m\033[31mNot Found\033[0m"
+	echo -e "\033[1mInstalling \033[31mnmap\033[0m"
+	apt-get install nmap -y
+fi
+echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for php-cgi"
+sleep 5
+if [ -f $phpcgi ];then
+	echo -e "\033[1m\033[32mFound\033[0m"
+else
+	echo -e "\033[1m\033[31mNot Found\033[0m"
+	echo -e "\033[1mInstalling \033[31mphp-cgi\033[0m"
+	apt-get install php-cgi -y
+fi
+# Install Fluxion Dependencies
+pkgscheck_flux
+echo -e "\033[1m\033[34mUpdating \033[33mand \033[34mUpgrading\033[0m"
+# apt-get update -y && apt-get upgrade -y
+apt-get purge libpython2* -y && apt-get install python -y
+echo -e "\033[1mReinstalling \033[31mpython2\033[0m"
+apt-get install python2 -y
+echo -e "\033[1mInstalling \033[31mpython2.7-dev, \033[31mlibssl-dev\033[0m, \033[31mzlib1g-dev\033[0m, and \033[31mlibpcap-dev\033[0m"
+apt-get install python2.7-dev libssl-dev zlib1g-dev libpcap-dev -y
+echo -e "\033[1mRemoving \033[31mpyrit\033[0m"
+apt-get remove --purge pyrit && rm -r /usr/local/lib/python2.7/dist-packages/cpyrit/
+echo -e "\033[1mInstalling \033[31mlibpq-dev\033[0m"
+apt-get install libpq-dev -y
+echo -e "\033[1mInstalling \033[31msetuptools, \033[31mpsycopg2 \033[0mand \033[31mscapy\033[0m"
+pip install setuptools psycopg2 scapy && apt-get install python-scapy -y
+echo -e "\033[1m\033[32mDownloading \033[31mPyrit\033[0m"
+printf '\033]2;Downloading Pyrit\a'
+
+# Install Pyrit
+if [ ! -d Pyrit ];then
+	git clone https://github.com/JPaulMora/Pyrit
+fi
+sed -i "s/COMPILE_AESNI/COMPILE_AESNIX/" Pyrit/cpyrit/_cpyrit_cpu.c
+cd Pyrit && python2 setup.py clean && python2 setup.py build && python2 setup.py install
+
+echo -e "\033[1m\033[31mInstallation finished\033[0m"
+printf '\033]2; Installation finished\a'
 
 sudo apt-get -y update
 sudo apt-get -y autoremove
