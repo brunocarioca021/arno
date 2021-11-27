@@ -126,8 +126,8 @@ echo "Não se esqueça de configurar as credenciais da AWS!"
 
 
 #criando uma pasta de ferramentas em ~/
-mkdir ~/feijoada
-cd ~/feijoada/
+mkdir ~/arno
+cd ~/arno/
 
 echo "Installing Aquatone"
 go get github.com/michenriksen/aquatone
@@ -169,58 +169,58 @@ echo "installing JSParser"
 git clone https://github.com/nahamsec/JSParser.git
 cd JSParser*
 sudo python setup.py install
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing Sublist3r"
 git clone https://github.com/aboul3la/Sublist3r.git
 cd Sublist3r*
 pip install -r requirements.txt
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing teh_s3_bucketeers"
 git clone https://github.com/tomdev/teh_s3_bucketeers.git
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing takeover"
 git clone https://github.com/m4ll0k/takeover.git
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing wpscan"
 git clone https://github.com/wpscanteam/wpscan.git
 cd wpscan*
 sudo gem install bundler && bundle install --without test
-cd ~/feijoada/wpscan/bin && sudo cp wpscan /usr/local/bin
-cd ~/feijoada/
+cd ~/arno/wpscan/bin && sudo cp wpscan /usr/local/bin
+cd ~/arno/
 echo "done"
 
 echo "installing dirsearch"
 git clone https://github.com/maurosoria/dirsearch.git
 pip3 install -r requirements.txt
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing lazys3"
 git clone https://github.com/nahamsec/lazys3.git
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing virtual host discovery"
 git clone https://github.com/jobertabma/virtual-host-discovery.git
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing sqlmap"
 git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap-dev
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing knock.py"
 git clone https://github.com/guelfoweb/knock.git
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing Infoga"
@@ -230,84 +230,84 @@ wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
 python get-pip.py
 pip2 install -r requirements.txt
 python setup.py install
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing lazyrecon"
 git clone https://github.com/nahamsec/lazyrecon.git
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing GitTools"
 git clone https://github.com/internetwache/GitTools.git
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing massdns"
 git clone https://github.com/blechschmidt/massdns.git
-cd ~/feijoada/massdns
+cd ~/arno/massdns
 make
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing anonsurf"
 git clone https://github.com/Und3rf10w/kali-anonsurf.git
-cd ~/feijoada/kali-anonsurf
+cd ~/arno/kali-anonsurf
 sudo chmod +x installer.sh
 sudo ./installer.sh
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing asnlookup"
 git clone https://github.com/yassineaboukir/asnlookup.git
-cd ~/feijoada/asnlookup
+cd ~/arno/asnlookup
 pip install -r requirements.txt
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing ParamSpider"
 git clone https://github.com/devanshbatham/ParamSpider
-cd ~/feijoada/ParamSpider
+cd ~/arno/ParamSpider
 pip3 install -r requirements.txt
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing theHarvester"
 git clone https://github.com/laramies/theHarvester
-cd ~/feijoada/theHarvester/bin && sudo cp theHarvester /usr/local/bin
+cd ~/arno/theHarvester/bin && sudo cp theHarvester /usr/local/bin
 docker build -t theharvester .
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing dvcs-ripper"
 git clone https://github.com/kost/dvcs-ripper.git
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing SocialFish"
 git clone https://github.com/UndeadSec/SocialFish.git
 sudo apt-get install python3 python3-pip python3-dev -y
 python3 -m pip install -r requirements.txt
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "installing crtndstry"
 git clone https://github.com/nahamsec/crtndstry.git
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 echo "downloading Seclists"
-cd ~/feijoada/
+cd ~/arno/
 git clone https://github.com/danielmiessler/SecLists.git
-cd ~/feijoada/SecLists/Discovery/DNS/
+cd ~/arno/SecLists/Discovery/DNS/
 ##ESTE ARQUIVO QUEBRA MASSAS E PRECISA SER LIMPO
 cat dns-Jhaddix.txt | head -n -14 > clean-jhaddix-dns.txt
-cd ~/feijoada/
+cd ~/arno/
 echo "done"
 
 cd ~/go/bin && sudo cp * /usr/local/bin/
 
-echo -e "\n\n\n\n\n\n\n\n\nDone! Todas as ferramentas estão configuradas em ~/feijoada"
+echo -e "\n\n\n\n\n\n\n\n\nDone! Todas as ferramentas estão configuradas em ~/arno"
 ls -Slha
 echo "\n\n\n\n\n\n\n\n\nUma última vez: não se esqueça de configurar as credenciais da AWS em ~/.aws/!"
 
