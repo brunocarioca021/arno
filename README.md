@@ -1,4 +1,4 @@
-## **Feijoada**
+## **Arno**
 Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar 90% do seu Tempo na hora de configurar sua máquina para trabalhar.
 
 
@@ -51,7 +51,7 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 
 
 ## **Instalar**
-- git clone https://github.com/pantherwhite/feijoada.git
-- cd /feijoada
+- git clone https://github.com/pantherwhite/arno.git
+- cd /ardno
 - chmod +x install.sh
 - ./install.sh
