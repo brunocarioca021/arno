@@ -24,9 +24,6 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 - Parsero
 - lazyrecon
 - SocialFish
-- shellphish
-- maskphish
-- phoneinfoga
 - Massdns
 - Asnlookup
 - Unfurl
@@ -39,7 +36,6 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 - Httpx
 - Gobuster
 - assetfinder
-- Veil-Evasion
 - takeover
 - infoga
 - Gittools
