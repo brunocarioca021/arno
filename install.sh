@@ -10,7 +10,7 @@ ${reset}"
 
 echo -e "\n\n\n\n"
 
-echo -e "\n\n\nDeseja Atualizar seu Linux ?"
+echo -e "\n\n\nDeseja Atualizar seu Linux ? o tempo pode variar de acordo com sua máquina."
 PS3="Por favor selecione uma opção : "
 choices=("yes" "no")
 select choice in "${choices[@]}";do break;done
@@ -18,6 +18,7 @@ case $choice in
 yes) 		echo "atualizando.."
 		sudo apt-get -y install kali-linux-default
 		sudo apt-get -y update
+		sudo apt-get -f install
 		sudo apt -y full-upgrade
 		sudo apt -y dist-upgrade
 		;;
@@ -310,6 +311,8 @@ echo -e "\n\n\n\n\n\n\n\n\nDone! Todas as ferramentas estão configuradas em ~/f
 ls -Slha
 echo "\n\n\n\n\n\n\n\n\nUma última vez: não se esqueça de configurar as credenciais da AWS em ~/.aws/!"
 
+echo "done"
+
 packages_list=(aircrack-ng aireplay-ng airmon-ng airodump-ng awk curl hostapd iwconfig lighttpd
 macchanger mdk3 unzip xterm openssl rfkill strings fuser)
 function pkgscheck_flux() {
@@ -333,7 +336,7 @@ function pkgscheck_flux() {
 		echo -e "\033[1m\033[32mFound\033[0m"
 	fi
 }
-# Check for source in sources.list if not adds it to the sources.list
+# Verifique a fonte em sources.list se não a adiciona a sources.list
 username=$(whoami)
 if [ $username != "root" ];then
 	echo -e "\033[1m\033[31mPlease run this script as the user root try doing sudo bash install.sh"
@@ -407,7 +410,7 @@ else
 	echo -e "\033[1mInstalling \033[31mphp-cgi\033[0m"
 	apt-get install php-cgi -y
 fi
-# Install Fluxion Dependencies
+# Instale as dependências do Fluxion
 pkgscheck_flux
 echo -e "\033[1m\033[34mUpdating \033[33mand \033[34mUpgrading\033[0m"
 # apt-get update -y && apt-get upgrade -y
