@@ -130,7 +130,7 @@ mkdir ~/arno
 cd ~/arno/
 
 echo "Installing Aquatone"
-go get github.com/michenriksen/aquatone
+sudo go get github.com/michenriksen/aquatone
 echo "done"
 
 echo "Installing Gau"
