@@ -133,7 +133,7 @@ echo "Installing Aquatone"
 go get github.com/michenriksen/aquatone
 wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_amd64_1.7.0.zip
 unzip aquatone_linux_amd64_1.7.0.zip
-sudo cp aquatone ~/go/bin/ | rm -rf aquatone_linux_amd64_1.7.0.zip
+sudo cp aquatone /usr/local/bin | rm -rf aquatone_linux_amd64_1.7.0.zip
 echo "done"
 
 echo "Installing Gau"
