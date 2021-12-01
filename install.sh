@@ -79,6 +79,12 @@ sudo apt update
 sudo apt install brave-browser
 echo "done"
 
+echo "Installing Pyrit"
+git clone https://github.com/hacker3983/pyrit-installer
+cd pyrit-installer
+sudo bash install.sh
+echo "done"
+
 echo "installing bash_profile aliases from recon_profile"
 git clone https://github.com/nahamsec/recon_profile.git
 cd recon_profile
