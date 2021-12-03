@@ -184,7 +184,9 @@ echo "done"
 echo "installing Sublist3r"
 git clone https://github.com/aboul3la/Sublist3r.git
 cd Sublist3r*
+sudo python3 setup.py isntall
 pip install -r requirements.txt
+ln -sf sublist3r.py /usr/bin/sublist3r
 cd ~/arno/
 echo "done"
 
@@ -208,7 +210,9 @@ echo "done"
 
 echo "installing dirsearch"
 git clone https://github.com/maurosoria/dirsearch.git
+sudo python3 setup.py isntall
 pip3 install -r requirements.txt
+ln -sf dirsearch.py /usr/bin/dirsearch
 cd ~/arno/
 echo "done"
 
@@ -229,6 +233,9 @@ echo "done"
 
 echo "installing knock.py"
 git clone https://github.com/guelfoweb/knock.git
+sudo python3 setup.py isntall
+pip3 install -r requirements.txt
+ln -sf knockpy.py /usr/bin/knockpy
 cd ~/arno/
 echo "done"
 
