@@ -172,13 +172,6 @@ echo "installing unfurl"
 go get -u github.com/tomnomnom/unfurl 
 echo "done"
 
-echo "installing JSParser"
-git clone https://github.com/nahamsec/JSParser.git
-cd JSParser*
-sudo python setup.py install
-cd ~/arno/
-echo "done"
-
 echo "installing Sublist3r"
 git clone https://github.com/aboul3la/Sublist3r.git
 cd ~/arno/Sublist3r
@@ -273,11 +266,6 @@ echo "installing SocialFish"
 git clone https://github.com/UndeadSec/SocialFish.git
 sudo apt-get install python3 python3-pip python3-dev -y
 python3 -m pip install -r requirements.txt
-cd ~/arno/
-echo "done"
-
-echo "installing crtndstry"
-git clone https://github.com/nahamsec/crtndstry.git
 cd ~/arno/
 echo "done"
 
