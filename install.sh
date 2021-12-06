@@ -10,12 +10,12 @@ ${reset}"
 
 echo -e "\n\n\n\n"
 
-echo -e "\n\n\nDeseja Atualizar seu Linux ? o tempo pode variar de acordo com sua máquina."
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Deseja Atualizar seu Linux ? o tempo pode variar de acordo com sua máquina."
 PS3="Por favor selecione uma opção : "
 choices=("yes" "no")
 select choice in "${choices[@]}";do break;done
 case $choice in
-yes) 		echo "atualizando.."
+yes) 		echo -e "\033[1m\033[34m[\033[35m+\033[34m] atualizando.."
 		sudo apt-get -y install kali-linux-default
 		sudo apt-get -y update
 		sudo apt-get -f install
@@ -23,7 +23,7 @@ yes) 		echo "atualizando.."
 		sudo apt -y dist-upgrade
 		;;
 
-no) echo -e "\n\ncontinuando com a instalação..."
+no) echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] continuando com a instalação..."
 ;;
 	esac
 
@@ -73,7 +73,7 @@ sudo pip3 install wfuzz
 sudo gem install typhoeus
 sudo gem install opt_parse_validator
 
-echo "installing Brave"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing Brave"
 sudo apt install apt-transport-https curl
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
@@ -81,13 +81,13 @@ sudo apt update
 sudo apt install brave-browser
 echo "done"
 
-echo "Installing Pyrit"
+echo -e "Installing Pyrit"
 git clone https://github.com/hacker3983/pyrit-installer
 cd pyrit-installer
 sudo bash install.sh
 echo "done"
 
-echo "installing bash_profile aliases from recon_profile"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing bash_profile aliases from recon_profile"
 git clone https://github.com/nahamsec/recon_profile.git
 cd recon_profile
 cat bash_profile >> ~/.bash_profile
@@ -96,7 +96,7 @@ echo "done"
 
 #install go
 if [[ -z "$GOPATH" ]];then
-echo "Parece que go não está instalado, gostaria de instalá-lo agora ?"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Parece que go não está instalado, gostaria de instalá-lo agora ?"
 PS3="Por favor selecione uma opção : "
 choices=("yes" "no")
 select choice in "${choices[@]}"; do
@@ -128,163 +128,163 @@ fi
 
 
 #Não se esqueça de configurar as credenciais da AWS!
-echo "Não se esqueça de configurar as credenciais da AWS!"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Não se esqueça de configurar as credenciais da AWS!"
 sudo apt-get install -y awscli
-echo "Não se esqueça de configurar as credenciais da AWS!"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Não se esqueça de configurar as credenciais da AWS!"
 
 
 #criando uma pasta de ferramentas em ~/
-mkdir ~/arno
-cd ~/arno/
+mkdir ~/tools
+cd ~/tools/
 
-echo "Installing Aquatone"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Installing Aquatone"
 go get github.com/michenriksen/aquatone
 wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_amd64_1.7.0.zip
 unzip aquatone_linux_amd64_1.7.0.zip
 sudo cp aquatone /usr/local/bin | rm -rf aquatone_linux_amd64_1.7.0.zip
 echo "done"
 
-echo "Installing Gau"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Installing Gau"
 GO111MODULE=on go get -u -v github.com/lc/gau
 echo "done"
 
-echo "Installing Subfinder"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Installing Subfinder"
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 echo "done"
 
-echo "Installing Httpx"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Installing Httpx"
 go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 echo "done"
 
-echo "Installing Gobuster"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Installing Gobuster"
 go install github.com/OJ/gobuster/v3@latest
 echo "done"
 
-echo "Installing Assetfinder"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Installing Assetfinder"
 go get -u github.com/tomnomnom/assetfinder
 echo "done"
 
-echo "installing httprobe"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing httprobe"
 go get -u github.com/tomnomnom/httprobe 
 echo "done"
 
-echo "installing unfurl"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing unfurl"
 go get -u github.com/tomnomnom/unfurl 
 echo "done"
 
-echo "installing Sublist3r"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing Sublist3r"
 git clone https://github.com/aboul3la/Sublist3r.git
-cd ~/arno/Sublist3r
+cd ~/tools/Sublist3r
 sudo chmod +x * && sudo python3 setup.py install
 pip install -r requirements.txt
 ln -sf sublist3r.py /usr/bin/sublist3r
-cd ~/arno/
+cd ~/tools/
 echo "done"
 
-echo "installing takeover"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing takeover"
 git clone https://github.com/m4ll0k/takeover.git
-cd ~/arno/
+cd ~/tools/
 echo "done"
 
-echo "installing wpscan"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing wpscan"
 git clone https://github.com/wpscanteam/wpscan.git
-cd ~/arno/wpscan
+cd ~/tools/wpscan
 sudo chmod +x *
 sudo gem install bundler && bundle install --without test
-cd ~/arno/wpscan/bin && sudo cp wpscan /usr/local/bin
-cd ~/arno/
+cd ~/tools/wpscan/bin && sudo cp wpscan /usr/local/bin
+cd ~/tools/
 echo "done"
 
-echo "installing dirsearch"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing dirsearch"
 git clone https://github.com/maurosoria/dirsearch.git
-cd ~/arno/dirsearch
+cd ~/tools/dirsearch
 sudo chmod +x * && sudo python3 setup.py install
 pip3 install -r requirements.txt
 ln -sf dirsearch.py /usr/bin/dirsearch
-cd ~/arno/
+cd ~/tools/
 echo "done"
 
-echo "installing sqlmap"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing sqlmap"
 git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap-dev
-cd ~/arno/
+cd ~/tools/
 echo "done"
 
-echo "installing knock.py"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing knock.py"
 git clone https://github.com/guelfoweb/knock.git
-cd ~/arno/knock
+cd ~/tools/knock
 sudo python3 setup.py install
 pip3 install -r requirements.txt
 ln -sf knockpy.py /usr/bin/knockpy
-cd ~/arno/
+cd ~/tools/
 echo "done"
 
-echo "installing Infoga"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing Infoga"
 git clone https://github.com/m4ll0k/Infoga.git
-cd ~/arno/Infoga
+cd ~/tools/Infoga
 wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
 python get-pip.py
 pip2 install -r requirements.txt
 python setup.py install
-cd ~/arno/
+cd ~/tools/
 echo "done"
 
-echo "installing GitTools"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing GitTools"
 git clone https://github.com/internetwache/GitTools.git
-cd ~/arno/
+cd ~/tools/
 echo "done"
 
-echo "installing massdns"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing massdns"
 git clone https://github.com/blechschmidt/massdns.git
-cd ~/arno/massdns
+cd ~/tools/massdns
 make
-cd ~/arno/
+cd ~/tools/
 echo "done"
 
-echo "installing anonsurf"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing anonsurf"
 git clone https://github.com/Und3rf10w/kali-anonsurf.git
-cd ~/arno/kali-anonsurf
+cd ~/tools/kali-anonsurf
 sudo chmod +x installer.sh
 sudo ./installer.sh
-cd ~/arno/
+cd ~/tools/
 echo "done"
 
-echo "installing ParamSpider"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing ParamSpider"
 git clone https://github.com/devanshbatham/ParamSpider
-cd ~/arno/ParamSpider
+cd ~/tools/ParamSpider
 pip3 install -r requirements.txt
-cd ~/arno/
+cd ~/tools/
 echo "done"
 
-echo "installing theHarvester"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing theHarvester"
 git clone https://github.com/laramies/theHarvester
-cd ~/arno/theHarvester/bin && sudo cp theHarvester /usr/local/bin
+cd ~/tools/theHarvester/bin && sudo cp theHarvester /usr/local/bin
 docker build -t theharvester .
-cd ~/arno/
+cd ~/tools/
 echo "done"
 
-echo "installing SocialFish"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing SocialFish"
 git clone https://github.com/UndeadSec/SocialFish.git
 sudo apt-get install python3 python3-pip python3-dev -y
 python3 -m pip install -r requirements.txt
-cd ~/arno/
+cd ~/tools/
 echo "done"
 
-echo "downloading Seclists"
-cd ~/arno/
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] downloading Seclists"
+cd ~/tools/
 git clone https://github.com/danielmiessler/SecLists.git
-cd ~/arno/SecLists/Discovery/DNS/
+cd ~/tools/SecLists/Discovery/DNS/
 ##ESTE ARQUIVO QUEBRA MASSAS E PRECISA SER LIMPO
 cat dns-Jhaddix.txt | head -n -14 > clean-jhaddix-dns.txt
-cd ~/arno/
+cd ~/tools/
 echo "done"
 
 cd ~/go/bin && sudo cp * /usr/local/bin/
 
-echo -e "\n\n\n\n\n\n\n\n\nDone! Todas as ferramentas estão configuradas em ~/arno"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Done! Todas as ferramentas estão configuradas em ~/tools"
 ls -Slha
 echo "\n\n\n\n\n\n\n\n\nUma última vez: não se esqueça de configurar as credenciais da AWS em ~/.aws/!"
 
-echo "done"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] done"
 
 packages_list=(aircrack-ng aireplay-ng airmon-ng airodump-ng awk curl hostapd iwconfig lighttpd
 macchanger mdk3 unzip xterm openssl rfkill strings fuser)
@@ -416,7 +416,7 @@ sudo apt-get -y autoremove
 sudo apt-get -y autoclean
 
 #limpar tela
-echo -e "\n\n\nDeseja limpar a sua tela?"
+echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Deseja limpar a sua tela?"
 PS3="Por favor selecione uma opção : "
 choices=("yes" "no")
 select choice in "${choices[@]}";do break;done
@@ -424,5 +424,5 @@ case $choice in
 yes) echo "limpando tela";printf
  clear;;
  
-no) echo -e "\n\nOtimo Trabalho\nSaindo da instalação...";;
+no) echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Otimo Trabalho\nSaindo da instalação...";;
 esac
