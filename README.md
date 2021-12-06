@@ -1,5 +1,5 @@
 ## **Arno**
-Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar 90% do seu Tempo na hora de configurar sua máquina para trabalhar.
+Ferramenta em script shell Completa para Bug bounty ou Pentest ! Vai poupar 90% do seu Tempo na hora de configurar sua máquina para trabalhar.
 
 
 ## Ferramenta atualiza todo diretório kali-linux e todas dependências necessárias para trabalhar
