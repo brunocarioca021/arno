@@ -280,8 +280,6 @@ echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Done! Todas as ferramentas estão 
 ls -Slha
 echo -e "\n\033[1m\033[31m[\033[35m+\033[31m] Uma última vez: não se esqueça de configurar as credenciais da AWS em ~/.aws/!"
 
-echo "\n\033[1m\033[33m[\033[35m+\033[33m] done"
-
 packages_list=(aircrack-ng aireplay-ng airmon-ng airodump-ng awk curl hostapd iwconfig lighttpd
 macchanger mdk3 unzip xterm openssl rfkill strings fuser)
 function pkgscheck_flux() {
