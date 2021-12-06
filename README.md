@@ -12,14 +12,10 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 
 
 - dirsearch
-- JSParser
 - knockpy
-- lazys3
 - recon_profile
 - sqlmap-dev
 - Sublist3r
-- teh_s3_bucketeers
-- virtual-host-discovery
 - wpscan
 - Parsero
 - lazyrecon
@@ -27,7 +23,6 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 - Massdns
 - Asnlookup
 - Unfurl
-- Waybackurls
 - Httprobe
 - wfuzz
 - Aquatone
@@ -42,7 +37,6 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 - anonsurf
 - ParamSpider
 - theHarvester
-- dvcs-ripper
 - crtndstry
 
 
