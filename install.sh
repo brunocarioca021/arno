@@ -1,21 +1,16 @@
 #!/bin/bash
 
-echo -e "${red}
-	________              ___________                  ___       _______ __________      
-	___  __ \_____ _________  /___  /______________    __ |     / /__  /____(_)_  /_____ 
-	__  /_/ /  __  /_  __ \  __/_  __ \  _ \_  ___/    __ | /| / /__  __ \_  /_  __/  _ \
-	_  ____// /_/ /_  / / / /_ _  / / /  __/  /        __ |/ |/ / _  / / /  / / /_ /  __/
-	/_/     \__,_/ /_/ /_/\__/ /_/ /_/\___//_/         ____/|__/  /_/ /_//_/  \__/ \___/
-${reset}"
+echo -e "\n\033[1m\033[37m[\033[31m+\033[37m] Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar 90% do seu Tempo na hora de configurar sua máquina para trabalhar. "
+echo -e "\n\033[1m\033[37m=================================> "
 
-echo -e "\n\n\n\n"
+echo -e "\n\n"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Deseja Atualizar seu Linux ? o tempo pode variar de acordo com sua máquina."
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Deseja Atualizar seu Linux ? o tempo pode variar de acordo com sua máquina."
 PS3="Por favor selecione uma opção : "
 choices=("yes" "no")
 select choice in "${choices[@]}";do break;done
 case $choice in
-yes) 		echo -e "\033[1m\033[34m[\033[35m+\033[34m] atualizando.."
+yes) 		echo "atualizando.."
 		sudo apt-get -y install kali-linux-default
 		sudo apt-get -y update
 		sudo apt-get -f install
@@ -23,7 +18,7 @@ yes) 		echo -e "\033[1m\033[34m[\033[35m+\033[34m] atualizando.."
 		sudo apt -y dist-upgrade
 		;;
 
-no) echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] continuando com a instalação..."
+no) echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] continuando com a instalação..."
 ;;
 	esac
 
@@ -73,7 +68,7 @@ sudo pip3 install wfuzz
 sudo gem install typhoeus
 sudo gem install opt_parse_validator
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing Brave"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing Brave"
 sudo apt install apt-transport-https curl
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
@@ -87,7 +82,7 @@ cd pyrit-installer
 sudo bash install.sh
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing bash_profile aliases from recon_profile"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing bash_profile aliases from recon_profile"
 git clone https://github.com/nahamsec/recon_profile.git
 cd recon_profile
 cat bash_profile >> ~/.bash_profile
@@ -96,7 +91,7 @@ echo "done"
 
 #install go
 if [[ -z "$GOPATH" ]];then
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Parece que go não está instalado, gostaria de instalá-lo agora ?"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Parece que go não está instalado, gostaria de instalá-lo agora ?"
 PS3="Por favor selecione uma opção : "
 choices=("yes" "no")
 select choice in "${choices[@]}"; do
@@ -128,51 +123,51 @@ fi
 
 
 #Não se esqueça de configurar as credenciais da AWS!
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Não se esqueça de configurar as credenciais da AWS!"
+echo -e "\n\033[1m\033[31m[\033[35m+\033[31m] Não se esqueça de configurar as credenciais da AWS!"
 sudo apt-get install -y awscli
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Não se esqueça de configurar as credenciais da AWS!"
+echo -e "\n\033[1m\033[31m[\033[35m+\033[31m] Não se esqueça de configurar as credenciais da AWS!"
 
 
 #criando uma pasta de ferramentas em ~/
 mkdir ~/tools
 cd ~/tools/
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Installing Aquatone"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Installing Aquatone"
 go get github.com/michenriksen/aquatone
 wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_amd64_1.7.0.zip
 unzip aquatone_linux_amd64_1.7.0.zip
 sudo cp aquatone /usr/local/bin | rm -rf aquatone_linux_amd64_1.7.0.zip
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Installing Gau"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Installing Gau"
 GO111MODULE=on go get -u -v github.com/lc/gau
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Installing Subfinder"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Installing Subfinder"
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Installing Httpx"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Installing Httpx"
 go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Installing Gobuster"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Installing Gobuster"
 go install github.com/OJ/gobuster/v3@latest
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Installing Assetfinder"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Installing Assetfinder"
 go get -u github.com/tomnomnom/assetfinder
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing httprobe"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing httprobe"
 go get -u github.com/tomnomnom/httprobe 
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing unfurl"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing unfurl"
 go get -u github.com/tomnomnom/unfurl 
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing Sublist3r"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing Sublist3r"
 git clone https://github.com/aboul3la/Sublist3r.git
 cd ~/tools/Sublist3r
 sudo chmod +x * && sudo python3 setup.py install
@@ -181,12 +176,12 @@ ln -sf sublist3r.py /usr/bin/sublist3r
 cd ~/tools/
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing takeover"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing takeover"
 git clone https://github.com/m4ll0k/takeover.git
 cd ~/tools/
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing wpscan"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing wpscan"
 git clone https://github.com/wpscanteam/wpscan.git
 cd ~/tools/wpscan
 sudo chmod +x *
@@ -195,7 +190,7 @@ cd ~/tools/wpscan/bin && sudo cp wpscan /usr/local/bin
 cd ~/tools/
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing dirsearch"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing dirsearch"
 git clone https://github.com/maurosoria/dirsearch.git
 cd ~/tools/dirsearch
 sudo chmod +x * && sudo python3 setup.py install
@@ -204,12 +199,12 @@ ln -sf dirsearch.py /usr/bin/dirsearch
 cd ~/tools/
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing sqlmap"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing sqlmap"
 git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap-dev
 cd ~/tools/
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing knock.py"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing knock.py"
 git clone https://github.com/guelfoweb/knock.git
 cd ~/tools/knock
 sudo python3 setup.py install
@@ -218,7 +213,7 @@ ln -sf knockpy.py /usr/bin/knockpy
 cd ~/tools/
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing Infoga"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing Infoga"
 git clone https://github.com/m4ll0k/Infoga.git
 cd ~/tools/Infoga
 wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
@@ -228,19 +223,19 @@ python setup.py install
 cd ~/tools/
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing GitTools"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing GitTools"
 git clone https://github.com/internetwache/GitTools.git
 cd ~/tools/
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing massdns"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing massdns"
 git clone https://github.com/blechschmidt/massdns.git
 cd ~/tools/massdns
 make
 cd ~/tools/
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing anonsurf"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing anonsurf"
 git clone https://github.com/Und3rf10w/kali-anonsurf.git
 cd ~/tools/kali-anonsurf
 sudo chmod +x installer.sh
@@ -248,28 +243,29 @@ sudo ./installer.sh
 cd ~/tools/
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing ParamSpider"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing ParamSpider"
 git clone https://github.com/devanshbatham/ParamSpider
 cd ~/tools/ParamSpider
 pip3 install -r requirements.txt
 cd ~/tools/
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing theHarvester"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing theHarvester"
 git clone https://github.com/laramies/theHarvester
 cd ~/tools/theHarvester/bin && sudo cp theHarvester /usr/local/bin
 docker build -t theharvester .
 cd ~/tools/
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] installing SocialFish"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing SocialFish"
 git clone https://github.com/UndeadSec/SocialFish.git
 sudo apt-get install python3 python3-pip python3-dev -y
+cd ~/tools/SocialFish
 python3 -m pip install -r requirements.txt
 cd ~/tools/
 echo "done"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] downloading Seclists"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] downloading Seclists"
 cd ~/tools/
 git clone https://github.com/danielmiessler/SecLists.git
 cd ~/tools/SecLists/Discovery/DNS/
@@ -280,18 +276,18 @@ echo "done"
 
 cd ~/go/bin && sudo cp * /usr/local/bin/
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Done! Todas as ferramentas estão configuradas em ~/tools"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Done! Todas as ferramentas estão configuradas em ~/tools"
 ls -Slha
-echo "\n\n\n\n\n\n\n\n\nUma última vez: não se esqueça de configurar as credenciais da AWS em ~/.aws/!"
+echo -e "\n\n Uma última vez: não se esqueça de configurar as credenciais da AWS em ~/.aws/!"
 
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] done"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] done"
 
 packages_list=(aircrack-ng aireplay-ng airmon-ng airodump-ng awk curl hostapd iwconfig lighttpd
 macchanger mdk3 unzip xterm openssl rfkill strings fuser)
 function pkgscheck_flux() {
 	for pkg in "${packages_list[@]}"
 	do
-		echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for $pkg\033[0m"
+		echo -e "\033[1m\033[33m[\033[31m+\033[33m] Checking for $pkg\033[0m"
 		sleep 1
 		if ! hash $pkg 2>/dev/null; then
 			echo -e "\033[1m\033[31mNot Found\033[0m"
@@ -300,7 +296,7 @@ function pkgscheck_flux() {
 			echo -e "\033[1m\033[32mFound\033[0m"
 		fi
 	done
-	echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for dhcpd\033[0m"
+	echo -e "\033[1m\033[33m[\033[31m+\033[33m] Checking for dhcpd\033[0m"
 	if ! hash dhcpd 2>/dev/null;then
 		echo -e "\033[1m\033[31mNot Found\033[0m"
 		echo -e "\033[1mInstalling \033[31mdhcpd\033[0m"
@@ -315,7 +311,7 @@ if [ $username != "root" ];then
 	echo -e "\033[1m\033[31mPlease run this script as the user root try doing sudo bash install.sh"
 	exit
 fi
-echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for source in sources.list"
+echo -e "\033[1m\033[33m[\033[31m+\033[33m] Checking for source in sources.list"
 source="deb http://ftp.debian.org/debian/ stretch main contrib non-free"
 path="/etc/apt/sources.list"
 found=0
@@ -337,7 +333,7 @@ piperror="/usr/bin/python2: No module named pip"
 pip=$(python2 -m pip 2>&1)
 nmap="/usr/bin/nmap"
 phpcgi="/usr/bin/php-cgi"
-echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for git"
+echo -e "\033[1m\033[33m[\033[31m+\033[33m] Checking for git"
 sleep 5
 if [ -x $git ];then
 	echo -e "\033[1m\033[32mFound\033[0m"
@@ -346,7 +342,7 @@ else
 	echo -e "\033[1mInstalling \033[31mgit\033[0m"
 	apt-get install git -y
 fi
-echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for python2"
+echo -e "\033[1m\033[33m[\033[31m+\033[33m] Checking for python2"
 sleep 5
 if [ -f $python ];then
 	echo -e "\033[1m\033[32mFound\033[0m"
@@ -355,7 +351,7 @@ else
 	echo -e "\033[1mInstalling \033[31mpython2\033[0m"
 	apt-get install python2 -y
 fi
-echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for python2-pip"
+echo -e "\033[1m\033[33m[\033[31m+\033[33m] Checking for python2-pip"
 sleep 5
 if [ "$pip" != "$piperror" ];then
 	echo -e "\033[1m\033[32mFound\033[0m"
@@ -365,7 +361,7 @@ else
 	#curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
 	python2 incase/get-pip.py
 fi
-echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for nmap"
+echo -e "\033[1m\033[33m[\033[31m+\033[33m] Checking for nmap"
 sleep 5
 if [ -f $nmap ];then
 	echo -e "\033[1m\033[32mFound\033[0m"
@@ -374,7 +370,7 @@ else
 	echo -e "\033[1mInstalling \033[31mnmap\033[0m"
 	apt-get install nmap -y
 fi
-echo -e "\033[1m\033[34m[\033[31m+\033[34m] Checking for php-cgi"
+echo -e "\033[1m\033[33m[\033[31m+\033[33m] Checking for php-cgi"
 sleep 5
 if [ -f $phpcgi ];then
 	echo -e "\033[1m\033[32mFound\033[0m"
@@ -385,7 +381,7 @@ else
 fi
 # Instale as dependências do Fluxion
 pkgscheck_flux
-echo -e "\033[1m\033[34mUpdating \033[33mand \033[34mUpgrading\033[0m"
+echo -e "\033[1m\033[33mUpdating \033[33mand \033[33mUpgrading\033[0m"
 # apt-get update -y && apt-get upgrade -y
 apt-get purge libpython2* -y && apt-get install python -y
 echo -e "\033[1mReinstalling \033[31mpython2\033[0m"
@@ -416,7 +412,7 @@ sudo apt-get -y autoremove
 sudo apt-get -y autoclean
 
 #limpar tela
-echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Deseja limpar a sua tela?"
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Deseja limpar a sua tela?"
 PS3="Por favor selecione uma opção : "
 choices=("yes" "no")
 select choice in "${choices[@]}";do break;done
@@ -424,5 +420,5 @@ case $choice in
 yes) echo "limpando tela";printf
  clear;;
  
-no) echo -e "\n\n\033[1m\033[34m[\033[35m+\033[34m] Otimo Trabalho\nSaindo da instalação...";;
+no) echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Ótimo Trabalho\nSaindo da instalação...";;
 esac
