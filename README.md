@@ -37,7 +37,6 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 - anonsurf
 - ParamSpider
 - theHarvester
-- crtndstry
 
 
 ## **Instalar**
