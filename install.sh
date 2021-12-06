@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo -e "\n\033[1m\033[37m[\033[31m+\033[37m] Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar 90% do seu Tempo na hora de configurar sua máquina para trabalhar. "
-echo -e "\n\033[1m\033[37m=================================> "
+echo -e "\n\033[1m\033[37m=====================================================> "
 
 echo -e "\n\n"
 
@@ -278,9 +278,9 @@ cd ~/go/bin && sudo cp * /usr/local/bin/
 
 echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Done! Todas as ferramentas estão configuradas em ~/tools"
 ls -Slha
-echo -e "\n\n Uma última vez: não se esqueça de configurar as credenciais da AWS em ~/.aws/!"
+echo -e "\n\033[1m\033[31m[\033[35m+\033[31m] Uma última vez: não se esqueça de configurar as credenciais da AWS em ~/.aws/!"
 
-echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] done"
+echo "\n\033[1m\033[33m[\033[35m+\033[33m] done"
 
 packages_list=(aircrack-ng aireplay-ng airmon-ng airodump-ng awk curl hostapd iwconfig lighttpd
 macchanger mdk3 unzip xterm openssl rfkill strings fuser)
