@@ -44,3 +44,4 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 - cd /arno
 - chmod +x install.sh
 - ./install.sh
+- **Recomenda instalar em modo root**
