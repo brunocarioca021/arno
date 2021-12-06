@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "${red}
+echo -e "${red}
 	________              ___________                  ___       _______ __________      
 	___  __ \_____ _________  /___  /______________    __ |     / /__  /____(_)_  /_____ 
 	__  /_/ /  __  /_  __ \  __/_  __ \  _ \_  ___/    __ | /| / /__  __ \_  /_  __/  _ \
@@ -65,6 +65,8 @@ sudo apt -y install exploitdb-papers
 sudo apt -y install exploitdb-bin-sploits
 sudo apt -y install reaver
 sudo pip3 install argparse
+sudo pip3 install osrframework
+sudo pip3 install osrframework --upgrade
 sudo pip install one-lin3r
 sudo pip3 install requests
 sudo pip3 install wfuzz
@@ -170,10 +172,6 @@ echo "installing unfurl"
 go get -u github.com/tomnomnom/unfurl 
 echo "done"
 
-echo "installing waybackurls"
-go get github.com/tomnomnom/waybackurls
-echo "done"
-
 echo "installing JSParser"
 git clone https://github.com/nahamsec/JSParser.git
 cd JSParser*
@@ -187,11 +185,6 @@ cd Sublist3r*
 sudo python3 setup.py isntall
 pip install -r requirements.txt
 ln -sf sublist3r.py /usr/bin/sublist3r
-cd ~/arno/
-echo "done"
-
-echo "installing teh_s3_bucketeers"
-git clone https://github.com/tomdev/teh_s3_bucketeers.git
 cd ~/arno/
 echo "done"
 
@@ -213,16 +206,6 @@ git clone https://github.com/maurosoria/dirsearch.git
 sudo python3 setup.py isntall
 pip3 install -r requirements.txt
 ln -sf dirsearch.py /usr/bin/dirsearch
-cd ~/arno/
-echo "done"
-
-echo "installing lazys3"
-git clone https://github.com/nahamsec/lazys3.git
-cd ~/arno/
-echo "done"
-
-echo "installing virtual host discovery"
-git clone https://github.com/jobertabma/virtual-host-discovery.git
 cd ~/arno/
 echo "done"
 
@@ -249,11 +232,6 @@ python setup.py install
 cd ~/arno/
 echo "done"
 
-echo "installing lazyrecon"
-git clone https://github.com/nahamsec/lazyrecon.git
-cd ~/arno/
-echo "done"
-
 echo "installing GitTools"
 git clone https://github.com/internetwache/GitTools.git
 cd ~/arno/
@@ -274,13 +252,6 @@ sudo ./installer.sh
 cd ~/arno/
 echo "done"
 
-echo "installing asnlookup"
-git clone https://github.com/yassineaboukir/asnlookup.git
-cd ~/arno/asnlookup
-pip install -r requirements.txt
-cd ~/arno/
-echo "done"
-
 echo "installing ParamSpider"
 git clone https://github.com/devanshbatham/ParamSpider
 cd ~/arno/ParamSpider
@@ -292,11 +263,6 @@ echo "installing theHarvester"
 git clone https://github.com/laramies/theHarvester
 cd ~/arno/theHarvester/bin && sudo cp theHarvester /usr/local/bin
 docker build -t theharvester .
-cd ~/arno/
-echo "done"
-
-echo "installing dvcs-ripper"
-git clone https://github.com/kost/dvcs-ripper.git
 cd ~/arno/
 echo "done"
 
