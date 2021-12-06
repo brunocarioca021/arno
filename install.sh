@@ -181,8 +181,8 @@ echo "done"
 
 echo "installing Sublist3r"
 git clone https://github.com/aboul3la/Sublist3r.git
-cd Sublist3r*
-sudo python3 setup.py isntall
+cd ~/arno/Sublist3r
+sudo chmod +x * && sudo python3 setup.py isntall
 pip install -r requirements.txt
 ln -sf sublist3r.py /usr/bin/sublist3r
 cd ~/arno/
@@ -195,7 +195,8 @@ echo "done"
 
 echo "installing wpscan"
 git clone https://github.com/wpscanteam/wpscan.git
-cd wpscan*
+cd ~/arno/wpscan
+sudo chmod +x *
 sudo gem install bundler && bundle install --without test
 cd ~/arno/wpscan/bin && sudo cp wpscan /usr/local/bin
 cd ~/arno/
@@ -203,7 +204,8 @@ echo "done"
 
 echo "installing dirsearch"
 git clone https://github.com/maurosoria/dirsearch.git
-sudo python3 setup.py isntall
+cd ~/arno/dirsearch
+sudo chmod +x * && sudo python3 setup.py isntall
 pip3 install -r requirements.txt
 ln -sf dirsearch.py /usr/bin/dirsearch
 cd ~/arno/
@@ -216,6 +218,7 @@ echo "done"
 
 echo "installing knock.py"
 git clone https://github.com/guelfoweb/knock.git
+cd ~/arno/knock
 sudo python3 setup.py isntall
 pip3 install -r requirements.txt
 ln -sf knockpy.py /usr/bin/knockpy
@@ -224,7 +227,7 @@ echo "done"
 
 echo "installing Infoga"
 git clone https://github.com/m4ll0k/Infoga.git
-cd Infoga
+cd ~/arno/Infoga
 wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
 python get-pip.py
 pip2 install -r requirements.txt
