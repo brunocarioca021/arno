@@ -54,7 +54,9 @@ sudo apt-get install -y hashcat
 sudo apt-get install -y aptitute
 sudo apt-get install -y synaptic
 sudo apt-get install -y dirsearch
+sudo apt-get install -y lolcat
 sudo apt install python3.9-venv
+sudo apt install dialog
 sudo apt -y install exploitdb
 sudo apt -y install exploitdb-papers
 sudo apt -y install exploitdb-bin-sploits
