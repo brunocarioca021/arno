@@ -268,6 +268,14 @@ docker build -t theharvester .
 cd ~/tools/
 echo "done"
 
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing Patterns"
+git clone https://github.com/1ndianl33t/Gf-Patterns
+mkdir ~/.gf
+mv ~/Gf-Patterns/*.json ~/.gf
+rm -rf GF-Patterns
+cd ~/tools/
+echo "done"
+
 echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing SocialFish"
 git clone https://github.com/UndeadSec/SocialFish.git
 sudo apt-get install python3 python3-pip python3-dev -y
