@@ -67,6 +67,7 @@ sudo pip3 install osrframework --upgrade
 sudo pip install one-lin3r
 sudo pip3 install requests
 sudo pip3 install wfuzz
+sudo pip3 install holehe
 sudo gem install typhoeus
 sudo gem install opt_parse_validator
 
