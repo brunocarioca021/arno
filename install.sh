@@ -427,6 +427,7 @@ printf '\033]2; Installation finished\a'
 sudo apt-get -y update
 sudo apt-get -y autoremove
 sudo apt-get -y autoclean
+sudo updatedb
 
 #limpar tela
 echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Deseja limpar a sua tela?"
