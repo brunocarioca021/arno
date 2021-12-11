@@ -269,6 +269,13 @@ docker build -t theharvester .
 cd ~/tools/
 echo "done"
 
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing Karma"
+git clone https://github.com/decoxviii/karma.git
+cd ~/tools/karma
+sudo -H pip3 install -r requirements.txt
+cd ~/tools/
+echo "done"
+
 echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing Patterns"
 git clone https://github.com/1ndianl33t/Gf-Patterns
 mkdir ~/.gf
