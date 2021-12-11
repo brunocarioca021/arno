@@ -161,6 +161,15 @@ echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Installing Assetfinder"
 go get -u github.com/tomnomnom/assetfinder
 echo "done"
 
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Installing waybackurls"
+go get -u github.com/tomnomnom/waybackurls
+echo "done"
+
+echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Installing GF"
+go get -u github.com/tomnomnom/gf
+echo 'source $GOPATH/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc
+echo "done"
+
 echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing httprobe"
 go get -u github.com/tomnomnom/httprobe 
 echo "done"
