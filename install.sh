@@ -267,6 +267,7 @@ echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing ParamSpider"
 git clone https://github.com/devanshbatham/ParamSpider
 cd ~/tools/ParamSpider
 pip3 install -r requirements.txt
+ln -sf $PWD/paramspider.py /usr/bin/
 cd ~/tools/
 echo "done"
 
