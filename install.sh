@@ -109,8 +109,8 @@ select choice in "${choices[@]}"; do
 					export GOPATH=$HOME/go
 					export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 					echo 'export GOROOT=/usr/local/go' >> ~/.bash_profile
-					echo 'export GOPATH=$HOME/go'	>> ~/.bash_profile			
-					echo 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile	
+					echo 'export GOPATH=$HOME/go'	>> ~/.bash_profile
+					echo 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile
 					source ~/.bash_profile
 					sleep 1
 					break
@@ -120,7 +120,7 @@ select choice in "${choices[@]}"; do
 					echo "Abortando instalação..."
 					exit 1
 					;;
-	esac	
+	esac
 done
 fi
 
@@ -132,7 +132,15 @@ echo -e "\n\033[1m\033[31m[\033[35m+\033[31m] Não se esqueça de configurar as 
 
 
 #criando uma pasta de ferramentas em ~/
-mkdir ~/tools
+mkdir -p ~/{tools,.local/bin}
+if ! grep -q '.local/bin' $HOME/.profile; then
+  cat <<EOF >> $HOME/.profile
+# set PATH so it includes user's private bin if it exists
+if [ -d "\$HOME/.local/bin" ] ; then
+    PATH="\$HOME/.local/bin:\$PATH"
+fi
+EOF
+fi
 cd ~/tools/
 
 echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Installing Aquatone"
@@ -172,11 +180,11 @@ echo 'source $GOPATH/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashr
 echo "done"
 
 echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing httprobe"
-go get -u github.com/tomnomnom/httprobe 
+go get -u github.com/tomnomnom/httprobe
 echo "done"
 
 echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing unfurl"
-go get -u github.com/tomnomnom/unfurl 
+go get -u github.com/tomnomnom/unfurl
 echo "done"
 
 echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing Sublist3r"
@@ -259,6 +267,7 @@ echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] installing ParamSpider"
 git clone https://github.com/devanshbatham/ParamSpider
 cd ~/tools/ParamSpider
 pip3 install -r requirements.txt
+ln -sf $PWD/paramspider.py /usr/bin/
 cd ~/tools/
 echo "done"
 
@@ -445,6 +454,6 @@ select choice in "${choices[@]}";do break;done
 case $choice in
 yes) echo "limpando tela";printf
  clear;;
- 
+
 no) echo -e "\n\033[1m\033[33m[\033[35m+\033[33m] Ótimo Trabalho\nSaindo da instalação...";;
 esac
