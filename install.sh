@@ -66,6 +66,7 @@ sudo pip3 install argparse
 sudo pip3 install osrframework
 sudo pip3 install osrframework --upgrade
 sudo pip install one-lin3r
+sudo pip3 install py-altdns==1.0.2
 sudo pip3 install requests
 sudo pip3 install wfuzz
 sudo pip3 install holehe
