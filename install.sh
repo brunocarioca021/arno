@@ -1,7 +1,28 @@
 #!/usr/bin/env bash
 
+cd ~/
+git clone --quiet https://github.com/NRZCode/progressbar.git > /dev/null
+
+# ANSI Colors
+function load_ansi_colors() {
+  # @C FG Color
+  #    |-- foreground color
+  export CReset='\e[m' CFGBlack='\e[30m' CFGRed='\e[31m' CFGGreen='\e[32m' \
+    CFGYellow='\e[33m' CFGBlue='\e[34m' CFGPurple='\e[35m' CFGCyan='\e[36m' \
+    CFGWhite='\e[37m'
+  # @C BG Color
+  #    |-- background color
+  export CBGBlack='\e[40m' CBGRed='\e[41m' CBGGreen='\e[42m' CBGYellow='\e[43m' \
+    CBGBlue='\e[44m' CBGPurple='\e[45m' CBGCyan='\e[46m' CBGWhite='\e[47m'
+  # @C Attribute
+  #    |-- text attribute
+  export CBold='\e[1m' CFaint='\e[2m' CItalic='\e[3m' CUnderline='\e[4m' \
+    CSBlink='\e[5m' CFBlink='\e[6m' CReverse='\e[7m' CConceal='\e[8m' \
+    CCrossed='\e[9m' CDoubleUnderline='\e[21m'
+}
+
 banner() {
-  echo '  █████╗ ██████╗ ███╗   ██╗ ██████╗ 
+  echo ' █████╗ ██████╗ ███╗   ██╗ ██████╗ 
 ██╔══██╗██╔══██╗████╗  ██║██╔═══██╗
 ███████║██████╔╝██╔██╗ ██║██║   ██║
 ██╔══██║██╔══██╗██║╚██╗██║██║   ██║
@@ -10,18 +31,19 @@ banner() {
 }
 
 banner
+load_ansi_colors
 
-printf "\n\033[1m\033[37m[\033[31m+\033[37m] Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar seu Tempo na hora de configurar sua máquina para trabalhar. "
-printf "\n\033[1m\033[37m=====================================================> "
+printf "\n\033[1m\033[37m[\033[31m+\033[37m] Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar seu Tempo na hora de configurar sua máquina para trabalhar.${CReset} "
+printf "\n\033[1m\033[37m=====================================================>${CReset} "
 
 printf "\n\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Deseja Atualizar seu Linux ? o tempo pode variar de acordo com sua máquina.\n"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Deseja Atualizar seu Linux ? o tempo pode variar de acordo com sua máquina.${CReset}\n"
 PS3="Por favor selecione uma opção : "
 choices=("yes" "no")
 select choice in "${choices[@]}";do break;done
 case $choice in
-yes) 		printf "atualizando.."
+yes) 		printf "\natualizando..\n"
 		sudo apt-get -y install kali-linux-default
 		sudo apt-get -y update
 		sudo apt-get -f install
@@ -29,7 +51,7 @@ yes) 		printf "atualizando.."
 		sudo apt -y dist-upgrade
 		;;
 
-no) printf "\n\033[1m\033[33m[\033[35m+\033[33m] continuando com a instalação...\n"
+no) printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] continuando com a instalação...${CReset}\n"
 ;;
 	esac
 
@@ -73,7 +95,8 @@ sudo apt -y install exploitdb
 sudo apt -y install exploitdb-papers
 sudo apt -y install exploitdb-bin-sploits
 sudo apt -y install reaver
-sudo pip3 install argparse
+sudo apt -y install bats
+sudo pip3 install argparse > /dev/null
 sudo pip3 install osrframework
 sudo pip3 install osrframework --upgrade
 sudo pip install one-lin3r
@@ -84,22 +107,33 @@ sudo pip3 install holehe
 sudo gem install typhoeus
 sudo gem install opt_parse_validator
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando Brave"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando Brave${CReset}\n"
 sudo apt install apt-transport-https curl
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-printf "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+printf "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 sudo apt update
 sudo apt install brave-browser
 printf "done"
 
-printf "Instalando Pyrit"
-git clone https://github.com/hacker3983/pyrit-installer
-cd pyrit-installer
-sudo bash install.sh
-printf "done"
+{
+  git clone --quiet https://github.com/hacker3983/pyrit-installer "$HOME/.local/pyrit-installer"
+  sudo bash "$HOME/.local/pyrit-installer/install.sh" >/dev/null 2>/dev/null
+} >/dev/null 2>/dev/null &
+pid=$!
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando bash_profile aliases from recon_profile"
-git clone https://github.com/nahamsec/recon_profile.git
+message='\nInstalando Pyrit.\n'
+while :; do
+  signal='/ - \ |'
+  for s in $signal; do
+    printf "${CBold}${CFGBlue}[${CFGPurple}%s${CFGBlue}] %s\r" "$s" "$message"
+    sleep .08
+  done
+  ps -p $pid > /dev/null || break
+done
+printf '\nDone!\n'
+
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando bash_profile aliases from recon_profile${CReset}\n"
+git clone --quiet https://github.com/nahamsec/recon_profile.git > /dev/null
 cd recon_profile
 cat bash_profile >> ~/.bash_profile
 source ~/.bash_profile
@@ -107,14 +141,14 @@ printf "done"
 
 #install go
 if [[ -z "$GOPATH" ]];then
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Parece que go não está instalado, gostaria de instalá-lo agora ?"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Parece que go não está instalado, gostaria de instalá-lo agora ?${CReset}"
 PS3="Por favor selecione uma opção : "
 choices=("yes" "no")
 select choice in "${choices[@]}"; do
         case $choice in
                 yes)
 
-					printf "Instalando Golang"
+					printf "\nInstalando Golang\n"
 					wget https://golang.org/dl/go1.17.3.linux-amd64.tar.gz
 					sudo tar -xvf go1.17.3.linux-amd64.tar.gz
 					sudo mv go /usr/local
@@ -139,9 +173,9 @@ fi
 
 
 #Não se esqueça de configurar as credenciais da AWS!
-printf "\n\033[1m\033[31m[\033[35m+\033[31m] Não se esqueça de configurar as credenciais da AWS!"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Não se esqueça de configurar as credenciais da AWS!${CReset}\n"
 sudo apt-get install -y awscli
-printf "\n\033[1m\033[31m[\033[35m+\033[31m] Não se esqueça de configurar as credenciais da AWS!"
+printf "${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Não se esqueça de configurar as credenciais da AWS!${CReset}\n"
 
 
 #criando uma pasta de ferramentas em ~/
@@ -167,389 +201,274 @@ gf="/usr/local/bin/gf"
 httprobe="/usr/local/bin/httprobe"
 unfurl="/usr/local/bin/unfurl"
 sublist3r="/usr/bin/sublist3r"
+knockpy="/usr/bin/knockpy"
 
 # Aquatone
-printf "\n\033[1m\033[33m[\033[31m+\033[33m] Checando Aquatone\n"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Aquatone${CReset}\n"
 if [ -f $aquatone ];then
-	printf "\n\033[1m\033[32mEncontrado\033[0m\n"
+	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
-	printf "\n\033[1m\033[31mNão Encontrado\033[0m\n"	
-	printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando Aquatone\n"
+	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"	
+	printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando Aquatone${CReset}\n"
 go get github.com/michenriksen/aquatone
-wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_amd64_1.7.0.zip
-unzip aquatone_linux_amd64_1.7.0.zip
+wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_amd64_1.7.0.zip > /dev/null
+unzip aquatone_linux_amd64_1.7.0.zip > /dev/null
 sudo cp aquatone /usr/local/bin | rm -rf aquatone_linux_amd64_1.7.0.zip
 fi
 printf "done\n"
 
 # Gau
-printf "\n\033[1m\033[33m[\033[31m+\033[33m] Checando Gau\n"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Gau${CReset}\n"
 if [ -f $gau ];then
-	printf "\n\033[1m\033[32mEncontrado\033[0m\n"
+	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
-	printf "\n\033[1m\033[31mNão Encontrado\033[0m\n"	
-	printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando Gau\n"
+	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"	
+	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Gau${CReset}\n"
 GO111MODULE=on go get -u -v github.com/lc/gau
 fi
 printf "done\n"
 
 # Subfinder
-printf "\n\033[1m\033[33m[\033[31m+\033[33m] Checando Subfinder\n"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Subfinder${CReset}\n"
 if [ -f $subfinder ];then
-	printf "\n\033[1m\033[32mEncontrado\033[0m\n"
+	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
-	printf "\n\033[1m\033[31mNão Encontrado\033[0m\n"
-	printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando Subfinder\n"
+	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
+	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Subfinder${CReset}\n"
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 fi
 printf "done\n"
 
 # Httpx
-printf "\n\033[1m\033[33m[\033[31m+\033[33m] Checando Httpx\n"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Httpx${CReset}\n"
 if [ -f "$httpx" ];then
-	printf "\n\033[1m\033[32mEncontrado\033[0m\n"
+	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
-	printf "\n\033[1m\033[31mNão Encontrado\033[0m\n"
-	printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando Httpx\n"
+	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
+	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Httpx${CReset}\n"
 go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 fi
 printf "done\n"
 
 # Gobuster
-printf "\n\033[1m\033[33m[\033[31m+\033[33m] Checando Gobuster\n"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Gobuster${CReset}\n"
 if [ -f $gobuster ];then
-	printf "\n\033[1m\033[32mEncontrado\033[0m\n"
+	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
-	printf "\n\033[1m\033[31mNão Encontrado\033[0m\n"
-	printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando Gobuster\n"
+	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
+	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Gobuster${CReset}\n"
 go install github.com/OJ/gobuster/v3@latest
 fi
 printf "done\n"
 
 # Assetfinder
-printf "\n\033[1m\033[33m[\033[31m+\033[33m] Checando Assetfinder\n"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Assetfinder${CReset}\n"
 if [ -f $assetfinder ];then
-	printf "\n\033[1m\033[32mEncontrado\033[0m\n"
+	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
-	printf "\n\033[1m\033[31mNão Encontrado\033[0m\n"
-	printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando Assetfinder\n"
+	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
+	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Assetfinder${CReset}\n"
 go get -u github.com/tomnomnom/assetfinder
 fi
 printf "done\n"
 
 # Waybackurls
-printf "\n\033[1m\033[33m[\033[31m+\033[33m] Checando waybackurls\n"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando waybackurls${CReset}\n"
 if [ -f $waybackurls ];then
-	printf "\n\033[1m\033[32mEncontrado\033[0m\n"
+	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
-	printf "\n\033[1m\033[31mNão Encontrado\033[0m\n"
-	printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando waybackurls\n"
+	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
+	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando waybackurls${CReset}\n"
 go get -u github.com/tomnomnom/waybackurls
 fi
 printf "done\n"
 
 # GF
-printf "\n\033[1m\033[33m[\033[31m+\033[33m] Checando GF\n"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando GF${CReset}\n"
 if [ -f $gf ];then
-	printf "\n\033[1m\033[32mEncontrado\033[0m\n"
+	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
-	printf "\n\033[1m\033[31mNão Encontrado\033[0m\n"
-	printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando GF\n"
+	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
+	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando GF${CReset}\n"
 go get -u github.com/tomnomnom/gf
 printf 'source $GOPATH/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc
 fi
 printf "done\n"
 
 # Httprobe
-printf "\n\033[1m\033[33m[\033[31m+\033[33m] Checando httprobe"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando httprobe${CReset}\n"
 if [ -f $httprobe ];then
-	printf "\n\033[1m\033[32mEncontrado\033[0m"
+	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
-	printf "\n\033[1m\033[31mNão Encontrado\033[0m"
-	printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando httprobe\n"
+	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
+	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando httprobe${CReset}\n"
 go get -u github.com/tomnomnom/httprobe
 fi
 printf "done\n"
 
 # Unfurl
-printf "\n\033[1m\033[33m[\033[31m+\033[33m] Checando unfurl\n"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando unfurl${CReset}\n"
 if [ -f $unfurl ];then
-	printf "\n\033[1m\033[32mEncontrado\033[0m\n"
+	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
-	printf "\n\033[1m\033[31mNão Encontrado\033[0m\n"
-	printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando unfurl\n"
+	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
+	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando unfurl${CReset}\n"
 go get -u github.com/tomnomnom/unfurl
 fi
 printf "done\n"
 
 # Sublist3r
-printf "\n\033[1m\033[33m[\033[31m+\033[33m] Checando Sublist3r\n"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Sublist3r${CReset}\n"
 if [ -f $sublist3r ];then
-	printf "\n\033[1m\033[32mEncontrado\033[0m\n"
+	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
-	printf "\n\033[1m\033[31mNão Encontrado\033[0m\n"
-	printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando Sublist3r\n"
-git clone https://github.com/aboul3la/Sublist3r.git
+	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
+	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Sublist3r${CReset}\n"
+git clone --quiet https://github.com/aboul3la/Sublist3r.git > /dev/null
 cd ~/tools/Sublist3r
-sudo chmod +x * && sudo python3 setup.py install
+sudo chmod +x * && sudo python3 setup.py install | ~/progressbar/ProgressBar.sh
 pip install -r requirements.txt
 ln -sf sublist3r.py /usr/bin/sublist3r
 cd ~/tools/
 fi
 printf "done\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando takeover"
-git clone https://github.com/m4ll0k/takeover.git
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando takeover${CReset}\n"
+git clone --quiet https://github.com/m4ll0k/takeover.git > /dev/null
 cd ~/tools/
-printf "done"
+printf "done\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando wpscan"
-git clone https://github.com/wpscanteam/wpscan.git
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando wpscan${CReset}\n"
+git clone --quiet https://github.com/wpscanteam/wpscan.git > /dev/null
 cd ~/tools/wpscan
 sudo chmod +x *
-sudo gem install bundler && bundle install --without test
+sudo gem install bundler && bundle install --without test | ~/progressbar/ProgressBar.sh
 cd ~/tools/wpscan/bin && sudo cp wpscan /usr/local/bin
 cd ~/tools/
-printf "done"
+printf "done\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando dirsearch"
-git clone https://github.com/maurosoria/dirsearch.git
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando dirsearch${CReset}\n"
+git clone --quiet https://github.com/maurosoria/dirsearch.git > /dev/null
 cd ~/tools/dirsearch
 sudo chmod +x * && sudo python3 setup.py install
 pip3 install -r requirements.txt
 ln -sf dirsearch.py /usr/bin/dirsearch
 cd ~/tools/
-printf "done"
+printf "done\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando sqlmap"
-git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap-dev
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando sqlmap${CReset}\n"
+git clone --quiet --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap-dev > /dev/null
 cd ~/tools/
-printf "done"
+printf "done\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando knock.py"
-git clone https://github.com/guelfoweb/knock.git
+# Knock
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando knock${CReset}\n"
+if [ -f $knockpy ];then
+	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
+else
+	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
+	printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando knockpy${CReset}\n"
+git clone --quiet https://github.com/guelfoweb/knock.git > /dev/null
 cd ~/tools/knock
-sudo python3 setup.py install
+sudo chmod +x * && sudo python3 setup.py install
 pip3 install -r requirements.txt
 ln -sf knockpy.py /usr/bin/knockpy
 cd ~/tools/
-printf "done"
+fi
+printf "done\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando Infoga"
-git clone https://github.com/m4ll0k/Infoga.git
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando Infoga${CReset}\n"
+git clone --quiet https://github.com/m4ll0k/Infoga.git > /dev/null
 cd ~/tools/Infoga
-wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
+wget https://bootstrap.pypa.io/pip/2.7/get-pip.py > /dev/null
 python get-pip.py
 pip2 install -r requirements.txt
-python setup.py install
+sudo chmod +x * && python setup.py install
 cd ~/tools/
-printf "done"
+printf "done\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando GitTools"
-git clone https://github.com/internetwache/GitTools.git
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando GitTools${CReset}\n"
+git clone --quiet https://github.com/internetwache/GitTools.git > /dev/null
 cd ~/tools/
-printf "done"
+printf "done\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando massdns"
-git clone https://github.com/blechschmidt/massdns.git
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando massdns${CReset}\n"
+git clone --quiet https://github.com/blechschmidt/massdns.git > /dev/null
 cd ~/tools/massdns
 make
 cd ~/tools/
-printf "done"
+printf "done\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando anonsurf"
-git clone https://github.com/Und3rf10w/kali-anonsurf.git
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando anonsurf${CReset}\n"
+git clone --quiet https://github.com/Und3rf10w/kali-anonsurf.git > /dev/null
 cd ~/tools/kali-anonsurf
 sudo chmod +x installer.sh
 sudo ./installer.sh
 cd ~/tools/
-printf "done"
+printf "done\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando ParamSpider"
-git clone https://github.com/devanshbatham/ParamSpider
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando ParamSpider${CReset}\n"
+git clone --quiet https://github.com/devanshbatham/ParamSpider > /dev/null
 cd ~/tools/ParamSpider
 pip3 install -r requirements.txt
 ln -sf $PWD/paramspider.py /usr/bin/
 cd ~/tools/
-printf "done"
+printf "done\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando theHarvester"
-git clone https://github.com/laramies/theHarvester
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando theHarvester${CReset}\n"
+git clone --quiet https://github.com/laramies/theHarvester > /dev/null
 cd ~/tools/theHarvester/bin && sudo cp theHarvester /usr/local/bin
 docker build -t theharvester .
 cd ~/tools/
-printf "done"
+printf "done\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando Karma"
-git clone https://github.com/decoxviii/karma.git
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando Karma${CReset}\n"
+git clone --quiet https://github.com/decoxviii/karma.git > /dev/null
 cd ~/tools/karma
 sudo -H pip3 install -r requirements.txt
 cd ~/tools/
-printf "done"
+printf "done\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando Patterns"
-git clone https://github.com/1ndianl33t/Gf-Patterns
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando Patterns${CReset}\n"
+git clone --quiet https://github.com/1ndianl33t/Gf-Patterns > /dev/null
 mkdir ~/.gf
 mv ~/Gf-Patterns/*.json ~/.gf
 rm -rf GF-Patterns
 cd ~/tools/
-printf "done"
+printf "done\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Instalando SocialFish"
-git clone https://github.com/UndeadSec/SocialFish.git
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando SocialFish${CReset}\n"
+git clone --quiet https://github.com/UndeadSec/SocialFish.git > /dev/null
 sudo apt-get install python3 python3-pip python3-dev -y
 cd ~/tools/SocialFish
 python3 -m pip install -r requirements.txt
 cd ~/tools/
-printf "done"
+printf "done\n"
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] downloading Seclists"
-cd ~/tools/
-git clone https://github.com/danielmiessler/SecLists.git
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] downloading Seclists${CReset}\n"
+git clone --quiet https://github.com/danielmiessler/SecLists.git > /dev/null
 cd ~/tools/SecLists/Discovery/DNS/
 ##ESTE ARQUIVO QUEBRA MASSAS E PRECISA SER LIMPO
 cat dns-Jhaddix.txt | head -n -14 > clean-jhaddix-dns.txt
 cd ~/tools/
-printf "done"
+printf "done\n"
 
 cd ~/go/bin && sudo cp * /usr/local/bin/
 
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Done! Todas as ferramentas estão configuradas em ~/tools"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Done! Todas as ferramentas estão configuradas em ~/tools${CReset}\n"
 ls -Slha
-printf "\n\033[1m\033[31m[\033[35m+\033[31m] Uma última vez: não se esqueça de configurar as credenciais da AWS em ~/.aws/!"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Uma última vez: não se esqueça de configurar as credenciais da AWS em ~/.aws/!${CReset}\n"
 
-packages_list=(aircrack-ng aireplay-ng airmon-ng airodump-ng awk curl hostapd iwconfig lighttpd
-macchanger mdk3 unzip xterm openssl rfkill strings fuser)
-function pkgscheck_flux() {
-	for pkg in "${packages_list[@]}"
-	do
-		printf "\033[1m\033[33m[\033[31m+\033[33m] Checando for $pkg\033[0m"
-		sleep 1
-		if ! hash $pkg 2>/dev/null; then
-			printf "\033[1m\033[31mNot Found\033[0m"
-			apt-get install $pkg -y
-		else
-			printf "\033[1m\033[32mFound\033[0m"
-		fi
-	done
-	printf "\033[1m\033[33m[\033[31m+\033[33m] Checando for dhcpd\033[0m"
-	if ! hash dhcpd 2>/dev/null;then
-		printf "\033[1m\033[31mNot Found\033[0m"
-		printf "\033[1mInstalando \033[31mdhcpd\033[0m"
-		apt-get install isc-dhcp-server -y
-	else
-		printf "\033[1m\033[32mFound\033[0m"
-	fi
-}
-# Verifique a fonte em sources.list se não a adiciona a sources.list
-username=$(whoami)
-if [ $username != "root" ];then
-	printf "\033[1m\033[31mPlease run this script as the user root try doing sudo bash install.sh"
-	exit
-fi
-printf "\033[1m\033[33m[\033[31m+\033[33m] Checando for source in sources.list"
-source="deb http://ftp.debian.org/debian/ stretch main contrib non-free"
-path="/etc/apt/sources.list"
-found=0
-while read line; do
-	if [ "$line" == "$source" ];then
-		found=1;
-		printf "\033[1m\033[32mFound\033[0m"
-		break
-	fi
-done < $path
-
-if [ $found != 1 ];then
-	printf "\033[1m\033[31mNot Found \033[0m";printf "Adding $source to $path";printf $source >> $path;
-fi
-
-git="/usr/bin/git"
-python="/usr/bin/python"
-piperror="/usr/bin/python2: No module named pip"
-pip=$(python2 -m pip 2>&1)
-nmap="/usr/bin/nmap"
-phpcgi="/usr/bin/php-cgi"
-printf "\033[1m\033[33m[\033[31m+\033[33m] Checando for git"
-sleep 5
-if [ -x $git ];then
-	printf "\033[1m\033[32mFound\033[0m"
-else
-	printf "\033[1m\033[31mNot Found\033[0m"
-	printf "\033[1mInstalando \033[31mgit\033[0m"
-	apt-get install git -y
-fi
-printf "\033[1m\033[33m[\033[31m+\033[33m] Checando for python2"
-sleep 5
-if [ -f $python ];then
-	printf "\033[1m\033[32mFound\033[0m"
-else
-	printf "\033[1m\033[31mNot Found\033[0m"
-	printf "\033[1mInstalando \033[31mpython2\033[0m"
-	apt-get install python2 -y
-fi
-printf "\033[1m\033[33m[\033[31m+\033[33m] Checando for python2-pip"
-sleep 5
-if [ "$pip" != "$piperror" ];then
-	printf "\033[1m\033[32mFound\033[0m"
-else
-	printf "\033[1m\033[31mNot Found\033[0m"
-	printf "\033[1mInstalando \033[31mpython2-pip\033[0m"
-	#curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
-	python2 incase/get-pip.py
-fi
-printf "\033[1m\033[33m[\033[31m+\033[33m] Checando for nmap"
-sleep 5
-if [ -f $nmap ];then
-	printf "\033[1m\033[32mFound\033[0m"
-else
-	printf "\033[1m\033[31mNot Found\033[0m"
-	printf "\033[1mInstalando \033[31mnmap\033[0m"
-	apt-get install nmap -y
-fi
-printf "\033[1m\033[33m[\033[31m+\033[33m] Checando for php-cgi"
-sleep 5
-if [ -f $phpcgi ];then
-	printf "\033[1m\033[32mFound\033[0m"
-else
-	printf "\033[1m\033[31mNot Found\033[0m"
-	printf "\033[1mInstalando \033[31mphp-cgi\033[0m"
-	apt-get install php-cgi -y
-fi
-# Instale as dependências do Fluxion
-pkgscheck_flux
-printf "\033[1m\033[33mUpdating \033[33mand \033[33mUpgrading\033[0m"
-# apt-get update -y && apt-get upgrade -y
-apt-get purge libpython2* -y && apt-get install python -y
-printf "\033[1mReInstalando \033[31mpython2\033[0m"
-apt-get install python2 -y
-printf "\033[1mInstalando \033[31mpython2.7-dev, \033[31mlibssl-dev\033[0m, \033[31mzlib1g-dev\033[0m, and \033[31mlibpcap-dev\033[0m"
-apt-get install python2.7-dev libssl-dev zlib1g-dev libpcap-dev -y
-printf "\033[1mRemoving \033[31mpyrit\033[0m"
-apt-get remove --purge pyrit && rm -r /usr/local/lib/python2.7/dist-packages/cpyrit/
-printf "\033[1mInstalando \033[31mlibpq-dev\033[0m"
-apt-get install libpq-dev -y
-printf "\033[1mInstalando \033[31msetuptools, \033[31mpsycopg2 \033[0mand \033[31mscapy\033[0m"
-pip install setuptools psycopg2 scapy && apt-get install python-scapy -y
-printf "\033[1m\033[32mDownloading \033[31mPyrit\033[0m"
-printf '\033]2;Downloading Pyrit\a'
-
-# Install Pyrit
-if [ ! -d Pyrit ];then
-	git clone https://github.com/JPaulMora/Pyrit
-fi
-sed -i "s/COMPILE_AESNI/COMPILE_AESNIX/" Pyrit/cpyrit/_cpyrit_cpu.c
-cd Pyrit && python2 setup.py clean && python2 setup.py build && python2 setup.py install
-
-printf "\033[1m\033[31mInstallation finished\033[0m"
+printf "${CBold}${CFGRed}Installation finished${CReset}"
 printf '\033]2; Installation finished\a'
 
-sudo apt-get -y update
-sudo apt-get -y autoremove
-sudo apt-get -y autoclean
+sudo apt-get -y update > /dev/null
+sudo apt-get -y autoremove > /dev/null
+sudo apt-get -y autoclean > /dev/null
 sudo updatedb
 
 #limpar tela
-printf "\n\033[1m\033[33m[\033[35m+\033[33m] Deseja limpar a sua tela?"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Deseja limpar a sua tela?${CReset}\n"
 PS3="Por favor selecione uma opção : "
 choices=("yes" "no")
 select choice in "${choices[@]}";do break;done
@@ -557,5 +476,5 @@ case $choice in
 yes) printf "limpando tela";printf
  clear;;
 
-no) printf "\n\033[1m\033[33m[\033[35m+\033[33m] Ótimo Trabalho\nSaindo da instalação...";;
+no) printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Ótimo Trabalho\nSaindo da instalação...${CReset}\n";;
 esac
