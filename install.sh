@@ -146,7 +146,7 @@ select choice in "${choices[@]}"; do
 
 					printf "\nInstalando Golang\n"
 					wget https://go.dev/dl/go1.17.5.linux-amd64.tar.gz 
-					sudo tar -xvf go1.17.3.linux-amd64.tar.gz >/dev/null 2>/dev/null
+					sudo tar -xvf go1.17.3.linux-amd64.tar.gz
 					sudo cp -r go /usr/local
 					export GOROOT=/usr/local/go
 					export GOPATH=$HOME/go
