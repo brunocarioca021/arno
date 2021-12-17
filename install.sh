@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-cat bash_profile >> ~/.bash_profile
-source ~/.bash_profile
-
+sudo mv .bash_profile $HOME
 cd ~/
 git clone --quiet https://github.com/NRZCode/progressbar.git > /dev/null
 cp -r progressbar ~/.local > /dev/null
@@ -92,15 +90,16 @@ sudo apt-get install -y hashcat
 sudo apt-get install -y aptitute
 sudo apt-get install -y synaptic
 sudo apt-get install -y lolcat
-sudo apt install python3.9-venv
-sudo apt install dialog
+sudo apt install -y python3.9-venv
+sudo apt install -y dialog
+sudo apt install -y golang-go
 sudo apt -y install exploitdb
 sudo apt -y install exploitdb-papers
 sudo apt -y install exploitdb-bin-sploits
 sudo apt -y install reaver
 sudo apt -y install bats
-sudo pip3 install argparse >/dev/null 2>/dev/null
-sudo pip3 install osrframework >/dev/null 2>/dev/null
+sudo pip3 install argparse
+sudo pip3 install osrframework
 sudo pip3 install osrframework --upgrade
 sudo pip install one-lin3r
 sudo pip3 install py-altdns==1.0.2
@@ -134,6 +133,9 @@ while :; do
   ps -p $pid > /dev/null || break
 done
 printf '\nDone!\n'
+
+cat bash_profile >> ~/.bash_profile
+source ~/.bash_profile
 
 #install go
 if [[ -z "$GOPATH" ]];then
