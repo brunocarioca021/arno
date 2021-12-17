@@ -107,6 +107,9 @@ sudo pip3 install holehe
 sudo gem install typhoeus
 sudo gem install opt_parse_validator
 
+cat bash_profile >> ~/.bash_profile
+source ~/.bash_profile
+
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando Brave${CReset}\n"
 sudo apt install apt-transport-https curl
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
@@ -131,14 +134,6 @@ while :; do
   ps -p $pid > /dev/null || break
 done
 printf '\nDone!\n'
-
-printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando bash_profile aliases from recon_profile${CReset}\n"
-git clone --quiet https://github.com/nahamsec/recon_profile.git > /dev/null
-cd recon_profile
-cat bash_profile >> ~/.bash_profile
-source ~/.bash_profile
-cd ~
-printf "done"
 
 #install go
 if [[ -z "$GOPATH" ]];then
