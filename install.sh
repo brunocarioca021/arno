@@ -2,6 +2,7 @@
 
 cd ~/
 git clone --quiet https://github.com/NRZCode/progressbar.git > /dev/null
+cp -r progressbar ~/.local > /dev/null
 
 # ANSI Colors
 function load_ansi_colors() {
