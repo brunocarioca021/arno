@@ -96,8 +96,8 @@ sudo apt -y install exploitdb-papers
 sudo apt -y install exploitdb-bin-sploits
 sudo apt -y install reaver
 sudo apt -y install bats
-sudo pip3 install argparse > /dev/null
-sudo pip3 install osrframework
+sudo pip3 install argparse >/dev/null 2>/dev/null
+sudo pip3 install osrframework >/dev/null 2>/dev/null
 sudo pip3 install osrframework --upgrade
 sudo pip install one-lin3r
 sudo pip3 install py-altdns==1.0.2
@@ -142,9 +142,9 @@ select choice in "${choices[@]}"; do
                 yes)
 
 					printf "\nInstalando Golang\n"
-					wget https://golang.org/dl/go1.17.3.linux-amd64.tar.gz
-					sudo tar -xvf go1.17.3.linux-amd64.tar.gz
-					sudo mv go /usr/local
+					wget https://golang.org/dl/go1.17.3.linux-amd64.tar.gz 
+					sudo tar -xvf go1.17.3.linux-amd64.tar.gz >/dev/null 2>/dev/null
+					sudo cp -r go /usr/local
 					export GOROOT=/usr/local/go
 					export GOPATH=$HOME/go
 					export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
@@ -202,7 +202,7 @@ if [ -f $aquatone ];then
 	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
 	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"	
-	printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando Aquatone${CReset}\n"
+	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Aquatone${CReset}\n"
 go get github.com/michenriksen/aquatone
 wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_amd64_1.7.0.zip > /dev/null
 unzip aquatone_linux_amd64_1.7.0.zip > /dev/null
