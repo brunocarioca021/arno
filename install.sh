@@ -457,8 +457,7 @@ printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Done! Todas as ferramen
 ls -Slha
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Uma última vez: não se esqueça de configurar as credenciais da AWS em ~/.aws/!${CReset}\n"
 
-printf "${CBold}${CFGRed}Installation finished${CReset}"
-printf '\033]2; Installation finished\a'
+printf "${CBold}${CFGRed}\nInstallation finished\n${CReset}"
 
 sudo apt-get -y update > /dev/null
 sudo apt-get -y autoremove > /dev/null
