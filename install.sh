@@ -459,9 +459,9 @@ printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Uma última vez: não s
 
 printf "${CBold}${CFGRed}\nInstallation finished\n${CReset}"
 
-sudo apt-get -y update > /dev/null
-sudo apt-get -y autoremove > /dev/null
-sudo apt-get -y autoclean > /dev/null
+sudo apt-get -y update
+sudo apt-get -y autoremove
+sudo apt-get -y autoclean
 sudo updatedb
 
 #limpar tela
