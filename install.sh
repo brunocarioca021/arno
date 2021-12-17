@@ -87,7 +87,6 @@ sudo apt-get install -y proxychains4
 sudo apt-get install -y hashcat
 sudo apt-get install -y aptitute
 sudo apt-get install -y synaptic
-sudo apt-get install -y dirsearch
 sudo apt-get install -y lolcat
 sudo apt install python3.9-venv
 sudo apt install dialog
@@ -113,7 +112,7 @@ sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://b
 printf "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 sudo apt update
 sudo apt install brave-browser
-printf "done\n"
+printf "done\n\n"
 
 {
   git clone --quiet https://github.com/hacker3983/pyrit-installer "$HOME/.local/pyrit-installer"
@@ -131,6 +130,13 @@ while :; do
   ps -p $pid > /dev/null || break
 done
 printf '\nDone!\n'
+
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando bash_profile aliases from recon_profile${CReset}\n"
+git clone --quiet https://github.com/nahamsec/recon_profile.git > /dev/null
+cd recon_profile
+cat bash_profile >> ~/.bash_profile
+source ~/.bash_profile
+printf "done"
 
 #install go
 if [[ -z "$GOPATH" ]];then
