@@ -348,8 +348,9 @@ cd ~/tools/
 printf "done\n"
 
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando dirsearch${CReset}\n"
+cd /usr/share
 git clone --quiet https://github.com/maurosoria/dirsearch.git > /dev/null
-cd ~/tools/dirsearch
+cd /usr/share/dirsearch
 sudo chmod +x * && sudo python3 setup.py install
 pip3 install -r requirements.txt
 ln -sf dirsearch.py /usr/bin/dirsearch
