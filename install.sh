@@ -89,7 +89,6 @@ sudo apt-get install -y aptitute
 sudo apt-get install -y synaptic
 sudo apt-get install -y dirsearch
 sudo apt-get install -y lolcat
-sudo apt install -y golang-go
 sudo apt install python3.9-venv
 sudo apt install dialog
 sudo apt -y install exploitdb
@@ -135,7 +134,7 @@ printf '\nDone!\n'
 
 #install go
 if [[ -z "$GOPATH" ]];then
-printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Parece que go não está instalado, gostaria de instalá-lo agora ?${CReset}"
+printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Parece que go não está instalado, gostaria de instalá-lo agora ?\n${CReset}"
 PS3="Por favor selecione uma opção : "
 choices=("yes" "no")
 select choice in "${choices[@]}"; do
