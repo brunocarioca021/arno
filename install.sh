@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+cat bash_profile >> ~/.bash_profile
+source ~/.bash_profile
+
 cd ~/
 git clone --quiet https://github.com/NRZCode/progressbar.git > /dev/null
 cp -r progressbar ~/.local > /dev/null
@@ -106,9 +109,6 @@ sudo pip3 install wfuzz
 sudo pip3 install holehe
 sudo gem install typhoeus
 sudo gem install opt_parse_validator
-
-cat bash_profile >> ~/.bash_profile
-source ~/.bash_profile
 
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando Brave${CReset}\n"
 sudo apt install apt-transport-https curl
