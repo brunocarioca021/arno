@@ -137,6 +137,7 @@ git clone --quiet https://github.com/nahamsec/recon_profile.git > /dev/null
 cd recon_profile
 cat bash_profile >> ~/.bash_profile
 source ~/.bash_profile
+cd ~
 printf "done"
 
 #install go
@@ -213,7 +214,7 @@ else
 go get github.com/michenriksen/aquatone
 wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_amd64_1.7.0.zip > /dev/null
 unzip aquatone_linux_amd64_1.7.0.zip > /dev/null
-sudo cp aquatone /usr/local/bin | rm -rf aquatone_linux_amd64_1.7.0.zip
+sudo mv aquatone /usr/local/bin | rm -rf aquatone_linux_amd64_1.7.0.zip LICENSE.txt README.md
 fi
 printf "done\n"
 
