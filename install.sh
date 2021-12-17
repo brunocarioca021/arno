@@ -89,6 +89,7 @@ sudo apt-get install -y aptitute
 sudo apt-get install -y synaptic
 sudo apt-get install -y dirsearch
 sudo apt-get install -y lolcat
+sudo apt install -y golang-go
 sudo apt install python3.9-venv
 sudo apt install dialog
 sudo apt -y install exploitdb
@@ -113,7 +114,7 @@ sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://b
 printf "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 sudo apt update
 sudo apt install brave-browser
-printf "done"
+printf "done\n"
 
 {
   git clone --quiet https://github.com/hacker3983/pyrit-installer "$HOME/.local/pyrit-installer"
@@ -121,7 +122,7 @@ printf "done"
 } >/dev/null 2>/dev/null &
 pid=$!
 
-message='\nInstalando Pyrit.\n'
+message='Instalando Pyrit.'
 while :; do
   signal='/ - \ |'
   for s in $signal; do
@@ -131,13 +132,6 @@ while :; do
   ps -p $pid > /dev/null || break
 done
 printf '\nDone!\n'
-
-printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando bash_profile aliases from recon_profile${CReset}\n"
-git clone --quiet https://github.com/nahamsec/recon_profile.git > /dev/null
-cd recon_profile
-cat bash_profile >> ~/.bash_profile
-source ~/.bash_profile
-printf "done"
 
 #install go
 if [[ -z "$GOPATH" ]];then
@@ -326,7 +320,7 @@ else
 	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Sublist3r${CReset}\n"
 git clone --quiet https://github.com/aboul3la/Sublist3r.git > /dev/null
 cd ~/tools/Sublist3r
-sudo chmod +x * && sudo python3 setup.py install | ~/progressbar/ProgressBar.sh
+sudo chmod +x * && sudo python3 setup.py install
 pip install -r requirements.txt
 ln -sf sublist3r.py /usr/bin/sublist3r
 cd ~/tools/
@@ -335,6 +329,8 @@ printf "done\n"
 
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando takeover${CReset}\n"
 git clone --quiet https://github.com/m4ll0k/takeover.git > /dev/null
+sudo chmod +x * && sudo python3 setup.py install
+ln -sf takeover.py /usr/bin/takeover
 cd ~/tools/
 printf "done\n"
 
@@ -342,7 +338,7 @@ printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando wpscan${CRes
 git clone --quiet https://github.com/wpscanteam/wpscan.git > /dev/null
 cd ~/tools/wpscan
 sudo chmod +x *
-sudo gem install bundler && bundle install --without test | ~/progressbar/ProgressBar.sh
+sudo gem install bundler && bundle install --without test
 cd ~/tools/wpscan/bin && sudo cp wpscan /usr/local/bin
 cd ~/tools/
 printf "done\n"
@@ -395,8 +391,8 @@ printf "done\n"
 
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando massdns${CReset}\n"
 git clone --quiet https://github.com/blechschmidt/massdns.git > /dev/null
-cd ~/tools/massdns
-make
+cd ~/tools/massdns/bin
+sudo cp ~/go/bin
 cd ~/tools/
 printf "done\n"
 
@@ -418,15 +414,10 @@ printf "done\n"
 
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando theHarvester${CReset}\n"
 git clone --quiet https://github.com/laramies/theHarvester > /dev/null
-cd ~/tools/theHarvester/bin && sudo cp theHarvester /usr/local/bin
+cd ~/tools/theHarvester/bin && sudo cp theHarvester /usr/local/bin && cd ~/tools/theharvester
+pip3 install -r requirements.txt
+sudo chmod +x * && sudo python3 setup.py install
 docker build -t theharvester .
-cd ~/tools/
-printf "done\n"
-
-printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando Karma${CReset}\n"
-git clone --quiet https://github.com/decoxviii/karma.git > /dev/null
-cd ~/tools/karma
-sudo -H pip3 install -r requirements.txt
 cd ~/tools/
 printf "done\n"
 
