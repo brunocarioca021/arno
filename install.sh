@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-sudo mv .bash_profile $HOME
 cd ~/
 git clone --quiet https://github.com/NRZCode/progressbar.git > /dev/null
 cp -r progressbar ~/.local > /dev/null
@@ -134,9 +133,6 @@ while :; do
 done
 printf '\nDone!\n'
 
-cat bash_profile >> ~/.bash_profile
-source ~/.bash_profile
-
 #install go
 if [[ -z "$GOPATH" ]];then
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Parece que go não está instalado, gostaria de instalá-lo agora ?\n${CReset}"
@@ -156,7 +152,11 @@ select choice in "${choices[@]}"; do
 					printf 'export GOROOT=/usr/local/go' >> ~/.bash_profile
 					printf 'export GOPATH=$HOME/go'	>> ~/.bash_profile
 					printf 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile
+					printf 'export GOROOT=/usr/local/go' >> ~/.profile
+					printf 'export GOPATH=$HOME/go'	>> ~/.profile
+					printf 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.profile
 					source ~/.bash_profile
+					source ~/.profile
 					sleep 1
 					break
 					;;
