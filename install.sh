@@ -112,7 +112,7 @@ printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando Brave${CRese
 sudo apt install apt-transport-https curl
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 printf "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-sudo apt update
+sudo apt update && python3 -m pip install --upgrade pip
 sudo apt install brave-browser
 printf "done\n\n"
 
@@ -144,19 +144,27 @@ select choice in "${choices[@]}"; do
 
 					printf "\nInstalando Golang\n"
 					wget https://go.dev/dl/go1.17.5.linux-amd64.tar.gz 
-					sudo tar -xvf go1.17.5.linux-amd64.tar.gz 
+					sudo tar -xvf go1.17.5.linux-amd64.tar.gz && sudo rm -rf go1.17.5.linux-amd64.tar.gz
 					[[ -d /usr/local/go ]] || mv go /usr/local/go
 					export GOROOT=/usr/local/go
 					export GOPATH=$HOME/go
 					export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+					export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 					printf 'export GOROOT=/usr/local/go' >> ~/.bash_profile
 					printf 'export GOPATH=$HOME/go'	>> ~/.bash_profile
 					printf 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile
+					printf 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin'  >> ~/.bash_profile
 					printf 'export GOROOT=/usr/local/go' >> ~/.profile
 					printf 'export GOPATH=$HOME/go'	>> ~/.profile
 					printf 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.profile
+					printf 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin'  >> ~/.profile
+					printf 'export GOROOT=/usr/local/go' >> ~/.bashrc
+					printf 'export GOPATH=$HOME/go'	>> ~/.bashrc
+					printf 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bashrc
+					printf 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin'  >> ~/.bashrc
 					source ~/.bash_profile
 					source ~/.profile
+					source ~/.bashrc
 					sleep 1
 					break
 					;;
@@ -203,12 +211,12 @@ knockpy="/usr/bin/knockpy"
 
 # Aquatone
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Aquatone${CReset}\n"
-if [ -f $aquatone ];then
+if [[ -f $aquatone ]];then
 	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
 	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"	
 	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Aquatone${CReset}\n"
-go get github.com/michenriksen/aquatone
+	go get github.com/michenriksen/aquatone
 wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_amd64_1.7.0.zip > /dev/null
 unzip aquatone_linux_amd64_1.7.0.zip > /dev/null
 sudo mv aquatone /usr/local/bin | rm -rf aquatone_linux_amd64_1.7.0.zip LICENSE.txt README.md
@@ -217,107 +225,107 @@ printf "done\n"
 
 # Gau
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Gau${CReset}\n"
-if [ -f $gau ];then
+if [[ -f $gau ]];then
 	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
 	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"	
 	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Gau${CReset}\n"
-GO111MODULE=on go get -u -v github.com/lc/gau
+	GO111MODULE=on go get -u -v github.com/lc/gau
 fi
 printf "done\n"
 
 # Subfinder
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Subfinder${CReset}\n"
-if [ -f $subfinder ];then
+if [[ -f $subfinder ]];then
 	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
 	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
 	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Subfinder${CReset}\n"
-go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+	go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 fi
 printf "done\n"
 
 # Httpx
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Httpx${CReset}\n"
-if [ -f "$httpx" ];then
+if [[ -f "$httpx" ]];then
 	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
 	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
 	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Httpx${CReset}\n"
-go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+	go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 fi
 printf "done\n"
 
 # Gobuster
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Gobuster${CReset}\n"
-if [ -f $gobuster ];then
+if [[ -f $gobuster ]];then
 	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
 	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
 	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Gobuster${CReset}\n"
-go install github.com/OJ/gobuster/v3@latest
+	go install github.com/OJ/gobuster/v3@latest
 fi
 printf "done\n"
 
 # Assetfinder
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Assetfinder${CReset}\n"
-if [ -f $assetfinder ];then
+if [[ -f $assetfinder ]];then
 	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
 	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
 	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Assetfinder${CReset}\n"
-go get -u github.com/tomnomnom/assetfinder
+	go get -u github.com/tomnomnom/assetfinder
 fi
 printf "done\n"
 
 # Waybackurls
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando waybackurls${CReset}\n"
-if [ -f $waybackurls ];then
+if [[ -f $waybackurls ]];then
 	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
 	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
 	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando waybackurls${CReset}\n"
-go get -u github.com/tomnomnom/waybackurls
+	go get -u github.com/tomnomnom/waybackurls
 fi
 printf "done\n"
 
 # GF
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando GF${CReset}\n"
-if [ -f $gf ];then
+if [[ -f $gf ]];then
 	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
 	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
 	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando GF${CReset}\n"
-go get -u github.com/tomnomnom/gf
+	go get -u github.com/tomnomnom/gf
 printf 'source $GOPATH/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc
 fi
 printf "done\n"
 
 # Httprobe
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando httprobe${CReset}\n"
-if [ -f $httprobe ];then
+if [[ -f $httprobe ]];then
 	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
 	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
 	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando httprobe${CReset}\n"
-go get -u github.com/tomnomnom/httprobe
+	go get -u github.com/tomnomnom/httprobe
 fi
 printf "done\n"
 
 # Unfurl
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando unfurl${CReset}\n"
-if [ -f $unfurl ];then
+if [[ -f $unfurl ]];then
 	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
 	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
 	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando unfurl${CReset}\n"
-go get -u github.com/tomnomnom/unfurl
+	go get -u github.com/tomnomnom/unfurl
 fi
 printf "done\n"
 
 # Sublist3r
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Sublist3r${CReset}\n"
-if [ -f $sublist3r ];then
+if [[ -f $sublist3r ]];then
 	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
 	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
@@ -333,6 +341,7 @@ printf "done\n"
 
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando takeover${CReset}\n"
 git clone --quiet https://github.com/m4ll0k/takeover.git > /dev/null
+cd ~/tools/takeover
 sudo chmod +x * && sudo python3 setup.py install
 ln -sf takeover.py /usr/bin/takeover
 cd ~/tools/
@@ -364,7 +373,7 @@ printf "done\n"
 
 # Knock
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando knock${CReset}\n"
-if [ -f $knockpy ];then
+if [[ -f $knockpy ]];then
 	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
 	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
@@ -382,9 +391,9 @@ printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando Infoga${CRes
 git clone --quiet https://github.com/m4ll0k/Infoga.git > /dev/null
 cd ~/tools/Infoga
 wget https://bootstrap.pypa.io/pip/2.7/get-pip.py > /dev/null
-python get-pip.py
-pip2 install -r requirements.txt
-sudo chmod +x * && python setup.py install
+python3 get-pip.py
+pip3 install -r requirements.txt
+sudo chmod +x * && sudo python3 setup.py install
 cd ~/tools/
 printf "done\n"
 
@@ -395,8 +404,8 @@ printf "done\n"
 
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando massdns${CReset}\n"
 git clone --quiet https://github.com/blechschmidt/massdns.git > /dev/null
-cd ~/tools/massdns/bin
-sudo cp ~/go/bin
+cd ~/tools/massdns/ && sudo chmod +x * && make
+sudo cp ~/tools/massdns/bin/massdns /usr/local/bin
 cd ~/tools/
 printf "done\n"
 
@@ -418,7 +427,7 @@ printf "done\n"
 
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando theHarvester${CReset}\n"
 git clone --quiet https://github.com/laramies/theHarvester > /dev/null
-cd ~/tools/theHarvester/bin && sudo cp theHarvester /usr/local/bin && cd ~/tools/theharvester
+cd ~/tools/theHarvester/bin && sudo cp theHarvester /usr/local/bin && cd ~/tools/theHarvester
 pip3 install -r requirements.txt
 sudo chmod +x * && sudo python3 setup.py install
 docker build -t theharvester .
@@ -428,8 +437,7 @@ printf "done\n"
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando Patterns${CReset}\n"
 git clone --quiet https://github.com/1ndianl33t/Gf-Patterns > /dev/null
 mkdir ~/.gf
-mv ~/Gf-Patterns/*.json ~/.gf
-rm -rf GF-Patterns
+mv ~/tools/Gf-Patterns/*.json ~/.gf && rm -rf ~/tools/Gf-Patterns
 cd ~/tools/
 printf "done\n"
 
@@ -449,8 +457,6 @@ cat dns-Jhaddix.txt | head -n -14 > clean-jhaddix-dns.txt
 cd ~/tools/
 printf "done\n"
 
-cd ~/go/bin && sudo cp * /usr/local/bin/
-
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Done! Todas as ferramentas estão configuradas em ~/tools${CReset}\n"
 ls -Slha
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Uma última vez: não se esqueça de configurar as credenciais da AWS em ~/.aws/!${CReset}\n"
@@ -461,6 +467,8 @@ sudo apt-get -y update
 sudo apt-get -y autoremove
 sudo apt-get -y autoclean
 sudo updatedb
+
+cd ~/go/bin && sudo cp * /usr/local/bin/
 
 #limpar tela
 printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Deseja limpar a sua tela?${CReset}\n"
