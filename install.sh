@@ -23,7 +23,7 @@ function load_ansi_colors() {
 }
 
 banner() {
-  echo ' █████╗ ██████╗ ███╗   ██╗ ██████╗ 
+  echo ' █████╗ ██████╗ ███╗   ██╗ ██████╗
 ██╔══██╗██╔══██╗████╗  ██║██╔═══██╗
 ███████║██████╔╝██╔██╗ ██║██║   ██║
 ██╔══██║██╔══██╗██║╚██╗██║██║   ██║
@@ -139,41 +139,35 @@ printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Parece que go não est�
 PS3="Por favor selecione uma opção : "
 choices=("yes" "no")
 select choice in "${choices[@]}"; do
-        case $choice in
-                yes)
+  case $choice in
+    yes)
 
-					printf "\nInstalando Golang\n"
-					wget https://go.dev/dl/go1.17.5.linux-amd64.tar.gz 
-					sudo tar -xvf go1.17.5.linux-amd64.tar.gz && sudo rm -rf go1.17.5.linux-amd64.tar.gz
-					[[ -d /usr/local/go ]] || mv go /usr/local/go
-					export GOROOT=/usr/local/go
-					export GOPATH=$HOME/go
-					export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-					export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-					printf 'export GOROOT=/usr/local/go' >> ~/.bash_profile
-					printf 'export GOPATH=$HOME/go'	>> ~/.bash_profile
-					printf 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile
-					printf 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin'  >> ~/.bash_profile
-					printf 'export GOROOT=/usr/local/go' >> ~/.profile
-					printf 'export GOPATH=$HOME/go'	>> ~/.profile
-					printf 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.profile
-					printf 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin'  >> ~/.profile
-					printf 'export GOROOT=/usr/local/go' >> ~/.bashrc
-					printf 'export GOPATH=$HOME/go'	>> ~/.bashrc
-					printf 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bashrc
-					printf 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin'  >> ~/.bashrc
-					source ~/.bash_profile
-					source ~/.profile
-					source ~/.bashrc
-					sleep 1
-					break
-					;;
-				no)
-					printf "Por favor, instale go e execute novamente este script"
-					printf "Abortando instalação..."
-					exit 1
-					;;
-	esac
+      printf "\nInstalando Golang\n"
+      if [[ ! -d /usr/local/go ]]; then
+        wget -O /tmp/go1.17.5.linux-amd64.tar.gz https://go.dev/dl/go1.17.5.linux-amd64.tar.gz
+        tar -xvf /tmp/go1.17.5.linux-amd64.tar.gz
+        mv go /usr/local/go
+      fi
+      export GOROOT=/usr/local/go
+      export GOPATH=$HOME/go
+      export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+      if ! grep -qE 'GOPATH|GOROOT' $HOME/.profile; then
+        cat <<EOT >> $HOME/.profile
+
+GOROOT=/usr/local/go
+GOPATH=\$HOME/go
+PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+EOT
+      fi
+      sleep 1
+      break
+      ;;
+    no)
+      printf "Por favor, instale go e execute novamente este script"
+      printf "Abortando instalação..."
+      exit 1
+      ;;
+  esac
 done
 fi
 
@@ -188,6 +182,7 @@ printf "${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Não se esqueça de configu
 mkdir -p ~/{tools,.local/bin}
 if ! grep -q '.local/bin' $HOME/.profile; then
   cat <<EOF >> $HOME/.profile
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "\$HOME/.local/bin" ] ; then
     PATH="\$HOME/.local/bin:\$PATH"
@@ -214,7 +209,7 @@ printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Aquatone${CRes
 if [[ -f $aquatone ]];then
 	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
-	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"	
+	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
 	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Aquatone${CReset}\n"
 	go get github.com/michenriksen/aquatone
 wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_amd64_1.7.0.zip > /dev/null
@@ -228,7 +223,7 @@ printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Checando Gau${CReset}\n
 if [[ -f $gau ]];then
 	printf "\n\n${CBold}${CFGGreen}Encontrado${CReset}\n"
 else
-	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"	
+	printf "\n${CBold}${CFGRed}Não Encontrado${CReset}\n"
 	printf "\n\n${CBold}${CFGBlue}[${CFGRed}+${CFGBlue}] Instalando Gau${CReset}\n"
 	GO111MODULE=on go get -u -v github.com/lc/gau
 fi
