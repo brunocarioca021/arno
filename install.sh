@@ -112,7 +112,7 @@ printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] Instalando Brave${CRese
 sudo apt install apt-transport-https curl
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 printf "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-sudo apt update && sudo python3 -m pip install --upgrade pip
+sudo apt -y update && sudo python3 -m pip install --upgrade pip
 sudo apt install -y brave-browser
 printf "done\n\n"
 
