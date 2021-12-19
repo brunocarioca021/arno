@@ -2,6 +2,7 @@
 Ferramenta em script shell Completa para Bug bounty ou Pentest ! Vai poupar 90% do seu Tempo na hora de configurar sua máquina para trabalhar.
 Ela configura já todas as ferramentas para você trabalhar, você não vai precisar configurar manualmente.
 
+<script src="https://asciinema.org/a/14.js" id="Pr9tgXyydpsFB9Fkqlim6kr0O" async data-autoplay="true" data-size="big"></script>
 
 ## Ferramenta atualiza todo diretório kali-linux e todas dependências necessárias para trabalhar
    - tor, argparse, requests, proxychains4, aptitude, Seclists, synaptic, brave, hashcat, docker.io, exploitdb-papers, exploitdb-bin-sploits etc...
