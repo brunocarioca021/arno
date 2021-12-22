@@ -52,7 +52,7 @@ init_install() {
   mkdir -p "$srcdir"
   apt update
   # REQUIREMENTS
-  apt -y install python3-pip apt-transport-https curl
+  apt -y install python3-pip apt-transport-https curl libcurl4-openssl-dev libssl-dev jq ruby-full libcurl4-openssl-dev libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev perl libio-socket-ssl-perl libdbd-sqlite3-perl libclass-dbi-perl libio-all-lwp-perl libparallel-forkmanager-perl libredis-perl libalgorithm-combinatorics-perl cvs subversion git bzr mercurial build-essential libssl-dev libffi-dev python-dev python2-dev python2 python-dev-is-python3 ruby-ffi-yajl python-setuptools libldns-dev python-pip python-dnspython git nmap rename xargs docker.io parsero apache2 amass ssh tor privoxy wifite proxychains4 hashcat aptitute synaptic lolcat python3.9-venv dialog golang-go exploitdb exploitdb-papers exploitdb-bin-sploits reaver bats
 
   print_message 'Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar seu Tempo na hora de configurar sua máquina para trabalhar.'
   printf "\n${CBold}${CFGWhite}=====================================================>${CReset}\n\n"
@@ -69,7 +69,7 @@ init_install() {
         fi
         break
         ;;
-      no) printf "\n\n${CBold}${CFGYellow}[${CFGRed}+${CFGYellow}] continuando com a instalação...${CReset}\n"
+      no) print_message 'continuando com a instalação...'
         break
         ;;
       *) printf '\nOpção inválida\n'
@@ -84,7 +84,7 @@ git_install() {
     printf 'ERROR: Não foi possível instalar %s\n' "$1"
     return 1
   fi
-  git -C "$srcdir" clone "$repo"
+  git -C "$srcdir" clone -q "$repo"
   if [[ $app ]]; then
     ln -sf "$srcdir/${1#*/}/$app" "$bindir/$app"
   fi
