@@ -122,28 +122,28 @@ tools=(
   Ngrok
   Sherlock
   ZPhisher
-#  pwndb
-#  phoneinfoga
-#  twitter-info
-#  sayhello
-#  osintgram
-#  seeker
-#  saycheese
-#  anon-sms
-#  sublist3r
-#  takeover
-#  dirsearch
-#  sqlmap
-#  knock
-#  Infoga
-#  gittools
-#  massdns
-#  anonsurf
-#  paramspider
-#  theHarvester
-#  gf-patterns
-#  socialfish
-#  seclists
+  pwndb
+  phoneinfoga
+  twitter-info
+  sayhello
+  osintgram
+  seeker
+  saycheese
+  anon-sms
+  sublist3r
+  takeover
+  dirsearch
+  sqlmap
+  knock
+  Infoga
+  gittools
+  massdns
+  anonsurf
+  paramspider
+  theHarvester
+  gf-patterns
+  socialfish
+  seclists
 )
 selection="$*"
 if [[ $# == 0 ]]; then
@@ -269,7 +269,7 @@ for tool in $selection; do
         print_message 'Instalando Infoga'
         git_install 'm4ll0k/Infoga'
         wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
-        pip3 install -r "$srcdir/Infoga/requirements.txt" 
+        pip3 install -r "$srcdir/Infoga/requirements.txt"
         python3 "$srcdir/Infoga/setup.py" install
         ;;
       gittools)
@@ -279,7 +279,7 @@ for tool in $selection; do
       massdns)
         print_message 'Instalando massdns'
         git_install 'blechschmidt/massdns'
-        make "$srcdir/massdns/" 
+        make "$srcdir/massdns/"
         cp "$srcdir/massdns/bin/massdns" /usr/local/bin
         ;;
       anonsurf)
