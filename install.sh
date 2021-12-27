@@ -194,45 +194,31 @@ for tool in $selection; do
       pwndb)
         print_message 'Instalando pwndb'
         git_install 'davidtavarez/pwndb'
-        cd pwndb
-        apt-get install virtualenv
         virtualenv venv
         source venv/bin/activate
-        pip install -r requirements.txt
+        pip install -r "$srcdir/pwndb/requirements.txt"
         ;;
       phoneinfoga)
         print_message 'Instalando phoneinfoga'
         curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install | bash
-        sudo mv ./phoneinfoga /usr/bin/phoneinfoga
-        ;;
-      twintproject)
-        print_message 'Instalando twintproject'
-        git_install --depth=1 'twintproject/twint'
-        cd twint/
-        pip3 install -r requirements.txt
-        sudo chmod +x * && sudo python3 setup.py install
         ;;
       twitter-info)
         print_message 'Instalando Twitter-info'
         git_install 'D4Vinci/Twitter-Info'
-        cd Twitter-Info/
-        pip3 install -r requirements.txt
         ;;
       sayhello)
         print_message 'Instalando sayhello'
-        git_install 'thelinuxchoice/sayhello'
+        git_install 'd093w1z/sayhello.git'
         ;;
       osintgram)
         print_message 'Instalando Osintgram'
         git_install 'Datalux/Osintgram'
-        cd Osintgram/
         python3 -m venv venv
-        pip install -r requirements.txt
+        pip install -r "$srcdir/Osintgram/requirements.txt"
         ;;
       seeker)
         print_message 'Instalando seeker'
         git_install 'thewhiteh4t/seeker'
-        cd seeker/ && pip3 install requests
         ;;
       saycheese)
         print_message 'Instalando saycheese'
@@ -245,60 +231,45 @@ for tool in $selection; do
       the-endorser)
         print_message 'Instalando the-endorser'
         git_install 'eth0izzle/the-endorser'
-        sudo pip3 install -r requirements.txt
-        sudo apt-get install -y graphviz
+        pip3 install -r "$srcdir/the-endorser/requirements.txt"
         ;;
       sublist3r)
         print_message 'Instalando Sublist3r'
         git_install 'aboul3la/Sublist3r'
-        cd Sublist3r
-        sudo chmod +x * && sudo python3 setup.py install
-        pip install -r requirements.txt
-        ln -sf sublist3r.py /usr/bin/sublist3r
+        pip install -r "$srcdir/Sublist3r/requirements.txt"
+        python3 "$srcdir/Sublist3r/setup.py" install
+        ln -sf "$srcdir/Sublist3r/sublist3r.py" /usr/bin/sublist3r
         ;;
       takeover)
         print_message 'Instalando takeover'
         git_install 'm4ll0k/takeover'
-        cd takeover
-        sudo chmod +x * && sudo python3 setup.py install
-        ln -sf takeover.py /usr/bin/takeover
-        ;;
-      wpscan)
-        print_message 'Instalando wpscan'
-        git_install 'wpscanteam/wpscan'
-        cd wpscan
-        sudo chmod +x *
-        sudo gem install bundler && bundle install --without test
-        wpscan/bin && sudo cp wpscan /usr/local/bin
+        chmod +x * | python3 "$srcdir/takeover/setup.py" install
+        ln -sf "$srcdir/takeover/takeover.py" /usr/bin/takeover
         ;;
       dirsearch)
         print_message 'Instalando dirsearch'
         git_install 'maurosoria/dirsearch'
-        cd /usr/share/dirsearch
-        sudo chmod +x * && sudo python3 setup.py install
-        pip3 install -r requirements.txt
-        ln -sf dirsearch.py /usr/bin/dirsearch
+        pip3 install -r "$srcdir/dirsearch/requirements.txt"
+        python3 "$srcdir/dirsearch/setup.py" install
+        ln -sf "$srcdir/dirsearch/dirsearch.py" /usr/bin/dirsearch
         ;;
       sqlmap)
         print_message 'Instalando sqlmap'
-        git_install --depth 1 'sqlmapproject/sqlmap' sqlmap-dev
+        git_install 'sqlmapproject/sqlmap' sqlmap-dev
         ;;
       knock)
         print_message 'Instalando knock'
         git_install 'guelfoweb/knock'
-        cd knock
-        sudo chmod +x * && sudo python3 setup.py install
-        pip3 install -r requirements.txt
-        ln -sf knockpy.py /usr/bin/knockpy
+        pip3 install -r "$srcdir/knock/requirements.txt"
+        python3 "$srcdir/knock/setup.py" install
+        ln -sf "$srcdir/knock/knockpy.py" /usr/bin/knockpy
         ;;
       infoga)
         print_message 'Instalando Infoga'
         git_install 'm4ll0k/Infoga'
-        cd Infoga
         wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
-        python3 get-pip.py
-        pip3 install -r requirements.txt
-        sudo chmod +x * && sudo python3 setup.py install
+        pip3 install -r "$srcdir/Infoga/requirements.txt" 
+        python3 "$srcdir/Infoga/setup.py" install
         ;;
       gittools)
         print_message 'Instalando GitTools'
@@ -307,49 +278,44 @@ for tool in $selection; do
       massdns)
         print_message 'Instalando massdns'
         git_install 'blechschmidt/massdns'
-        cd massdns/ && sudo chmod +x * && make
-        sudo cp ~/tools/massdns/bin/massdns /usr/local/bin
+        make "$srcdir/massdns/" 
+        cp "$srcdir/massdns/bin/massdns" /usr/local/bin
         ;;
       anonsurf)
         print_message 'Instalando anonsurf'
         git_install 'Und3rf10w/kali-anonsurf'
-        cd kali-anonsurf
-        sudo chmod +x * && sudo ./installer.sh
+        ./installer.sh "$srcdir/kali-anonsurf/"
         ;;
       paramspider)
         print_message 'Instalando ParamSpider'
         git_install 'devanshbatham/ParamSpider'
-        cd ParamSpider
-        pip3 install -r requirements.txt
+        pip3 install -r "$srcdir/ParamSpider/requirements.txt"
         ln -sf $PWD/paramspider.py /usr/bin/
         ;;
-      theharvester)
+      theHarvester)
         print_message 'Instalando theHarvester'
         git_install 'laramies/theHarvester'
-        cd theHarvester/bin && sudo cp theHarvester /usr/local/bin && theHarvester
-        pip3 install -r requirements.txt
-        sudo chmod +x * && sudo python3 setup.py install
-        docker build -t theharvester .
+        pip3 install -r "$srcdir/theHarvester/requirements.txt"
+        python3 "$srcdir/theHarvester/setup.py" install
+        docker -t build "$srcdir/theHarvester/" theharvester .
+        cp "$srcdir/theHarvester/bin/theHarvester" /usr/local/bin
         ;;
       gf-patterns)
         print_message 'Instalando Gf-Patterns'
         git_install '1ndianl33t/Gf-Patterns'
         mkdir ~/.gf
-        mv ~/tools/Gf-Patterns/*.json ~/.gf && rm -rf ~/tools/Gf-Patterns
+        mv "$srcdir/Gf-Patterns/*.json" ~/.gf && rm -rf "$srcdir/Gf-Patterns"
         ;;
       socialfish)
         print_message 'SecLists SocialFish'
         git_install 'UndeadSec/SocialFish'
-        sudo apt-get install python3 python3-pip python3-dev -y
-        cd SocialFish
-        python3 -m pip install -r requirements.txt
+        python3 -m pip install -r "$srcdir/SocialFish/requirements.txt"
         ;;
       seclists)
         print_message 'Instalando SecLists'
         git_install 'danielmiessler/SecLists.git'
-        cd SecLists/Discovery/DNS/
         ##ESTE ARQUIVO QUEBRA MASSAS E PRECISA SER LIMPO
-        cat dns-Jhaddix.txt | head -n -14 > clean-jhaddix-dns.txt
+        cat "$srcdir/SecLists/Discovery/DNS/dns-Jhaddix.txt" | head -n -14 > clean-jhaddix-dns.txt
         ;;
       go)
         if [[ -z "$GOPATH" ]]; then
