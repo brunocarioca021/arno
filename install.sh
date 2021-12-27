@@ -54,7 +54,7 @@ init_install() {
   # REQUIREMENTS
   apt -y install python3-pip apt-transport-https curl libcurl4-openssl-dev libssl-dev jq ruby-full libcurl4-openssl-dev libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev perl libio-socket-ssl-perl libdbd-sqlite3-perl libclass-dbi-perl libio-all-lwp-perl libparallel-forkmanager-perl libredis-perl libalgorithm-combinatorics-perl cvs subversion git bzr mercurial build-essential libssl-dev libffi-dev python-dev python2-dev python2 python-dev-is-python3 ruby-ffi-yajl python-setuptools libldns-dev python-pip python-dnspython git nmap rename docker.io parsero apache2 amass ssh tor privoxy wifite proxychains4 hashcat aptitude synaptic lolcat python3.9-venv dialog golang-go exploitdb exploitdb-papers exploitdb-bin-sploits reaver bats
   pip3 install argparse osrframework py-altdns==1.0.2 requests wfuzz holehe
-  pip install one-lin3r
+  pip install one-lin3r bluto
   gem install typhoeus opt_parse_validator
 
   print_message 'Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar seu Tempo na hora de configurar sua máquina para trabalhar.'
