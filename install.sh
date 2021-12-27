@@ -51,8 +51,8 @@ init_install() {
   apt update
   # REQUIREMENTS
   apt -y install python3-pip apt-transport-https curl libcurl4-openssl-dev libssl-dev jq ruby-full libcurl4-openssl-dev libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev perl libio-socket-ssl-perl libdbd-sqlite3-perl libclass-dbi-perl libio-all-lwp-perl libparallel-forkmanager-perl libredis-perl libalgorithm-combinatorics-perl cvs subversion git bzr mercurial build-essential libssl-dev libffi-dev python2-dev python2 python-dev-is-python3 ruby-ffi-yajl python-setuptools libldns-dev git nmap rename docker.io parsero apache2 amass ssh tor privoxy wifite proxychains4 hashcat aptitude synaptic lolcat python3.9-venv dialog golang-go exploitdb exploitdb-papers exploitdb-bin-sploits reaver bats
-  sudo -H -E -u $SUDO_USER pip3 install argparse osrframework py-altdns==1.0.2 requests wfuzz holehe twint
-  sudo -H -E -u $SUDO_USER pip install one-lin3r bluto dnspython requests win_unicode_console colorama
+  sudo $SUDO_OPT pip3 install argparse osrframework py-altdns==1.0.2 requests wfuzz holehe twint
+  sudo $SUDO_OPT pip install one-lin3r bluto dnspython requests win_unicode_console colorama
   gem install typhoeus opt_parse_validator blunder wpscan
 
   print_message 'Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar seu Tempo na hora de configurar sua máquina para trabalhar.'
@@ -64,8 +64,8 @@ init_install() {
       yes)
         printf '\natualizando..\n'
         apt -y upgrade
-        sudo -H -E -u $SUDO_USER pip3 install --upgrade pip
-        sudo -H -E -u $SUDO_USER pip3 install --upgrade osrframework
+        sudo $SUDO_OPT pip3 install --upgrade pip
+        sudo $SUDO_OPT pip3 install --upgrade osrframework
         break
         ;;
       no) print_message 'continuando com a instalação...'
@@ -110,6 +110,7 @@ if [[ 0 != $EUID ]]; then
   printf 'Necessário executar esse script com privilégios de administrador!\nExecute:\n$ sudo ./%s\n' "$BASENAME"
   exit 1
 fi
+SUDO_OPT="-H -E -u $SUDO_USER"
 
 tools=(
   ProgressBar
@@ -121,28 +122,28 @@ tools=(
   Ngrok
   Sherlock
   ZPhisher
-  pwndb
-  phoneinfoga
-  twitter-info
-  sayhello
-  osintgram
-  seeker
-  saycheese
-  anon-sms
-  sublist3r
-  takeover
-  dirsearch
-  sqlmap
-  knock
-  Infoga
-  gittools
-  massdns
-  anonsurf
-  paramspider
-  theHarvester
-  gf-patterns
-  socialfish
-  seclists
+#  pwndb
+#  phoneinfoga
+#  twitter-info
+#  sayhello
+#  osintgram
+#  seeker
+#  saycheese
+#  anon-sms
+#  sublist3r
+#  takeover
+#  dirsearch
+#  sqlmap
+#  knock
+#  Infoga
+#  gittools
+#  massdns
+#  anonsurf
+#  paramspider
+#  theHarvester
+#  gf-patterns
+#  socialfish
+#  seclists
 )
 selection="$*"
 if [[ $# == 0 ]]; then
@@ -185,7 +186,7 @@ for tool in $selection; do
       sherlock)
         print_message 'Instalando sherlock'
         git_install 'sherlock-project/sherlock' 'sherlock/sherlock.py'
-        sudo -H -E -u $SUDO_USER pip3 install -r "$srcdir/sherlock/requirements.txt"
+        sudo $SUDO_OPT pip3 install -r "$srcdir/sherlock/requirements.txt"
         ;;
       zphisher)
         print_message 'Instalando zphisher'
@@ -328,35 +329,36 @@ for tool in $selection; do
           fi
           export GOROOT="$srcdir/go"
           export GOPATH="$HOME/go"
-          sudo -H -E -u $SUDO_USER bash -c '
-if ! grep -qE "GOPATH|GOROOT" $HOME/.profile; then
-  cat <<EOT >> $HOME/.profile
+          sudo $SUDO_OPT bash <<EOC
+if ! grep -qE "GOPATH|GOROOT" \$HOME/.profile; then
+  cat <<EOT >> \$HOME/.profile
 
 GOROOT=$srcdir/go
 GOPATH=\$HOME/go
 PATH=\$GOPATH/bin:\$GOROOT/bin:\$PATH
 EOT
-fi'
+fi
+EOC
         fi
+        print_message 'Instalando Ferramentas em GO'
+        sudo $SUDO_OPT bash <<EOC
+go get github.com/michenriksen/aquatone
+go get -u -v github.com/lc/gau
+go get -u github.com/tomnomnom/assetfinder
+go get -u github.com/tomnomnom/waybackurls
+go get -u github.com/tomnomnom/gf
+go get -u github.com/tomnomnom/httprobe
+go get -u github.com/tomnomnom/unfurl
+go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+go install github.com/OJ/gobuster/v3@latest
+EOC
         ;;
       awscli)
         #Não se esqueça de configurar as credenciais da AWS!
         print_message 'Não se esqueça de configurar as credenciais da AWS!'
         apt -y install awscli
         print_message 'Não se esqueça de configurar as credenciais da AWS!'
-        ;;
-      aquatone)
-        print_message 'Instalando Ferramentas em GO'
-        go get github.com/michenriksen/aquatone
-        go get -u -v github.com/lc/gau
-        go get -u github.com/tomnomnom/assetfinder
-        go get -u github.com/tomnomnom/waybackurls
-        go get -u github.com/tomnomnom/gf
-        go get -u github.com/tomnomnom/httprobe
-        go get -u github.com/tomnomnom/unfurl
-        go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-        go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
-        go install github.com/OJ/gobuster/v3@latest
         ;;
     esac
   fi
