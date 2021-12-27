@@ -4,8 +4,6 @@
 # * Defina srcdir, pode ser global (/usr/local ou /usr/local/src)
 # * ou local ($HOME/.local) para instalação das ferramentas
 # */
-export srcdir=${srcdir:-/usr/local}
-export bindir=${bindir:-$srcdir/bin}
 VERSION=0.0.2
 DIRNAME=${BASH_SOURCE[0]%/*}
 BASENAME=${BASH_SOURCE[0]##*/}
@@ -52,10 +50,10 @@ init_install() {
   mkdir -p "$srcdir"
   apt update
   # REQUIREMENTS
-  apt -y install python3-pip apt-transport-https curl libcurl4-openssl-dev libssl-dev jq ruby-full libcurl4-openssl-dev libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev perl libio-socket-ssl-perl libdbd-sqlite3-perl libclass-dbi-perl libio-all-lwp-perl libparallel-forkmanager-perl libredis-perl libalgorithm-combinatorics-perl cvs subversion git bzr mercurial build-essential libssl-dev libffi-dev python-dev python2-dev python2 python-dev-is-python3 ruby-ffi-yajl python-setuptools libldns-dev python-pip python-dnspython git nmap rename docker.io parsero apache2 amass ssh tor privoxy wifite proxychains4 hashcat aptitude synaptic lolcat python3.9-venv dialog golang-go exploitdb exploitdb-papers exploitdb-bin-sploits reaver bats
-  pip3 install argparse osrframework py-altdns==1.0.2 requests wfuzz holehe
-  pip install one-lin3r bluto
-  gem install typhoeus opt_parse_validator
+  apt -y install python3-pip apt-transport-https curl libcurl4-openssl-dev libssl-dev jq ruby-full libcurl4-openssl-dev libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev perl libio-socket-ssl-perl libdbd-sqlite3-perl libclass-dbi-perl libio-all-lwp-perl libparallel-forkmanager-perl libredis-perl libalgorithm-combinatorics-perl cvs subversion git bzr mercurial build-essential libssl-dev libffi-dev python2-dev python2 python-dev-is-python3 ruby-ffi-yajl python-setuptools libldns-dev git nmap rename docker.io parsero apache2 amass ssh tor privoxy wifite proxychains4 hashcat aptitude synaptic lolcat python3.9-venv dialog golang-go exploitdb exploitdb-papers exploitdb-bin-sploits reaver bats
+  sudo -H -E -u $SUDO_USER pip3 install argparse osrframework py-altdns==1.0.2 requests wfuzz holehe twint
+  sudo -H -E -u $SUDO_USER pip install one-lin3r bluto dnspython requests win_unicode_console colorama
+  gem install typhoeus opt_parse_validator blunder wpscan
 
   print_message 'Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar seu Tempo na hora de configurar sua máquina para trabalhar.'
   printf "\n${CBold}${CFGWhite}=====================================================>${CReset}\n\n"
@@ -66,11 +64,8 @@ init_install() {
       yes)
         printf '\natualizando..\n'
         apt -y upgrade
-        python3 -m pip install --upgrade pip
-        pip3 install --upgrade osrframework
-        if grep -iq kali /etc/issue; then
-          apt -y install kali-linux-default
-        fi
+        sudo -H -E -u $SUDO_USER pip3 install --upgrade pip
+        sudo -H -E -u $SUDO_USER pip3 install --upgrade osrframework
         break
         ;;
       no) print_message 'continuando com a instalação...'
@@ -85,13 +80,13 @@ git_install() {
   local repo="$giturl/$1"
   local app="$2"
   if [[ -d "$srcdir/${1#*/}" ]]; then
-    printf 'ERROR: Não foi possível instalar %s\n' "$1"
+    printf 'WARNING: O diretório %s já existe. Não foi possível executar git clone %s\n' "$1" "$1"
     return 1
   fi
   git -C "$srcdir" clone -q "$repo"
   if [[ $app ]]; then
     chmod +x "$srcdir/${1#*/}/$app"
-    ln -sf "$srcdir/${1#*/}/$app" "$bindir/$app"
+    ln -sf "$srcdir/${1#*/}/$app" "$bindir/${app##*/}"
   fi
 }
 
@@ -103,6 +98,9 @@ banner() {
 ██║  ██║██║  ██║██║ ╚████║╚██████╔╝
 ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝'
 }
+
+export srcdir=${srcdir:-/usr/local}
+export bindir=${bindir:-$srcdir/bin}
 
 banner
 load_ansi_colors
@@ -120,6 +118,31 @@ tools=(
   Go
   AwsCli
   Aquatone
+  Ngrok
+  Sherlock
+  ZPhisher
+  pwndb
+  phoneinfoga
+  twitter-info
+  sayhello
+  osintgram
+  seeker
+  saycheese
+  anon-sms
+  sublist3r
+  takeover
+  dirsearch
+  sqlmap
+  knock
+  Infoga
+  gittools
+  massdns
+  anonsurf
+  paramspider
+  theHarvester
+  gf-patterns
+  socialfish
+  seclists
 )
 selection="$*"
 if [[ $# == 0 ]]; then
@@ -145,7 +168,7 @@ for tool in $selection; do
       pyrit)
         print_message 'Instalando Pyrit'
         git_install 'hacker3983/pyrit-installer'
-        bash "$srcdir/pyrit-installer/install.sh" 2>&- 1>&2
+        bash "$srcdir/pyrit-installer/install.sh"
         ;;
       ngrok)
         print_message 'Instalando ngrok'
@@ -162,7 +185,7 @@ for tool in $selection; do
       sherlock)
         print_message 'Instalando sherlock'
         git_install 'sherlock-project/sherlock' 'sherlock/sherlock.py'
-        pip3 install -r "$srcdir/sherlock/requirements.txt"
+        sudo -H -E -u $SUDO_USER pip3 install -r "$srcdir/sherlock/requirements.txt"
         ;;
       zphisher)
         print_message 'Instalando zphisher'
