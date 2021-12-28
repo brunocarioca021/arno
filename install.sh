@@ -122,35 +122,35 @@ tools=(
   Ngrok
   Sherlock
   ZPhisher
-  pwndb
-  phoneinfoga
-  twitter-info
-  sayhello
-  osintgram
-  seeker
-  saycheese
-  anon-sms
-  sublist3r
-  takeover
-  dirsearch
-  sqlmap
-  knock
-  Infoga
-  gittools
-  massdns
-  anonsurf
-  paramspider
-  theHarvester
-  gf-patterns
-  socialfish
-  seclists
+#  pwndb
+#  phoneinfoga
+#  twitter-info
+#  sayhello
+#  osintgram
+#  seeker
+#  saycheese
+#  anon-sms
+#  sublist3r
+#  takeover
+#  dirsearch
+#  sqlmap
+#  knock
+#  Infoga
+#  gittools
+#  massdns
+#  anonsurf
+#  paramspider
+#  theHarvester
+#  gf-patterns
+#  socialfish
+#  seclists
 )
 selection="$*"
 if [[ $# == 0 ]]; then
   selection="${tools[*]}"
 fi
 
-init_install
+#init_install #@debug
 giturl='https://github.com'
 for tool in $selection; do
   if in_array "${tool,,}" "${tools[@],,}"; then
@@ -322,20 +322,26 @@ for tool in $selection; do
         if [[ -z "$GOPATH" ]]; then
           printf "\nInstalando Golang\n"
           apt -y install golang-go
-          export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
           if [[ ! -d "$srcdir/go" ]]; then
             wget -O /tmp/go1.17.5.linux-amd64.tar.gz https://go.dev/dl/go1.17.5.linux-amd64.tar.gz
             tar -C "$srcdir" -zxvf /tmp/go1.17.5.linux-amd64.tar.gz
           fi
-          export GOROOT="$srcdir/go"
-          export GOPATH="$HOME/go"
-          sudo $SUDO_OPT bash <<EOC
-if ! grep -qE "GOPATH|GOROOT" \$HOME/.profile; then
-  cat <<EOT >> \$HOME/.profile
+          sudo $SUDO_OPT bash <<'EOC'
+if ! grep -qE "GOPATH|GOROOT" $HOME/.profile; then
+  cat <<EOT >> $HOME/.profile
 
 GOROOT=$srcdir/go
-GOPATH=\$HOME/go
-PATH=\$GOPATH/bin:\$GOROOT/bin:\$PATH
+GOPATH="\$HOME/go"
+PATH="\$GOPATH/bin:\$GOROOT/bin:\$PATH"
+EOT
+fi
+if [[ zsh == ${SHELL##*/} ]] && ! grep -q '.profile' $HOME/.zprofile; then
+  cat <<EOT >> $HOME/.zprofile
+emulate sh
+if [ -r $HOME/.profile ]; then
+  . $HOME/.profile
+fi
+emulate zsh
 EOT
 fi
 EOC
