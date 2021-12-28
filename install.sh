@@ -124,26 +124,27 @@ tools=(
   ZPhisher
   pwndb
   phoneinfoga
-  twitter-info
+  Twitter-info
   sayhello
-  osintgram
+  Osintgram
   seeker
   saycheese
   anon-sms
+  the-endorser
   sublist3r
-  takeover
-  dirsearch
-  sqlmap
-  knock
-  Infoga
-  gittools
-  massdns
-  anonsurf
-  paramspider
-  theHarvester
-  gf-patterns
-  socialfish
-  seclists
+#  takeover
+#  dirsearch
+#  sqlmap
+#  knock
+#  Infoga
+#  gittools
+#  massdns
+#  anonsurf
+#  paramspider
+#  theHarvester
+#  gf-patterns
+#  socialfish
+#  seclists
 )
 selection="$*"
 if [[ $# == 0 ]]; then
@@ -190,40 +191,46 @@ for tool in $selection; do
         ;;
       zphisher)
         print_message 'Instalando zphisher'
-        git_install 'htr-tech/zphisher'
+        git_install 'htr-tech/zphisher' 'zphisher.sh'
         ;;
       pwndb)
         print_message 'Instalando pwndb'
-        git_install 'davidtavarez/pwndb'
-        virtualenv venv
-        source venv/bin/activate
-        pip install -r "$srcdir/pwndb/requirements.txt"
+        git_install 'davidtavarez/pwndb' 'pwndb.py'
+        sudo $SUDO_OPT pip3 install -r "$srcdir/pwndb/requirements.txt"
         ;;
       phoneinfoga)
         print_message 'Instalando phoneinfoga'
         curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install | bash
+        mv ./phoneinfoga "$bindir/phoneinfoga"
         ;;
       twitter-info)
         print_message 'Instalando Twitter-info'
-        git_install 'D4Vinci/Twitter-Info'
+        git_install 'D4Vinci/Twitter-Info' 'Twitter_info.py'
         ;;
       sayhello)
         print_message 'Instalando sayhello'
-        git_install 'd093w1z/sayhello.git'
+        git_install 'd093w1z/sayhello.git' 'sayhello.sh'
         ;;
       osintgram)
         print_message 'Instalando Osintgram'
         git_install 'Datalux/Osintgram'
-        python3 -m venv venv
-        pip install -r "$srcdir/Osintgram/requirements.txt"
+        sudo $SUDO_OPT pip3 install -r "$srcdir/Osintgram/requirements.txt"
+        cat <<EOF > "$bindir/osintgram.sh"
+#!/usr/bin/env bash
+echo 'Usage: osintgram.sh <target username> --command <command>'
+if [[ \$# -gt 0 ]]; then
+  python3 "$srcdir/Osintgram/main.py" \$*
+fi
+EOF
+        chmod +x "$bindir/osintgram.sh"
         ;;
       seeker)
         print_message 'Instalando seeker'
-        git_install 'thewhiteh4t/seeker'
+        git_install 'thewhiteh4t/seeker' 'seeker.py'
         ;;
       saycheese)
         print_message 'Instalando saycheese'
-        git_install 'hangetzzu/saycheese'
+        git_install 'hangetzzu/saycheese' 'saycheese.sh'
         ;;
       anon-sms)
         print_message 'Instalando Anon-SMS'
@@ -231,15 +238,14 @@ for tool in $selection; do
         ;;
       the-endorser)
         print_message 'Instalando the-endorser'
-        git_install 'eth0izzle/the-endorser'
-        pip3 install -r "$srcdir/the-endorser/requirements.txt"
+        git_install 'eth0izzle/the-endorser' 'the-endorser.py'
+        sudo $SUDO_OPT pip3 install -r "$srcdir/the-endorser/requirements.txt"
         ;;
       sublist3r)
         print_message 'Instalando Sublist3r'
         git_install 'aboul3la/Sublist3r'
-        pip install -r "$srcdir/Sublist3r/requirements.txt"
+        sudo $SUDO_OPT pip3 install -r "$srcdir/Sublist3r/requirements.txt"
         python3 "$srcdir/Sublist3r/setup.py" install
-        ln -sf "$srcdir/Sublist3r/sublist3r.py" /usr/bin/sublist3r
         ;;
       takeover)
         print_message 'Instalando takeover'
