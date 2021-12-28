@@ -122,35 +122,35 @@ tools=(
   Ngrok
   Sherlock
   ZPhisher
-#  pwndb
-#  phoneinfoga
-#  twitter-info
-#  sayhello
-#  osintgram
-#  seeker
-#  saycheese
-#  anon-sms
-#  sublist3r
-#  takeover
-#  dirsearch
-#  sqlmap
-#  knock
-#  Infoga
-#  gittools
-#  massdns
-#  anonsurf
-#  paramspider
-#  theHarvester
-#  gf-patterns
-#  socialfish
-#  seclists
+  pwndb
+  phoneinfoga
+  twitter-info
+  sayhello
+  osintgram
+  seeker
+  saycheese
+  anon-sms
+  sublist3r
+  takeover
+  dirsearch
+  sqlmap
+  knock
+  Infoga
+  gittools
+  massdns
+  anonsurf
+  paramspider
+  theHarvester
+  gf-patterns
+  socialfish
+  seclists
 )
 selection="$*"
 if [[ $# == 0 ]]; then
   selection="${tools[*]}"
 fi
 
-#init_install #@debug
+init_install
 giturl='https://github.com'
 for tool in $selection; do
   if in_array "${tool,,}" "${tools[@],,}"; then
