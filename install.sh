@@ -4,7 +4,7 @@
 # * Defina srcdir, pode ser global (/usr/local ou /usr/local/src)
 # * ou local ($HOME/.local) para instalação das ferramentas
 # */
-VERSION=0.0.2
+VERSION=0.0.5
 DIRNAME=${BASH_SOURCE[0]%/*}
 BASENAME=${BASH_SOURCE[0]##*/}
 
@@ -46,20 +46,30 @@ print_message() {
   fi
 }
 
+system_update() {
+  if [[ ! $is_updated ]]; then
+    apt update && is_updated=1
+  fi
+}
+
 init_install() {
   mkdir -p "$srcdir"
-  apt update
+  system_update
   # REQUIREMENTS
-  apt -y install python3-pip apt-transport-https curl libcurl4-openssl-dev libssl-dev jq ruby-full libcurl4-openssl-dev libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev perl libio-socket-ssl-perl libdbd-sqlite3-perl libclass-dbi-perl libio-all-lwp-perl libparallel-forkmanager-perl libredis-perl libalgorithm-combinatorics-perl cvs subversion git bzr mercurial build-essential libssl-dev libffi-dev python2-dev python2 python-dev-is-python3 ruby-ffi-yajl python-setuptools libldns-dev git nmap rename docker.io parsero apache2 amass ssh tor privoxy wifite proxychains4 hashcat aptitude synaptic lolcat python3.9-venv dialog golang-go exploitdb exploitdb-papers exploitdb-bin-sploits graphviz virtualenv reaver bats
-  sudo $SUDO_OPT pip3 install argparse osrframework py-altdns==1.0.2 requests wfuzz holehe twint
-  sudo $SUDO_OPT pip install one-lin3r bluto dnspython requests win_unicode_console colorama
-  gem install typhoeus opt_parse_validator blunder wpscan
+  if [[ ! -f $HOME/.local/.arno_init_install_successful ]]; then
+    apt -y install python3-pip apt-transport-https curl libcurl4-openssl-dev libssl-dev jq ruby-full libcurl4-openssl-dev libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev perl libio-socket-ssl-perl libdbd-sqlite3-perl libclass-dbi-perl libio-all-lwp-perl libparallel-forkmanager-perl libredis-perl libalgorithm-combinatorics-perl cvs subversion git bzr mercurial build-essential libssl-dev libffi-dev python2-dev python2 python-dev-is-python3 ruby-ffi-yajl python-setuptools libldns-dev git nmap rename docker.io parsero apache2 amass ssh tor privoxy wifite proxychains4 hashcat aptitude synaptic lolcat python3.9-venv dialog golang-go exploitdb exploitdb-papers exploitdb-bin-sploits graphviz virtualenv reaver bats
+    sudo $SUDO_OPT pip3 install argparse osrframework py-altdns==1.0.2 requests wfuzz holehe twint
+    sudo $SUDO_OPT pip install one-lin3r bluto dnspython requests win_unicode_console colorama
+    gem install typhoeus opt_parse_validator blunder wpscan
+    mkdir -p "$HOME/.local"
+    > $HOME/.local/.arno_init_install_successful
+  fi
 
   print_message 'Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar seu Tempo na hora de configurar sua máquina para trabalhar.'
   printf "\n${CBold}${CFGWhite}=====================================================>${CReset}\n\n"
   print_message 'Deseja Atualizar seu Linux? o tempo pode variar de acordo com sua máquina.'
   PS3="Por favor selecione uma opção : "
-  select opt in yes no;do
+  select opt in yes no; do
     case $opt in
       yes)
         printf '\natualizando..\n'
@@ -87,6 +97,14 @@ git_install() {
   if [[ $app ]]; then
     chmod +x "$srcdir/${1#*/}/$app"
     ln -sf "$srcdir/${1#*/}/$app" "$bindir/${app##*/}"
+  fi
+  if [[ -r "$srcdir/${1#*/}/requirements.txt" ]]; then
+    cd "$srcdir/${1#*/}"
+    sudo $SUDO_OPT pip3 -r requirements.txt
+  fi
+  if [[ -r "$srcdir/${1#*/}/setup.py" ]]; then
+    cd "$srcdir/${1#*/}"
+    sudo python3 setup.py install
   fi
 }
 
@@ -117,6 +135,7 @@ tools=(
   Brave
   Pyrit
   Go
+  go-tools
   AwsCli
   Aquatone
   Ngrok
@@ -131,20 +150,20 @@ tools=(
   saycheese
   anon-sms
   the-endorser
-  sublist3r
-#  takeover
-#  dirsearch
-#  sqlmap
-#  knock
-#  Infoga
-#  gittools
-#  massdns
-#  anonsurf
-#  paramspider
-#  theHarvester
-#  gf-patterns
-#  socialfish
-#  seclists
+  Sublist3r
+  takeover
+  dirsearch
+  sqlmap
+  knock
+  Infoga
+  gittools
+  massdns
+  anonsurf
+  paramspider
+  theHarvester
+  gf-patterns
+  socialfish
+  seclists
 )
 selection="$*"
 if [[ $# == 0 ]]; then
@@ -187,7 +206,6 @@ for tool in $selection; do
       sherlock)
         print_message 'Instalando sherlock'
         git_install 'sherlock-project/sherlock' 'sherlock/sherlock.py'
-        sudo $SUDO_OPT pip3 install -r "$srcdir/sherlock/requirements.txt"
         ;;
       zphisher)
         print_message 'Instalando zphisher'
@@ -196,7 +214,6 @@ for tool in $selection; do
       pwndb)
         print_message 'Instalando pwndb'
         git_install 'davidtavarez/pwndb' 'pwndb.py'
-        sudo $SUDO_OPT pip3 install -r "$srcdir/pwndb/requirements.txt"
         ;;
       phoneinfoga)
         print_message 'Instalando phoneinfoga'
@@ -214,7 +231,6 @@ for tool in $selection; do
       osintgram)
         print_message 'Instalando Osintgram'
         git_install 'Datalux/Osintgram'
-        sudo $SUDO_OPT pip3 install -r "$srcdir/Osintgram/requirements.txt"
         cat <<EOF > "$bindir/osintgram.sh"
 #!/usr/bin/env bash
 echo 'Usage: osintgram.sh <target username> --command <command>'
@@ -239,26 +255,18 @@ EOF
       the-endorser)
         print_message 'Instalando the-endorser'
         git_install 'eth0izzle/the-endorser' 'the-endorser.py'
-        sudo $SUDO_OPT pip3 install -r "$srcdir/the-endorser/requirements.txt"
         ;;
       sublist3r)
         print_message 'Instalando Sublist3r'
         git_install 'aboul3la/Sublist3r'
-        sudo $SUDO_OPT pip3 install -r "$srcdir/Sublist3r/requirements.txt"
-        python3 "$srcdir/Sublist3r/setup.py" install
         ;;
       takeover)
         print_message 'Instalando takeover'
         git_install 'm4ll0k/takeover'
-        chmod +x * | python3 "$srcdir/takeover/setup.py" install
-        ln -sf "$srcdir/takeover/takeover.py" /usr/bin/takeover
         ;;
       dirsearch)
         print_message 'Instalando dirsearch'
         git_install 'maurosoria/dirsearch'
-        pip3 install -r "$srcdir/dirsearch/requirements.txt"
-        python3 "$srcdir/dirsearch/setup.py" install
-        ln -sf "$srcdir/dirsearch/dirsearch.py" /usr/bin/dirsearch
         ;;
       sqlmap)
         print_message 'Instalando sqlmap'
@@ -267,16 +275,10 @@ EOF
       knock)
         print_message 'Instalando knock'
         git_install 'guelfoweb/knock'
-        pip3 install -r "$srcdir/knock/requirements.txt"
-        python3 "$srcdir/knock/setup.py" install
-        ln -sf "$srcdir/knock/knockpy.py" /usr/bin/knockpy
         ;;
       infoga)
         print_message 'Instalando Infoga'
         git_install 'm4ll0k/Infoga'
-        wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
-        pip3 install -r "$srcdir/Infoga/requirements.txt"
-        python3 "$srcdir/Infoga/setup.py" install
         ;;
       gittools)
         print_message 'Instalando GitTools'
@@ -295,15 +297,11 @@ EOF
         ;;
       paramspider)
         print_message 'Instalando ParamSpider'
-        git_install 'devanshbatham/ParamSpider'
-        pip3 install -r "$srcdir/ParamSpider/requirements.txt"
-        ln -sf $PWD/paramspider.py /usr/bin/
+        git_install 'devanshbatham/ParamSpider' 'paramspider.py'
         ;;
       theHarvester)
         print_message 'Instalando theHarvester'
         git_install 'laramies/theHarvester'
-        pip3 install -r "$srcdir/theHarvester/requirements.txt"
-        python3 "$srcdir/theHarvester/setup.py" install
         docker -t build "$srcdir/theHarvester/" theharvester .
         cp "$srcdir/theHarvester/bin/theHarvester" /usr/local/bin
         ;;
@@ -316,7 +314,6 @@ EOF
       socialfish)
         print_message 'SecLists SocialFish'
         git_install 'UndeadSec/SocialFish'
-        python3 -m pip install -r "$srcdir/SocialFish/requirements.txt"
         ;;
       seclists)
         print_message 'Instalando SecLists'
@@ -324,47 +321,22 @@ EOF
         ##ESTE ARQUIVO QUEBRA MASSAS E PRECISA SER LIMPO
         cat "$srcdir/SecLists/Discovery/DNS/dns-Jhaddix.txt" | head -n -14 > clean-jhaddix-dns.txt
         ;;
-      go)
-        if [[ -z "$GOPATH" ]]; then
-          printf "\nInstalando Golang\n"
-          apt -y install golang-go
-          if [[ ! -d "$srcdir/go" ]]; then
-            wget -O /tmp/go1.17.5.linux-amd64.tar.gz https://go.dev/dl/go1.17.5.linux-amd64.tar.gz
-            tar -C "$srcdir" -zxvf /tmp/go1.17.5.linux-amd64.tar.gz
-          fi
-          sudo $SUDO_OPT bash <<'EOC'
-if ! grep -qE "GOPATH|GOROOT" $HOME/.profile; then
-  cat <<EOT >> $HOME/.profile
-
-GOROOT=$srcdir/go
-GOPATH="\$HOME/go"
-PATH="\$GOPATH/bin:\$GOROOT/bin:\$PATH"
-EOT
-fi
-if [[ zsh == ${SHELL##*/} ]] && ! grep -q '.profile' $HOME/.zprofile; then
-  cat <<EOT >> $HOME/.zprofile
-emulate sh
-if [ -r $HOME/.profile ]; then
-  . $HOME/.profile
-fi
-emulate zsh
-EOT
-fi
-EOC
-        fi
+      go|go-tools)
+        print_message 'Instalando Golang'
+        system_update
+        apt -y install golang-go
         print_message 'Instalando Ferramentas em GO'
-        sudo $SUDO_OPT bash <<EOC
-go get github.com/michenriksen/aquatone
-go get -u -v github.com/lc/gau
-go get -u github.com/tomnomnom/assetfinder
-go get -u github.com/tomnomnom/waybackurls
-go get -u github.com/tomnomnom/gf
-go get -u github.com/tomnomnom/httprobe
-go get -u github.com/tomnomnom/unfurl
-go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
-go install github.com/OJ/gobuster/v3@latest
-EOC
+        export GOBIN=$bindir
+        go get github.com/michenriksen/aquatone
+        go get -u -v github.com/lc/gau
+        go get -u github.com/tomnomnom/assetfinder
+        go get -u github.com/tomnomnom/waybackurls
+        go get -u github.com/tomnomnom/gf
+        go get -u github.com/tomnomnom/httprobe
+        go get -u github.com/tomnomnom/unfurl
+        go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+        go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+        go install github.com/OJ/gobuster/v3@latest
         ;;
       awscli)
         #Não se esqueça de configurar as credenciais da AWS!
