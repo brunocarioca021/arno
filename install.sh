@@ -100,7 +100,7 @@ git_install() {
   fi
   if [[ -r "$srcdir/${1#*/}/requirements.txt" ]]; then
     cd "$srcdir/${1#*/}"
-    sudo $SUDO_OPT pip3 -r requirements.txt
+    sudo $SUDO_OPT pip3 install -r requirements.txt
   fi
   if [[ -r "$srcdir/${1#*/}/setup.py" ]]; then
     cd "$srcdir/${1#*/}"
@@ -135,7 +135,6 @@ tools=(
   Brave
   Pyrit
   Go
-  go-tools
   AwsCli
   Aquatone
   Ngrok
