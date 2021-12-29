@@ -100,7 +100,7 @@ git_install() {
   fi
   if [[ -r "$srcdir/${1#*/}/requirements.txt" ]]; then
     cd "$srcdir/${1#*/}"
-    sudo $SUDO_OPT pip3 -r requirements.txt
+    sudo $SUDO_OPT pip3 install -r requirements.txt
   fi
   if [[ -r "$srcdir/${1#*/}/setup.py" ]]; then
     cd "$srcdir/${1#*/}"
@@ -135,7 +135,6 @@ tools=(
   Brave
   Pyrit
   Go
-  go-tools
   AwsCli
   Aquatone
   Ngrok
@@ -226,7 +225,7 @@ for tool in $selection; do
         ;;
       sayhello)
         print_message 'Instalando sayhello'
-        git_install 'd093w1z/sayhello.git' 'sayhello.sh'
+        git_install 'd093w1z/sayhello' 'sayhello.sh'
         ;;
       osintgram)
         print_message 'Instalando Osintgram'
@@ -270,7 +269,7 @@ EOF
         ;;
       sqlmap)
         print_message 'Instalando sqlmap'
-        git_install 'sqlmapproject/sqlmap' sqlmap-dev
+        git_install 'sqlmapproject/sqlmap' 'sqlmap.py'
         ;;
       knock)
         print_message 'Instalando knock'
@@ -286,14 +285,14 @@ EOF
         ;;
       massdns)
         print_message 'Instalando massdns'
-        git_install 'blechschmidt/massdns'
-        make "$srcdir/massdns/"
-        cp "$srcdir/massdns/bin/massdns" /usr/local/bin
+        git_install 'blechschmidt/massdns' 'bin/massdns'
+        cd "$srcdir/massdns"
+        make
         ;;
       anonsurf)
         print_message 'Instalando anonsurf'
         git_install 'Und3rf10w/kali-anonsurf'
-        ./installer.sh "$srcdir/kali-anonsurf/"
+        bash "$srcdir/kali-anonsurf/installer.sh"
         ;;
       paramspider)
         print_message 'Instalando ParamSpider'
@@ -319,9 +318,9 @@ EOF
         print_message 'Instalando SecLists'
         git_install 'danielmiessler/SecLists.git'
         ##ESTE ARQUIVO QUEBRA MASSAS E PRECISA SER LIMPO
-        cat "$srcdir/SecLists/Discovery/DNS/dns-Jhaddix.txt" | head -n -14 > clean-jhaddix-dns.txt
+        head -n -14 "$srcdir/SecLists/Discovery/DNS/dns-Jhaddix.txt" > clean-jhaddix-dns.txt
         ;;
-      go|go-tools)
+      go)
         print_message 'Instalando Golang'
         system_update
         apt -y install golang-go
