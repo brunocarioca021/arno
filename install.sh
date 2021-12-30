@@ -4,7 +4,7 @@
 # * Defina srcdir, pode ser global (/usr/local ou /usr/local/src)
 # * ou local ($HOME/.local) para instalação das ferramentas
 # */
-VERSION=0.0.5
+VERSION=0.0.6
 DIRNAME=${BASH_SOURCE[0]%/*}
 BASENAME=${BASH_SOURCE[0]##*/}
 
@@ -95,7 +95,7 @@ git_install() {
   fi
   git -C "$srcdir" clone -q "$repo"
   if [[ $app ]]; then
-    chmod +x "$srcdir/${1#*/}/$app"
+    [[ -f "$srcdir/${1#*/}/$app" ]] && chmod +x "$srcdir/${1#*/}/$app"
     ln -sf "$srcdir/${1#*/}/$app" "$bindir/${app##*/}"
   fi
   if [[ -r "$srcdir/${1#*/}/requirements.txt" ]]; then
@@ -307,8 +307,7 @@ EOF
       gf-patterns)
         print_message 'Instalando Gf-Patterns'
         git_install '1ndianl33t/Gf-Patterns'
-        mkdir ~/.gf
-        mv "$srcdir/Gf-Patterns/*.json" ~/.gf && rm -rf "$srcdir/Gf-Patterns"
+        sudo $SUDO_OPT sh -c 'mkdir -p $HOME/.gf; cp "$srcdir/"Gf-Patterns/*.json ~/.gf' && rm -rf "$srcdir/Gf-Patterns"
         ;;
       socialfish)
         print_message 'SecLists SocialFish'
