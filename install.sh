@@ -158,6 +158,7 @@ declare -A tools=(
   [go]=
   [awscli]=
   [phoneinfoga]=
+  [rustscan]=
 )
 read_package_ini
 
@@ -231,6 +232,10 @@ EOF
         print_message 'Não se esqueça de configurar as credenciais da AWS!'
         apt -y install awscli
         print_message 'Não se esqueça de configurar as credenciais da AWS!'
+        ;;
+      rustscan)
+        wget -qO /tmp/rustscan_2.0.1_amd64.deb https://github.com/RustScan/RustScan/releases/download/2.0.1/rustscan_2.0.1_amd64.deb
+        dpkg -i /tmp/rustscan_2.0.1_amd64.deb
         ;;
     esac
   fi
