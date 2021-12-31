@@ -73,7 +73,7 @@ init_install() {
     case $opt in
       yes)
         printf '\natualizando..\n'
-        apt -y upgrade
+        apt -y full-upgrade
         sudo $SUDO_OPT pip3 install --upgrade pip
         sudo $SUDO_OPT pip3 install --upgrade osrframework
         break
