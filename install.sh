@@ -158,6 +158,7 @@ declare -A tools=(
   [go]=
   [awscli]=
   [phoneinfoga]=
+  [rustscan]=
 )
 read_package_ini
 
@@ -205,9 +206,6 @@ EOF
       theHarvester)
         docker -t build "$srcdir/theHarvester/" theharvester .
         ;;
-      gf-patterns)
-        sudo $SUDO_OPT sh -c 'mkdir -p $HOME/.gf; cp "$srcdir/"Gf-Patterns/*.json ~/.gf' && rm -rf "$srcdir/Gf-Patterns"
-        ;;
       seclists)
         ##ESTE ARQUIVO QUEBRA MASSAS E PRECISA SER LIMPO
         head -n -14 "$srcdir/SecLists/Discovery/DNS/dns-Jhaddix.txt" > clean-jhaddix-dns.txt
@@ -234,6 +232,10 @@ EOF
         print_message 'Não se esqueça de configurar as credenciais da AWS!'
         apt -y install awscli
         print_message 'Não se esqueça de configurar as credenciais da AWS!'
+        ;;
+      rustscan)
+        wget -qO /tmp/rustscan_2.0.1_amd64.deb https://github.com/RustScan/RustScan/releases/download/2.0.1/rustscan_2.0.1_amd64.deb
+        dpkg -i /tmp/rustscan_2.0.1_amd64.deb
         ;;
     esac
   fi
