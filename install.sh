@@ -164,6 +164,7 @@ tools=(
   socialfish
   seclists
 )
+
 selection="$*"
 if [[ $# == 0 ]]; then
   selection="${tools[*]}"
@@ -292,7 +293,7 @@ EOF
       anonsurf)
         print_message 'Instalando anonsurf'
         git_install 'Und3rf10w/kali-anonsurf'
-        bash "$srcdir/kali-anonsurf/installer.sh"
+        cd "$srcdir/kali-anonsurf"; ./installer.sh
         ;;
       paramspider)
         print_message 'Instalando ParamSpider'
