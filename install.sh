@@ -4,7 +4,7 @@
 # * Defina srcdir, pode ser global (/usr/local ou /usr/local/src)
 # * ou local ($HOME/.local) para instalação das ferramentas
 # */
-VERSION=0.0.6
+VERSION=0.1.1
 DIRNAME=${BASH_SOURCE[0]%/*}
 BASENAME=${BASH_SOURCE[0]##*/}
 
@@ -86,26 +86,48 @@ init_install() {
   done
 }
 
+cfg_listsections() {
+  local file=$1
+  grep -oP '(?<=^\[)[^]]+' "$file"
+}
+
+read_package_ini() {
+  local sec url script post_exec
+  if [[ ! -f "$DIRNAME/src/NRZCode/bash-ini-parser/bash-ini-parser" ]]; then
+    mkdir -p "$DIRNAME/src/NRZCode"
+    git -C src/NRZCode clone -q https://github.com/NRZCode/bash-ini-parser
+  fi
+  source "$DIRNAME/src/NRZCode/bash-ini-parser/bash-ini-parser"
+  cfg_parser "$DIRNAME/package.ini"
+  while read sec; do
+    unset url script post_exec
+    cfg_section_$sec
+    tools[${sec,,}]="$url|$script|$post_exec"
+  done < <(cfg_listsections "$DIRNAME/package.ini")
+}
+
 git_install() {
-  local repo="$giturl/$1"
-  local app="$2"
-  if [[ -d "$srcdir/${1#*/}" ]]; then
-    printf 'WARNING: O diretório %s já existe. Não foi possível executar git clone %s\n' "$1" "$1"
+  local repo=$1
+  local app=$2
+  local cmd=$3
+  if [[ -d "$srcdir/${repo##*/}" ]]; then
+    printf 'WARNING: O diretório %s já existe.\nNão foi possível executar git clone %s\n' "$srcdir/${repo##*/}" "${repo}"
     return 1
   fi
   git -C "$srcdir" clone -q "$repo"
   if [[ $app ]]; then
-    [[ -f "$srcdir/${1#*/}/$app" ]] && chmod +x "$srcdir/${1#*/}/$app"
-    ln -sf "$srcdir/${1#*/}/$app" "$bindir/${app##*/}"
+    [[ -f "$srcdir/${repo##*/}/$app" ]] && chmod +x "$srcdir/${repo##*/}/$app"
+    ln -sf "$srcdir/${repo##*/}/$app" "$bindir/${app##*/}"
   fi
-  if [[ -r "$srcdir/${1#*/}/requirements.txt" ]]; then
-    cd "$srcdir/${1#*/}"
+  if [[ -r "$srcdir/${repo##*/}/requirements.txt" ]]; then
+    cd "$srcdir/${repo##*/}"
     sudo $SUDO_OPT pip3 install -r requirements.txt
   fi
-  if [[ -r "$srcdir/${1#*/}/setup.py" ]]; then
-    cd "$srcdir/${1#*/}"
+  if [[ -r "$srcdir/${repo##*/}/setup.py" ]]; then
+    cd "$srcdir/${repo##*/}"
     sudo python3 setup.py install
   fi
+  [[ $cmd ]] && bash -c "$cmd"
 }
 
 banner() {
@@ -128,109 +150,49 @@ if [[ 0 != $EUID ]]; then
   printf 'Necessário executar esse script com privilégios de administrador!\nExecute:\n$ sudo ./%s\n' "$BASENAME"
   exit 1
 fi
-SUDO_OPT="-H -E -u $SUDO_USER"
+export SUDO_OPT="-H -E -u $SUDO_USER"
 
-tools=(
-  ProgressBar
-  Brave
-  Pyrit
-  Go
-  AwsCli
-  Aquatone
-  Ngrok
-  Sherlock
-  ZPhisher
-  pwndb
-  phoneinfoga
-  Twitter-info
-  sayhello
-  Osintgram
-  seeker
-  saycheese
-  anon-sms
-  the-endorser
-  Sublist3r
-  takeover
-  dirsearch
-  sqlmap
-  knock
-  Infoga
-  gittools
-  massdns
-  anonsurf
-  paramspider
-  theHarvester
-  gf-patterns
-  socialfish
-  seclists
+declare -A tools=(
+  [brave]=
+  [ngrok]=
+  [go]=
+  [awscli]=
+  [phoneinfoga]=
 )
+read_package_ini
 
 selection="$*"
 if [[ $# == 0 ]]; then
-  selection="${tools[*]}"
+  selection="${!tools[*]}"
 fi
 
 init_install
-giturl='https://github.com'
-for tool in $selection; do
-  if in_array "${tool,,}" "${tools[@],,}"; then
-    case ${tool,,} in
-      progressbar)
-        git_install 'NRZCode/progressbar' 'ProgressBar.sh'
-        ;;
+for tool in ${selection,,}; do
+  tool_list=${!tools[*]}
+  if in_array "$tool" ${tool_list,,}; then
+    IFS='|' read url script post_exec <<< "${tools[$tool]}"
+    print_message "Instalando $tool"
+    [[ $url ]] && git_install "$url" "$script" "$post_exec"
+    case $tool in
       brave)
-        print_message 'Instalando Brave'
         curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
         echo 'deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main' > /etc/apt/sources.list.d/brave-browser-release.list
         apt update
         apt -y install brave-browser
         printf 'done\n\n'
         ;;
-      pyrit)
-        print_message 'Instalando Pyrit'
-        git_install 'hacker3983/pyrit-installer'
-        bash "$srcdir/pyrit-installer/install.sh"
-        ;;
       ngrok)
-        print_message 'Instalando ngrok'
-        # Install 1
-        wget -qO /tmp/ngrok-stable-linux-amd64.tgz https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.tgz
-        tar -C "$bindir" -zxvf /tmp/ngrok-stable-linux-amd64.tgz
-
-        # Install 2
-        #wget -qO /etc/apt/trusted.gpg.d/ngrok.asc https://ngrok-agent.s3.amazonaws.com/ngrok.asc
-        #echo 'deb https://ngrok-agent.s3.amazonaws.com buster main' > /etc/apt/sources.list.d/ngrok.list
-        #apt update
-        #apt install ngrok
-        ;;
-      sherlock)
-        print_message 'Instalando sherlock'
-        git_install 'sherlock-project/sherlock' 'sherlock/sherlock.py'
-        ;;
-      zphisher)
-        print_message 'Instalando zphisher'
-        git_install 'htr-tech/zphisher' 'zphisher.sh'
-        ;;
-      pwndb)
-        print_message 'Instalando pwndb'
-        git_install 'davidtavarez/pwndb' 'pwndb.py'
+        wget -qO /etc/apt/trusted.gpg.d/ngrok.asc https://ngrok-agent.s3.amazonaws.com/ngrok.asc
+        echo 'deb https://ngrok-agent.s3.amazonaws.com buster main' > /etc/apt/sources.list.d/ngrok.list
+        apt update
+        apt -y install ngrok
+        printf 'done\n\n'
         ;;
       phoneinfoga)
-        print_message 'Instalando phoneinfoga'
         curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install | bash
         mv ./phoneinfoga "$bindir/phoneinfoga"
         ;;
-      twitter-info)
-        print_message 'Instalando Twitter-info'
-        git_install 'D4Vinci/Twitter-Info' 'Twitter_info.py'
-        ;;
-      sayhello)
-        print_message 'Instalando sayhello'
-        git_install 'd093w1z/sayhello' 'sayhello.sh'
-        ;;
       osintgram)
-        print_message 'Instalando Osintgram'
-        git_install 'Datalux/Osintgram'
         cat <<EOF > "$bindir/osintgram.sh"
 #!/usr/bin/env bash
 echo 'Usage: osintgram.sh <target username> --command <command>'
@@ -240,83 +202,13 @@ fi
 EOF
         chmod +x "$bindir/osintgram.sh"
         ;;
-      seeker)
-        print_message 'Instalando seeker'
-        git_install 'thewhiteh4t/seeker' 'seeker.py'
-        ;;
-      saycheese)
-        print_message 'Instalando saycheese'
-        git_install 'hangetzzu/saycheese' 'saycheese.sh'
-        ;;
-      anon-sms)
-        print_message 'Instalando Anon-SMS'
-        git_install 'HACK3RY2J/Anon-SMS'
-        ;;
-      the-endorser)
-        print_message 'Instalando the-endorser'
-        git_install 'eth0izzle/the-endorser' 'the-endorser.py'
-        ;;
-      sublist3r)
-        print_message 'Instalando Sublist3r'
-        git_install 'aboul3la/Sublist3r'
-        ;;
-      takeover)
-        print_message 'Instalando takeover'
-        git_install 'm4ll0k/takeover'
-        ;;
-      dirsearch)
-        print_message 'Instalando dirsearch'
-        git_install 'maurosoria/dirsearch'
-        ;;
-      sqlmap)
-        print_message 'Instalando sqlmap'
-        git_install 'sqlmapproject/sqlmap' 'sqlmap.py'
-        ;;
-      knock)
-        print_message 'Instalando knock'
-        git_install 'guelfoweb/knock'
-        ;;
-      infoga)
-        print_message 'Instalando Infoga'
-        git_install 'm4ll0k/Infoga'
-        ;;
-      gittools)
-        print_message 'Instalando GitTools'
-        git_install 'internetwache/GitTools'
-        ;;
-      massdns)
-        print_message 'Instalando massdns'
-        git_install 'blechschmidt/massdns' 'bin/massdns'
-        cd "$srcdir/massdns"
-        make
-        ;;
-      anonsurf)
-        print_message 'Instalando anonsurf'
-        git_install 'Und3rf10w/kali-anonsurf'
-        cd "$srcdir/kali-anonsurf"; ./installer.sh
-        ;;
-      paramspider)
-        print_message 'Instalando ParamSpider'
-        git_install 'devanshbatham/ParamSpider' 'paramspider.py'
-        ;;
       theHarvester)
-        print_message 'Instalando theHarvester'
-        git_install 'laramies/theHarvester'
         docker -t build "$srcdir/theHarvester/" theharvester .
-        cp "$srcdir/theHarvester/bin/theHarvester" /usr/local/bin
         ;;
       gf-patterns)
-        print_message 'Instalando Gf-Patterns'
-        git_install '1ndianl33t/Gf-Patterns'
         sudo $SUDO_OPT sh -c 'mkdir -p $HOME/.gf; cp "$srcdir/"Gf-Patterns/*.json ~/.gf' && rm -rf "$srcdir/Gf-Patterns"
         ;;
-      socialfish)
-        print_message 'SecLists SocialFish'
-        git_install 'UndeadSec/SocialFish'
-        ;;
       seclists)
-        print_message 'Instalando SecLists'
-        git_install 'danielmiessler/SecLists.git'
         ##ESTE ARQUIVO QUEBRA MASSAS E PRECISA SER LIMPO
         head -n -14 "$srcdir/SecLists/Discovery/DNS/dns-Jhaddix.txt" > clean-jhaddix-dns.txt
         ;;
