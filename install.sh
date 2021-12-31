@@ -205,9 +205,6 @@ EOF
       theHarvester)
         docker -t build "$srcdir/theHarvester/" theharvester .
         ;;
-      gf-patterns)
-        sudo $SUDO_OPT sh -c 'mkdir -p $HOME/.gf; cp "$srcdir/"Gf-Patterns/*.json ~/.gf' && rm -rf "$srcdir/Gf-Patterns"
-        ;;
       seclists)
         ##ESTE ARQUIVO QUEBRA MASSAS E PRECISA SER LIMPO
         head -n -14 "$srcdir/SecLists/Discovery/DNS/dns-Jhaddix.txt" > clean-jhaddix-dns.txt
