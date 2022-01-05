@@ -13,12 +13,13 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 
 - dirsearch
 - knockpy
-- recon_profile
+- bluto
+- rustscan
+- whatweb
 - sqlmap-dev
 - Sublist3r
 - wpscan
 - Parsero
-- lazyrecon
 - SocialFish
 - Massdns
 - Asnlookup
@@ -37,6 +38,18 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 - anonsurf
 - ParamSpider
 - theHarvester
+- ngrok
+- saycheese
+- Sherlok
+- git-dumper
+- Osintgram
+- seeker
+- zphisher
+- twintproject
+- sayhello
+- phoneinfoga
+- the-endorser
+- Anon-SMS
 
 
 ## **Instalar**
