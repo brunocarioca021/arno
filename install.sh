@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-#/**
-# * Defina srcdir, pode ser global (/usr/local ou /usr/local/src)
-# * ou local ($HOME/.local) para instalação das ferramentas
-# */
 VERSION=0.1.1
 DIRNAME=${BASH_SOURCE[0]%/*}
 BASENAME=${BASH_SOURCE[0]##*/}
@@ -76,6 +72,7 @@ init_install() {
         apt -y full-upgrade
         sudo $SUDO_OPT pip3 install --upgrade pip
         sudo $SUDO_OPT pip3 install --upgrade osrframework
+        apt -y autoremove
         break
         ;;
       no) print_message 'continuando com a instalação...'
@@ -98,12 +95,12 @@ read_package_ini() {
     git -C src/NRZCode clone -q https://github.com/NRZCode/bash-ini-parser
   fi
   source "$DIRNAME/src/NRZCode/bash-ini-parser/bash-ini-parser"
-  cfg_parser "$DIRNAME/package.ini"
+  cfg_parser "$inifile"
   while read sec; do
     unset url script post_exec
-    cfg_section_$sec
+    cfg_section_$sec 2>&-
     tools[${sec,,}]="$url|$script|$post_exec"
-  done < <(cfg_listsections "$DIRNAME/package.ini")
+  done < <(cfg_listsections "$inifile")
 }
 
 git_install() {
@@ -130,17 +127,34 @@ git_install() {
   [[ $cmd ]] && bash -c "$cmd"
 }
 
+check_dependencies() {
+  echo 'Aguarde enquanto atualizamos...'
+}
+
 banner() {
-  echo ' █████╗ ██████╗ ███╗   ██╗ ██████╗
+  local logo=' █████╗ ██████╗ ███╗   ██╗ ██████╗
 ██╔══██╗██╔══██╗████╗  ██║██╔═══██╗
 ███████║██████╔╝██╔██╗ ██║██║   ██║
 ██╔══██║██╔══██╗██║╚██╗██║██║   ██║
 ██║  ██║██║  ██║██║ ╚████║╚██████╔╝
 ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝'
+  [[ -x /usr/games/lolcat ]] &&
+    /usr/games/lolcat <<< "$logo" ||
+    echo "$logo"
 }
 
+#/**
+# * Defina srcdir, e bindir através de variáveis de ambiente
+# * de modo global (/usr/local ou /usr/local/src)
+# * ou local ($HOME/.local) para instalação das ferramentas
+# * Ex:
+# * $ export srcdir=/usr/local/src
+# * $ export bindir=/usr/bin
+# * $ sudo ./install.sh
+# */
 export srcdir=${srcdir:-/usr/local}
 export bindir=${bindir:-$srcdir/bin}
+inifile="$DIRNAME/package.ini"
 
 banner
 load_ansi_colors
