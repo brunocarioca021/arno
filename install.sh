@@ -49,7 +49,7 @@ system_update() {
 }
 
 check_dependencies() {
-  if ! type -t ProgressBar.sh 2>&- 1>&2; then
+  if ! type -t ProgressBar.sh &>-; then
     git_install "https://github.com/NRZCode/progressbar" "ProgressBar.sh" 2>&-
   fi
 }
@@ -117,7 +117,12 @@ git_install() {
     printf 'WARNING: O diretório %s já existe.\nNão foi possível executar git clone %s\n' "$srcdir/${repo##*/}" "${repo}" 1>&2
     return 1
   fi
-  ProgressBar.sh "git -C '$srcdir' clone -q '$repo'"
+  git_clone="git -C '$srcdir' clone -q '$repo'"
+  if type -t ProgressBar.sh &>-; then
+    ProgressBar.sh "$git_clone"
+  else
+    bash -c "$git_clone"
+  fi
   if [[ $app ]]; then
     [[ -f "$srcdir/${repo##*/}/$app" ]] && chmod +x "$srcdir/${repo##*/}/$app"
     ln -sf "$srcdir/${repo##*/}/$app" "$bindir/${app##*/}"
