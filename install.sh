@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION=0.1.1
+VERSION=1.0.1
 DIRNAME=${BASH_SOURCE[0]%/*}
 BASENAME=${BASH_SOURCE[0]##*/}
 
