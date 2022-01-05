@@ -48,6 +48,12 @@ system_update() {
   fi
 }
 
+check_dependencies() {
+  if ! type -t ProgressBar.sh 2>&- 1>&2; then
+    git_install "https://github.com/NRZCode/progressbar" "ProgressBar.sh" 2>&-
+  fi
+}
+
 init_install() {
   mkdir -p "$srcdir"
   system_update
@@ -108,10 +114,10 @@ git_install() {
   local app=$2
   local cmd=$3
   if [[ -d "$srcdir/${repo##*/}" ]]; then
-    printf 'WARNING: O diretório %s já existe.\nNão foi possível executar git clone %s\n' "$srcdir/${repo##*/}" "${repo}"
+    printf 'WARNING: O diretório %s já existe.\nNão foi possível executar git clone %s\n' "$srcdir/${repo##*/}" "${repo}" 1>&2
     return 1
   fi
-  git -C "$srcdir" clone -q "$repo"
+  ProgressBar.sh "git -C '$srcdir' clone -q '$repo'"
   if [[ $app ]]; then
     [[ -f "$srcdir/${repo##*/}/$app" ]] && chmod +x "$srcdir/${repo##*/}/$app"
     ln -sf "$srcdir/${repo##*/}/$app" "$bindir/${app##*/}"
@@ -125,10 +131,6 @@ git_install() {
     sudo python3 setup.py install
   fi
   [[ $cmd ]] && bash -c "$cmd"
-}
-
-check_dependencies() {
-  echo 'Aguarde enquanto atualizamos...'
 }
 
 banner() {
@@ -165,6 +167,7 @@ if [[ 0 != $EUID ]]; then
   exit 1
 fi
 export SUDO_OPT="-H -E -u $SUDO_USER"
+check_dependencies
 
 declare -A tools=(
   [brave]=
