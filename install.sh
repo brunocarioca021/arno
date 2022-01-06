@@ -50,7 +50,7 @@ system_update() {
 
 check_dependencies() {
   if ! type -t ProgressBar.sh &>-; then
-    git_install "https://github.com/NRZCode/progressbar" "ProgressBar.sh" 2>&-
+    git_install "https://github.com/NRZCode/progressbar" "ProgressBar.sh" &>-
   fi
 }
 
@@ -89,6 +89,10 @@ init_install() {
   done
 }
 
+progressbar() {
+  if type -t ProgressBar.sh &>-; then ProgressBar.sh $*; else cat; fi
+}
+
 cfg_listsections() {
   local file=$1
   grep -oP '(?<=^\[)[^]]+' "$file"
@@ -117,12 +121,7 @@ git_install() {
     printf 'WARNING: O diretório %s já existe.\nNão foi possível executar git clone %s\n' "$srcdir/${repo##*/}" "${repo}" 1>&2
     return 1
   fi
-  git_clone="git -C '$srcdir' clone -q '$repo'"
-  if type -t ProgressBar.sh &>-; then
-    ProgressBar.sh "$git_clone"
-  else
-    bash -c "$git_clone"
-  fi
+  git -C "$srcdir" clone -q "$repo"
   if [[ $app ]]; then
     [[ -f "$srcdir/${repo##*/}/$app" ]] && chmod +x "$srcdir/${repo##*/}/$app"
     ln -sf "$srcdir/${repo##*/}/$app" "$bindir/${app##*/}"
@@ -195,7 +194,7 @@ for tool in ${selection,,}; do
   if in_array "$tool" ${tool_list,,}; then
     IFS='|' read url script post_exec <<< "${tools[$tool]}"
     print_message "Instalando $tool"
-    [[ $url ]] && git_install "$url" "$script" "$post_exec"
+    [[ $url ]] && git_install "$url" "$script" "$post_exec" | progressbar
     case $tool in
       brave)
         curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
@@ -238,16 +237,25 @@ EOF
         apt -y install golang-go
         print_message 'Instalando Ferramentas em GO'
         export GOBIN=$bindir
-        go get github.com/michenriksen/aquatone
-        go get -u -v github.com/lc/gau
-        go get -u github.com/tomnomnom/assetfinder
-        go get -u github.com/tomnomnom/waybackurls
-        go get -u github.com/tomnomnom/gf
-        go get -u github.com/tomnomnom/httprobe
-        go get -u github.com/tomnomnom/unfurl
-        go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-        go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
-        go install github.com/OJ/gobuster/v3@latest
+        i=1
+        msg_fmt='%d Instalando %s %d/%d'
+        declare -A gotools=(
+          [aquatone]='go get github.com/michenriksen/aquatone'
+          [gau]='go get -u -v github.com/lc/gau'
+          [assetfinder]='go get -u github.com/tomnomnom/assetfinder'
+          [waybackurls]='go get -u github.com/tomnomnom/waybackurls'
+          [gf]='go get -u github.com/tomnomnom/gf'
+          [httprobe]='go get -u github.com/tomnomnom/httprobe'
+          [unfurl]='go get -u github.com/tomnomnom/unfurl'
+          [subfinder]='go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest'
+          [httpx]='go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest'
+          [gobuster]='go install github.com/OJ/gobuster/v3@latest'
+        )
+        for tool in "${!gotools[@]}"; do
+          printf "$msg_fmt\n" "$(((i-1)*10))" "$tool" "$i" "${#gotools[@]}"
+          bash -c "${gotools[$tool]}" &>-
+          ((i++))
+        done | progressbar -s normal
         ;;
       awscli)
         #Não se esqueça de configurar as credenciais da AWS!
