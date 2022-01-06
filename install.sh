@@ -117,7 +117,7 @@ git_install() {
     printf 'WARNING: O diretório %s já existe.\nNão foi possível executar git clone %s\n' "$srcdir/${repo##*/}" "${repo}" 1>&2
     return 1
   fi
-    git_clone="git -C '$srcdir' clone -q '$repo'"
+  git_clone="git -C '$srcdir' clone -q '$repo'"
   if type -t ProgressBar.sh &>-; then
     ProgressBar.sh "$git_clone"
   else
