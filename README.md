@@ -53,7 +53,7 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 
 
 ## **Instalar**
-- git clone https://github.com/pantherwhite/arno.git
+- git clone https://github.com/DonatoReis/arno.git
 - cd /arno
 - chmod +x install.sh
 - ./install.sh
