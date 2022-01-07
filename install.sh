@@ -50,7 +50,7 @@ system_update() {
 
 check_dependencies() {
   if ! type -t ProgressBar.sh &>-; then
-    git_install "https://github.com/NRZCode/progressbar" "ProgressBar.sh" &>-
+    git_install "https://github.com/NRZCode/progressbar" "ProgressBar.sh"
   fi
 }
 
@@ -102,9 +102,10 @@ read_package_ini() {
   local sec url script post_exec
   if [[ ! -f "$DIRNAME/src/NRZCode/bash-ini-parser/bash-ini-parser" ]]; then
     mkdir -p "$DIRNAME/src/NRZCode"
-    git -C src/NRZCode clone -q https://github.com/NRZCode/bash-ini-parser
+    git -C "$DIRNAME/src/NRZCode" clone -q https://github.com/NRZCode/bash-ini-parser
   fi
   source "$DIRNAME/src/NRZCode/bash-ini-parser/bash-ini-parser"
+  [[ -f "$inifile" ]] || wget -qO "$inifile" https://github.com/DonatoReis/arno/raw/main/package.ini
   cfg_parser "$inifile"
   while read sec; do
     unset url script post_exec
@@ -121,19 +122,22 @@ git_install() {
     printf 'WARNING: O diretório %s já existe.\nNão foi possível executar git clone %s\n' "$srcdir/${repo##*/}" "${repo}" 1>&2
     return 1
   fi
-  git -C "$srcdir" clone -q "$repo"
+  git -C "$srcdir" clone -q "$repo" | progressbar
+  echo '44'
   if [[ $app ]]; then
     [[ -f "$srcdir/${repo##*/}/$app" ]] && chmod +x "$srcdir/${repo##*/}/$app"
     ln -sf "$srcdir/${repo##*/}/$app" "$bindir/${app##*/}"
   fi
   if [[ -r "$srcdir/${repo##*/}/requirements.txt" ]]; then
     cd "$srcdir/${repo##*/}"
-    sudo $SUDO_OPT pip3 install -r requirements.txt
+    sudo $SUDO_OPT pip3 install -q -r requirements.txt 2>&-
   fi
+  echo '64'
   if [[ -r "$srcdir/${repo##*/}/setup.py" ]]; then
     cd "$srcdir/${repo##*/}"
-    sudo python3 setup.py install
+    sudo python3 setup.py -q install 2>&-
   fi
+  echo '84'
   [[ $cmd ]] && bash -c "$cmd"
 }
 
@@ -194,7 +198,7 @@ for tool in ${selection,,}; do
   if in_array "$tool" ${tool_list,,}; then
     IFS='|' read url script post_exec <<< "${tools[$tool]}"
     print_message "Instalando $tool"
-    [[ $url ]] && git_install "$url" "$script" "$post_exec" | progressbar
+    [[ $url ]] && git_install "$url" "$script" "$post_exec"
     case $tool in
       brave)
         curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
