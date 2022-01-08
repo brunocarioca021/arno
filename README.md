@@ -57,3 +57,10 @@ Um script para instalar as ferramentas mais populares usadas ao procurar vulnera
 ```bash
 $ curl -sL https://github.com/DonatoReis/arno/raw/main/install.sh | sudo bash
 ```
+- **Modo de instalação com git clone**
+```bash
+- git clone https://github.com/DonatoReis/arno.git
+- cd /arno
+- chmod +x install.sh
+- ./install.sh
+```
