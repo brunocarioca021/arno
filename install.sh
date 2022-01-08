@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION=1.0.1
+VERSION=1.0.2
 DIRNAME=${BASH_SOURCE[0]%/*}
 BASENAME=${BASH_SOURCE[0]##*/}
 
@@ -71,6 +71,7 @@ init_install() {
   printf "\n${CBold}${CFGWhite}=====================================================>${CReset}\n\n"
   print_message 'Deseja Atualizar seu Linux? o tempo pode variar de acordo com sua máquina.'
   PS3="Por favor selecione uma opção : "
+  read -p "$PS3"
   select opt in yes no; do
     case $opt in
       yes)
@@ -122,7 +123,7 @@ git_install() {
     printf 'WARNING: O diretório %s já existe.\nNão foi possível executar git clone %s\n' "$srcdir/${repo##*/}" "${repo}" 1>&2
     return 1
   fi
-  git -C "$srcdir" clone -q "$repo" | progressbar
+  git -C "$srcdir" clone -q "$repo" | progressbar -s normal
   if [[ $app ]]; then
     [[ -f "$srcdir/${repo##*/}/$app" ]] && chmod +x "$srcdir/${repo##*/}/$app"
     ln -sf "$srcdir/${repo##*/}/$app" "$bindir/${app##*/}"
