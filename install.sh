@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION=1.0.1
+VERSION=1.0.2
 DIRNAME=${BASH_SOURCE[0]%/*}
 BASENAME=${BASH_SOURCE[0]##*/}
 
@@ -69,24 +69,26 @@ init_install() {
 
   print_message 'Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar seu Tempo na hora de configurar sua máquina para trabalhar.'
   printf "\n${CBold}${CFGWhite}=====================================================>${CReset}\n\n"
-  print_message 'Deseja Atualizar seu Linux? o tempo pode variar de acordo com sua máquina.'
-  PS3="Por favor selecione uma opção : "
-  select opt in yes no; do
-    case $opt in
-      yes)
-        printf '\natualizando..\n'
-        apt -y full-upgrade
-        sudo $SUDO_OPT pip3 install --upgrade pip
-        sudo $SUDO_OPT pip3 install --upgrade osrframework
-        apt -y autoremove
-        break
-        ;;
-      no) print_message 'continuando com a instalação...'
-        break
-        ;;
-      *) printf '\nOpção inválida\n'
-    esac
-  done
+  if [[ -t 0 ]]; then
+    print_message 'Deseja Atualizar seu Linux? o tempo pode variar de acordo com sua máquina.'
+    PS3="Por favor selecione uma opção: "
+    select opt in yes no; do
+      case $opt in
+        yes)
+          printf '\natualizando..\n'
+          apt -y full-upgrade
+          sudo $SUDO_OPT pip3 install --upgrade pip
+          sudo $SUDO_OPT pip3 install --upgrade osrframework
+          apt -y autoremove
+          break
+          ;;
+        no) print_message 'continuando com a instalação...'
+          break
+          ;;
+        *) printf '\nOpção inválida\n';;
+      esac
+    done
+  fi
 }
 
 progressbar() {
@@ -122,7 +124,7 @@ git_install() {
     printf 'WARNING: O diretório %s já existe.\nNão foi possível executar git clone %s\n' "$srcdir/${repo##*/}" "${repo}" 1>&2
     return 1
   fi
-  git -C "$srcdir" clone -q "$repo" | progressbar
+  git -C "$srcdir" clone -q "$repo" | progressbar -s normal
   if [[ $app ]]; then
     [[ -f "$srcdir/${repo##*/}/$app" ]] && chmod +x "$srcdir/${repo##*/}/$app"
     ln -sf "$srcdir/${repo##*/}/$app" "$bindir/${app##*/}"
@@ -189,6 +191,7 @@ if [[ $# == 0 ]]; then
   selection="${!tools[*]}"
 fi
 
+export DEBIAN_FRONTEND=noninteractive
 init_install
 for tool in ${selection,,}; do
   tool_list=${!tools[*]}
