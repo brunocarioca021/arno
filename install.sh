@@ -123,7 +123,6 @@ git_install() {
     return 1
   fi
   git -C "$srcdir" clone -q "$repo" | progressbar
-  echo '44'
   if [[ $app ]]; then
     [[ -f "$srcdir/${repo##*/}/$app" ]] && chmod +x "$srcdir/${repo##*/}/$app"
     ln -sf "$srcdir/${repo##*/}/$app" "$bindir/${app##*/}"
@@ -132,12 +131,10 @@ git_install() {
     cd "$srcdir/${repo##*/}"
     sudo $SUDO_OPT pip3 install -q -r requirements.txt 2>&-
   fi
-  echo '64'
   if [[ -r "$srcdir/${repo##*/}/setup.py" ]]; then
     cd "$srcdir/${repo##*/}"
     sudo python3 setup.py -q install 2>&-
   fi
-  echo '84'
   [[ $cmd ]] && bash -c "$cmd"
 }
 
