@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION=1.0.2
+VERSION=1.0.3
 DIRNAME=${BASH_SOURCE[0]%/*}
 BASENAME=${BASH_SOURCE[0]##*/}
 
@@ -59,36 +59,22 @@ init_install() {
   system_update
   # REQUIREMENTS
   if [[ ! -f $HOME/.local/.arno_init_install_successful ]]; then
+    print_message 'Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar seu Tempo na hora de configurar sua máquina para trabalhar.'
+    printf "\n${CBold}${CFGWhite}=====================================================>${CReset}\n\n"
     apt -y install python3-pip apt-transport-https curl libcurl4-openssl-dev libssl-dev virtualbox-guest-x11 jq ruby-full libcurl4-openssl-dev ruby virtualbox-guest-utils libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev perl libio-socket-ssl-perl libdbd-sqlite3-perl libclass-dbi-perl libio-all-lwp-perl libparallel-forkmanager-perl libredis-perl libalgorithm-combinatorics-perl gem git cvs subversion git bzr mercurial build-essential libssl-dev libffi-dev python2-dev python2 python-dev-is-python3 ruby-ffi-yajl python-setuptools libldns-dev git nmap rename docker.io parsero apache2 amass joomscan uniscan ssh tor privoxy wifite proxychains4 hashcat aptitude synaptic lolcat python3.9-venv dialog golang-go exploitdb exploitdb-papers exploitdb-bin-sploits graphviz virtualenv reaver bats dirsearch
+    apt -y full-upgrade
+    sudo $SUDO_OPT pip3 install --upgrade pip
     sudo $SUDO_OPT pip3 install argparse osrframework py-altdns==1.0.2 requests wfuzz holehe twint bluto
+    sudo $SUDO_OPT pip3 install --upgrade osrframework
     sudo $SUDO_OPT pip install one-lin3r bluto dnspython requests win_unicode_console colorama
     gem install typhoeus opt_parse_validator blunder wpscan
+    apt -y autoremove
     mkdir -p "$HOME/.local"
     > $HOME/.local/.arno_init_install_successful
   fi
 
   print_message 'Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar seu Tempo na hora de configurar sua máquina para trabalhar.'
   printf "\n${CBold}${CFGWhite}=====================================================>${CReset}\n\n"
-  if [[ -t 0 ]]; then
-    print_message 'Deseja Atualizar seu Linux? o tempo pode variar de acordo com sua máquina.'
-    PS3="Por favor selecione uma opção: "
-    select opt in yes no; do
-      case $opt in
-        yes)
-          printf '\natualizando..\n'
-          apt -y full-upgrade
-          sudo $SUDO_OPT pip3 install --upgrade pip
-          sudo $SUDO_OPT pip3 install --upgrade osrframework
-          apt -y autoremove
-          break
-          ;;
-        no) print_message 'continuando com a instalação...'
-          break
-          ;;
-        *) printf '\nOpção inválida\n';;
-      esac
-    done
-  fi
 }
 
 progressbar() {
@@ -217,7 +203,7 @@ for tool in ${selection,,}; do
         ;;
       phoneinfoga)
         curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install | bash
-        mv ./phoneinfoga "$bindir/phoneinfoga"
+        #mv ./phoneinfoga "$bindir/phoneinfoga"
         ;;
       osintgram)
         cat <<EOF > "$bindir/osintgram.sh"
