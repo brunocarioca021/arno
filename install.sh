@@ -223,7 +223,6 @@ for tool in ${selection,,}; do
         ;;
       phoneinfoga)
         curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install | bash
-        #mv ./phoneinfoga "$bindir/phoneinfoga"
         ;;
       osintgram)
         cat <<EOF > "$bindir/osintgram.sh"
