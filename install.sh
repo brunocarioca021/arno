@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-VERSION=1.0.3
-DIRNAME=${BASH_SOURCE[0]%/*}
-BASENAME=${BASH_SOURCE[0]##*/}
+VERSION=1.0.4
+DIRNAME=${BASH_SOURCE%/*}
+BASENAME=${0##*/}
 
 # ANSI Colors
 function load_ansi_colors() {
@@ -42,10 +42,41 @@ print_message() {
   fi
 }
 
+banner_color() {
+  local colors logo_print
+  local c=({30..37})
+  logo_print="$(sed -E 's/$/\\e[m/;s/^.{26}/&\\e[%sm/;s/^.{16}/&\\e[%sm/;s/^.{8}/&\\e[%sm/;s/^/\\e[%sm/' <<< "$logo")"
+  substr=$(for i in {1..4}; do echo -n "${c[$((RANDOM%${#c[@]}))]} "; done)
+  printf -v colors '%6s'
+  colors=(${colors// /$substr})
+  printf "$logo_print\n" "${colors[@]}"
+}
+
+banner() {
+  logo=' █████╗ ██████╗ ███╗   ██╗ ██████╗
+██╔══██╗██╔══██╗████╗  ██║██╔═══██╗
+███████║██████╔╝██╔██╗ ██║██║   ██║
+██╔══██║██╔══██╗██║╚██╗██║██║   ██║
+██║  ██║██║  ██║██║ ╚████║╚██████╔╝
+╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝'
+  [[ -x /usr/games/lolcat ]] &&
+    /usr/games/lolcat <<< "$logo" ||
+    banner_color "$logo"
+}
+
 system_update() {
   if [[ ! $is_updated ]]; then
     apt update && is_updated=1
   fi
+}
+export -f system_update
+
+system_upgrade() {
+  print_message 'Atualizando sistema'
+  apt -y full-upgrade
+  sudo $SUDO_OPT pip3 install --upgrade pip
+  sudo $SUDO_OPT pip3 install --upgrade osrframework
+  apt -y autoremove
 }
 
 check_dependencies() {
@@ -55,20 +86,18 @@ check_dependencies() {
 }
 
 init_install() {
+  export DEBIAN_FRONTEND=noninteractive
   mkdir -p "$srcdir"
   system_update
   # REQUIREMENTS
   if [[ ! -f $HOME/.local/.arno_init_install_successful ]]; then
     print_message 'Ferramenta em script Bash Completa para Bug bounty ou Pentest ! Vai poupar seu Tempo na hora de configurar sua máquina para trabalhar.'
     printf "\n${CBold}${CFGWhite}=====================================================>${CReset}\n\n"
-    apt -y install python3-pip apt-transport-https curl libcurl4-openssl-dev libssl-dev virtualbox-guest-x11 jq ruby-full libcurl4-openssl-dev ruby virtualbox-guest-utils libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev perl libio-socket-ssl-perl libdbd-sqlite3-perl libclass-dbi-perl libio-all-lwp-perl libparallel-forkmanager-perl libredis-perl libalgorithm-combinatorics-perl gem git cvs subversion git bzr mercurial build-essential i2p-keyring secure-delete tor i2p libssl-dev libffi-dev python2-dev python2 python-dev-is-python3 ruby-ffi-yajl python-setuptools libldns-dev git nmap rename docker.io parsero apache2 amass joomscan uniscan ssh tor privoxy wifite proxychains4 hashcat aptitude synaptic lolcat python3.9-venv dialog golang-go exploitdb exploitdb-papers exploitdb-bin-sploits graphviz virtualenv reaver bats dirsearch
-    apt -y full-upgrade
+    apt -y install python3-pip apt-transport-https curl libcurl4-openssl-dev libssl-dev virtualbox-guest-x11 jq ruby-full libcurl4-openssl-dev ruby virtualbox-guest-utils libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev perl libio-socket-ssl-perl libdbd-sqlite3-perl libclass-dbi-perl libio-all-lwp-perl libparallel-forkmanager-perl libredis-perl libalgorithm-combinatorics-perl gem git cvs subversion git bzr mercurial build-essential libssl-dev libffi-dev python2-dev python2 python-dev-is-python3 ruby-ffi-yajl python-setuptools libldns-dev nmap rename docker.io parsero apache2 amass joomscan uniscan ssh tor privoxy wifite proxychains4 hashcat aptitude synaptic lolcat python3.9-venv dialog golang-go exploitdb exploitdb-papers exploitdb-bin-sploits graphviz virtualenv reaver bats dirsearch
     sudo $SUDO_OPT pip3 install --upgrade pip
     sudo $SUDO_OPT pip3 install argparse osrframework py-altdns==1.0.2 requests wfuzz holehe twint bluto
-    sudo $SUDO_OPT pip3 install --upgrade osrframework
     sudo $SUDO_OPT pip install one-lin3r bluto dnspython requests win_unicode_console colorama
     gem install typhoeus opt_parse_validator blunder wpscan
-    apt -y autoremove
     mkdir -p "$HOME/.local"
     > $HOME/.local/.arno_init_install_successful
   fi
@@ -126,17 +155,8 @@ git_install() {
   [[ $cmd ]] && bash -c "$cmd"
 }
 
-banner() {
-  local logo=' █████╗ ██████╗ ███╗   ██╗ ██████╗
-██╔══██╗██╔══██╗████╗  ██║██╔═══██╗
-███████║██████╔╝██╔██╗ ██║██║   ██║
-██╔══██║██╔══██╗██║╚██╗██║██║   ██║
-██║  ██║██║  ██║██║ ╚████║╚██████╔╝
-╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝'
-  [[ -x /usr/games/lolcat ]] &&
-    /usr/games/lolcat <<< "$logo" ||
-    echo "$logo"
-}
+[[ $0 != @($BASH_SOURCE|bash) ]] && { echo MSG; exit 1; }
+DIRNAME=${DIRNAME:-$HOME/.local}
 
 #/**
 # * Defina srcdir, e bindir através de variáveis de ambiente
@@ -155,12 +175,6 @@ banner
 load_ansi_colors
 [[ $1 == @(-h|--help|help) ]] && { echo MSG; exit 0; }
 [[ $1 == @(-v|--version) ]] && { echo $VERSION; exit 0; }
-if [[ 0 != $EUID ]]; then
-  printf 'Necessário executar esse script com privilégios de administrador!\nExecute:\n$ sudo ./%s\n' "$BASENAME"
-  exit 1
-fi
-export SUDO_OPT="-H -E -u $SUDO_USER"
-check_dependencies
 
 declare -A tools=(
   [brave]=
@@ -171,14 +185,20 @@ declare -A tools=(
   [rustscan]=
 )
 read_package_ini
+[[ $1 == @(-l|--list) ]] && { printf "  Uso: ./$BASENAME ${!tools[*]}"; exit 0; }
 
-[[ $1 == @(-l|--list) ]] && { printf "  Uso: ./$BASENAME ${!tools[@]}"; exit 0; }
+if [[ 0 != $EUID ]]; then
+  printf 'Necessário executar esse script com privilégios de administrador!\nExecute:\n$ sudo ./%s\n' "$BASENAME"
+  exit 1
+fi
+export SUDO_OPT="-H -E -u $SUDO_USER"
+check_dependencies
+
 selection="$*"
 if [[ $# == 0 ]]; then
   selection="${!tools[*]}"
 fi
 
-export DEBIAN_FRONTEND=noninteractive
 init_install
 for tool in ${selection,,}; do
   tool_list=${!tools[*]}
@@ -261,3 +281,4 @@ EOF
     esac
   fi
 done
+system_upgrade
